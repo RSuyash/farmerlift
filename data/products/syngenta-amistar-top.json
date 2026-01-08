@@ -1,0 +1,62 @@
+{
+    "name": "Syngenta Amistar Top Fungicide",
+    "brand": "Syngenta",
+    "category": "pesticide",
+    "price": 3400,
+    "mrp": 3800,
+    "stock": 150,
+    "isOrganic": false,
+    "description": "Amistar Top is a broad-spectrum, systemic fungicide for simultaneous control of diseases like sheath blight and blast in paddy, and leaf spots/blights in vegetables. It combines two modes of action for resistance management.",
+    "sku": "SYN-AMISTAR-TOP-1L",
+    "images": [
+        "/images/products/syngenta-amistar-top.png"
+    ],
+    "features": [
+        "Dual Mode of Action (Systemic + Contact)",
+        "Controls wide range of fungal diseases",
+        "Improving Crop Quality and Yield",
+        "Long-lasting protection"
+    ],
+    "manufacturer": "Syngenta India Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Azoxystrobin + Difenoconazole",
+    "packagingType": "Plastic Bottle",
+    "netWeight": "1 L",
+    "specifications": {
+        "type": "fungicide",
+        "chemicalGroup": "Strobilurin + Triazole",
+        "activeIngredients": [
+            {
+                "name": "Azoxystrobin",
+                "concentration": "18.2%",
+                "formulation": "SC"
+            },
+            {
+                "name": "Difenoconazole",
+                "concentration": "11.4%",
+                "formulation": "SC"
+            }
+        ],
+        "targetPests": [
+            "Sheath Blight",
+            "Blast",
+            "Yellow Rust",
+            "Powdery Mildew",
+            "Leaf Spot",
+            "Grey Mildew"
+        ],
+        "targetCrops": [
+            "Paddy",
+            "Wheat",
+            "Tomato",
+            "Chilli",
+            "Maize",
+            "Cotton"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "1 ml/L Water (200ml/Acre)",
+        "phi": 25,
+        "rainFastness": "2 hours",
+        "toxicityLabel": "blue"
+    }
+}

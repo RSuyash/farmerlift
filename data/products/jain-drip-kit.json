@@ -1,0 +1,34 @@
+{
+    "name": "Jain Select Drip Irrigation Kit (1 Acre)",
+    "brand": "Jain Irrigation",
+    "category": "machinery",
+    "price": 25000,
+    "mrp": 32000,
+    "stock": 20,
+    "isOrganic": false,
+    "description": "Complete drip irrigation kit for 1 acre land. Includes filters, mainline, sub-mainline, and inline drippers (16mm). Easy to install.",
+    "sku": "JAIN-DRIP-KIT-1ACRE",
+    "images": [
+        "/images/products/jain-drip-kit.png"
+    ],
+    "features": [
+        "Saves 50-70% Water",
+        "Uniform Discharge",
+        "UV Stabilized Components",
+        "Includes Screen Filter"
+    ],
+    "manufacturer": "Jain Irrigation Systems Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Drip System",
+    "packagingType": "Box (Multiple)",
+    "netWeight": "80 kg",
+    "specifications": {
+        "type": "tool",
+        "powerSource": "manual",
+        "capacity": "1 Acre",
+        "pressure": "1-1.5 kg/cm2",
+        "flowRate": "2-4 LPH (Drippers)",
+        "weight": "80 kg",
+        "warranty": "1 Year"
+    }
+}

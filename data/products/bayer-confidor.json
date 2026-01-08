@@ -1,0 +1,56 @@
+{
+    "name": "Bayer Confidor Super (Imidacloprid 30.5% SC)",
+    "brand": "Bayer",
+    "category": "pesticide",
+    "price": 950,
+    "mrp": 1100,
+    "stock": 200,
+    "isOrganic": false,
+    "description": "Systemic insecticide for control of sucking pests like Aphids, Jassids, Thrips, and Whitefly. Improves crop vigor and stress tolerance.",
+    "sku": "BAY-CONFIDOR-250ML",
+    "images": [
+        "/images/products/bayer-confidor.png"
+    ],
+    "features": [
+        "Broad Spectrum Sucking Pest Control",
+        "Systemic Action (Xylem Mobile)",
+        "Stress Shield Technology",
+        "Long Duration Protection"
+    ],
+    "manufacturer": "Bayer CropScience",
+    "countryOfOrigin": "India",
+    "commonName": "Imidacloprid",
+    "packagingType": "Bottle",
+    "netWeight": "250 ml",
+    "specifications": {
+        "type": "insecticide",
+        "chemicalGroup": "Neonicotinoid",
+        "activeIngredients": [
+            {
+                "name": "Imidacloprid",
+                "concentration": "30.5%",
+                "formulation": "SC"
+            }
+        ],
+        "targetPests": [
+            "Aphids",
+            "Jassids",
+            "Thrips",
+            "Whitefly",
+            "Termites"
+        ],
+        "targetCrops": [
+            "Cotton",
+            "Paddy",
+            "Sugarcane",
+            "Chilli",
+            "Okra",
+            "Mango"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "0.3 ml/L Water",
+        "phi": 7,
+        "rainFastness": "4 hours",
+        "toxicityLabel": "yellow"
+    }
+}

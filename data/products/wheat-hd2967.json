@@ -1,0 +1,43 @@
+{
+    "name": "Pusa HD 2967 Wheat Seeds",
+    "brand": "National Seeds Corporation",
+    "category": "seed",
+    "price": 1200,
+    "mrp": 1400,
+    "stock": 100,
+    "isOrganic": false,
+    "description": "Certified high-yielding wheat variety developed by IARI. Resistant to yellow rust and brown rust. Excellent chapati making quality.",
+    "sku": "NSC-WHEAT-HD2967-40KG",
+    "images": [
+        "/images/products/nsc-wheat-hd2967.png"
+    ],
+    "features": [
+        "Rust Resistant",
+        "High Grain Weight",
+        "Widely Adaptable",
+        "Certified Seed"
+    ],
+    "manufacturer": "National Seeds Corporation",
+    "countryOfOrigin": "India",
+    "commonName": "Wheat Seed",
+    "packagingType": "Jute Bag",
+    "netWeight": "40 kg",
+    "specifications": {
+        "type": "open-pollinated",
+        "crop": "Wheat",
+        "variety": "HD 2967",
+        "duration": "140-150 days",
+        "germinationPercentage": 85,
+        "purityPercentage": 98,
+        "geneticPurity": 99,
+        "season": [
+            "rabi"
+        ],
+        "sowingMethod": "broadcasting",
+        "sowingDistance": "20-22 cm (Row)",
+        "yieldPotential": "20-22 Quintals/Acre",
+        "resistanceFeatures": [
+            "Yellow Rust Resistant"
+        ]
+    }
+}

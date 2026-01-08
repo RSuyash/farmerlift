@@ -1,0 +1,50 @@
+{
+    "name": "Aries Chelamin (Chelated Zinc 12%)",
+    "brand": "Aries Agro",
+    "category": "fertilizer",
+    "price": 450,
+    "mrp": 550,
+    "stock": 200,
+    "isOrganic": false,
+    "description": "EDTA Chelated Zinc (12%) for correcting zinc deficiency. Fully water soluble and available to plants at varying pH levels.",
+    "sku": "ARIES-ZINC-500G",
+    "images": [
+        "/images/products/aries-chelamin.png"
+    ],
+    "features": [
+        "12% Chelated Zinc (EDTA)",
+        "Corrects Khaira Disease in Paddy",
+        "Compatible with most pesticides",
+        "Quick absorption"
+    ],
+    "manufacturer": "Aries Agro Limited",
+    "countryOfOrigin": "India",
+    "commonName": "Chelated Zinc",
+    "packagingType": "Pouch",
+    "netWeight": "500 g",
+    "specifications": {
+        "type": "chemical",
+        "form": "water-soluble-powder",
+        "applicationMethod": [
+            "foliar",
+            "drip"
+        ],
+        "targetCrops": [
+            "Paddy",
+            "Wheat",
+            "Maize",
+            "Citrus",
+            "Cotton"
+        ],
+        "dosePerAcre": "500g",
+        "composition": {
+            "n": 0,
+            "p": 0,
+            "k": 0,
+            "other": [
+                "Zinc (Zn) 12%"
+            ]
+        },
+        "solubility": "100%"
+    }
+}

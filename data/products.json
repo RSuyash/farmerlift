@@ -1,0 +1,74 @@
+[
+  {
+    "id": "prod_001",
+    "name": "Super Grow Organic Fertilizer",
+    "category": "Organic",
+    "price": "₹1,200",
+    "image": "/images/products/organic-fert-1.jpg",
+    "benefits": [
+      "Increases soil fertility naturally",
+      "Safe for all crop types",
+      "Improves water retention"
+    ],
+    "specs": {
+      "npk": "4-3-3",
+      "dosage": "500kg per acre",
+      "packaging": "50kg Bag"
+    },
+    "featured": true
+  },
+  {
+    "id": "prod_002",
+    "name": "AquaSolv Zinc Booster",
+    "category": "Water Soluble",
+    "price": "₹450",
+    "image": "/images/products/zinc-booster.jpg",
+    "benefits": [
+      "Rapid absorption by plants",
+      "Corrects zinc deficiency instantly",
+      "Boosts yield quality"
+    ],
+    "specs": {
+      "npk": "0-0-0 + Zn 12%",
+      "dosage": "2g per liter",
+      "packaging": "1kg Pouch"
+    },
+    "featured": true
+  },
+  {
+    "id": "prod_003",
+    "name": "EcoShield Pest Control",
+    "category": "Organic",
+    "price": "₹800",
+    "image": "/images/products/eco-shield.jpg",
+    "benefits": [
+      "Non-toxic to humans",
+      "Effective against aphids and mites",
+      "Zero residue"
+    ],
+    "specs": {
+      "active_ingredient": "Neem Oil Extract",
+      "dosage": "5ml per liter",
+      "packaging": "500ml Bottle"
+    },
+    "featured": false
+  },
+  {
+    "id": "prod_004",
+    "name": "NitroMax Soluble",
+    "category": "Water Soluble",
+    "price": "₹950",
+    "image": "/images/products/nitro-max.jpg",
+    "benefits": [
+      "High nitrogen content",
+      "Promotes leafy growth",
+      "Dissolves completely"
+    ],
+    "specs": {
+      "npk": "19-19-19",
+      "dosage": "5g per liter",
+      "packaging": "1kg Packet"
+    },
+    "featured": true
+  }
+]

@@ -1,0 +1,54 @@
+{
+    "name": "UPL Kocide 3000 (Copper Hydroxide 46.1% DF)",
+    "brand": "UPL",
+    "category": "pesticide",
+    "price": 900,
+    "mrp": 1050,
+    "stock": 120,
+    "isOrganic": false,
+    "description": "Advanced Copper Fungicide/Bactericide with BioActive technology. Better coverage and disease control with less copper usage.",
+    "sku": "UPL-KOCIDE-500G",
+    "images": [
+        "/images/products/upl-kocide.png"
+    ],
+    "features": [
+        "BioActive Technology",
+        "Controls Fungal & Bacterial Diseases",
+        "Low Metallic Copper Load",
+        "Rainfastness"
+    ],
+    "manufacturer": "UPL Limited",
+    "countryOfOrigin": "India",
+    "commonName": "Copper Hydroxide",
+    "packagingType": "Box",
+    "netWeight": "500 g",
+    "specifications": {
+        "type": "fungicide",
+        "chemicalGroup": "Inorganic Copper",
+        "activeIngredients": [
+            {
+                "name": "Copper Hydroxide",
+                "concentration": "46.1%",
+                "formulation": "DF"
+            }
+        ],
+        "targetPests": [
+            "Bacterial Blight",
+            "Anthracnose",
+            "Downy Mildew",
+            "Canker"
+        ],
+        "targetCrops": [
+            "Citrus",
+            "Pomegranate",
+            "Grape",
+            "Chilli",
+            "Tomato"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "1.5-2 g/L Water",
+        "phi": 7,
+        "rainFastness": "1 hour",
+        "toxicityLabel": "blue"
+    }
+}

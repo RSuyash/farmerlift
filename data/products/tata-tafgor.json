@@ -1,0 +1,55 @@
+{
+    "name": "Tata Rallis Tafgor (Dimethoate 30% EC)",
+    "brand": "Tata Rallis",
+    "category": "pesticide",
+    "price": 320,
+    "mrp": 380,
+    "stock": 180,
+    "isOrganic": false,
+    "description": "Systemic and Contact insecticide effective against Thrips, Aphids, and Mites. Penetrates plant tissue to kill hidden pests.",
+    "sku": "TATA-TAFGOR-1L",
+    "images": [
+        "/images/products/tata-tafgor.png"
+    ],
+    "features": [
+        "Dual Action (Systemic + Contact)",
+        "Effective Mite Control",
+        "Controls Stem Borers",
+        "Cost Effective"
+    ],
+    "manufacturer": "Rallis India Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Rogor",
+    "packagingType": "Bottle",
+    "netWeight": "1 L",
+    "specifications": {
+        "type": "insecticide",
+        "chemicalGroup": "Organophosphate",
+        "activeIngredients": [
+            {
+                "name": "Dimethoate",
+                "concentration": "30%",
+                "formulation": "EC"
+            }
+        ],
+        "targetPests": [
+            "Aphids",
+            "Jassids",
+            "Thrips",
+            "Mites",
+            "Shoot Borer"
+        ],
+        "targetCrops": [
+            "Cotton",
+            "Chilli",
+            "Vegetables",
+            "Paddy",
+            "Rose"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "2 ml/L Water",
+        "phi": 14,
+        "rainFastness": "3 hours",
+        "toxicityLabel": "yellow"
+    }
+}

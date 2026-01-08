@@ -1,0 +1,44 @@
+{
+    "name": "Seminis Abhilash Tomato Seeds",
+    "brand": "Seminis (Bayer)",
+    "category": "seed",
+    "price": 850,
+    "mrp": 950,
+    "stock": 400,
+    "isOrganic": false,
+    "description": "High-yielding determinate hybrid tomato variety. Known for excellent fruit firmness, uniform round shape, and deep red color. Suitable for long transport and storage.",
+    "sku": "SEM-TOMATO-ABHILASH-10G",
+    "images": [
+        "/images/products/seminis-abhilash.png"
+    ],
+    "features": [
+        "High Yield Potential",
+        "Excellent Fruit Firmness (Transport Friendly)",
+        "Tolerant to Tomato Leaf Curl Virus (ToLCV)",
+        "Uniform Fruit Size (80-100g)"
+    ],
+    "manufacturer": "Monsanto Holdings Pvt. Ltd (Bayer)",
+    "countryOfOrigin": "India",
+    "commonName": "Hybrid Tomato Seed",
+    "packagingType": "Pouch",
+    "netWeight": "10 g",
+    "specifications": {
+        "type": "hybrid",
+        "crop": "Tomato",
+        "variety": "Abhilash",
+        "duration": "60-65 days (First Picking)",
+        "germinationPercentage": 70,
+        "purityPercentage": 98,
+        "geneticPurity": 99,
+        "season": [
+            "kharif",
+            "rabi"
+        ],
+        "sowingMethod": "transplanting",
+        "sowingDistance": "60x45 cm",
+        "yieldPotential": "25-30 Tonnes/Acre",
+        "resistanceFeatures": [
+            "ToLCV Tolerant"
+        ]
+    }
+}

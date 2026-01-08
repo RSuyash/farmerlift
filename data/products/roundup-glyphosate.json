@@ -1,0 +1,51 @@
+{
+    "name": "Roundup Herbicides (Glyphosate 41% SL)",
+    "brand": "Roundup (Bayer)",
+    "category": "pesticide",
+    "price": 450,
+    "mrp": 550,
+    "stock": 300,
+    "isOrganic": false,
+    "description": "Non-selective, post-emergence herbicide for weed control. Kills weeds from roots. Ideal for non-cropped areas or land preparation.",
+    "sku": "RND-GLYPHOSATE-1L",
+    "images": [
+        "/images/products/roundup.png"
+    ],
+    "features": [
+        "Kills Weeds from Roots",
+        "Non-Selective Action",
+        "Effective on Grassy & Broadleaf Weeds",
+        "No Residual Soil Activity"
+    ],
+    "manufacturer": "Monsanto India Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Glyphosate",
+    "packagingType": "Bottle",
+    "netWeight": "1 L",
+    "specifications": {
+        "type": "herbicide",
+        "chemicalGroup": "Glycine",
+        "activeIngredients": [
+            {
+                "name": "Glyphosate IPA Salt",
+                "concentration": "41%",
+                "formulation": "SL"
+            }
+        ],
+        "targetPests": [
+            "All Annual & Perennial Weeds",
+            "Parthenium",
+            "Cynodon"
+        ],
+        "targetCrops": [
+            "Non-Crop Area",
+            "Tea",
+            "Orchards"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "10 ml/L Water",
+        "phi": 30,
+        "rainFastness": "6 hours",
+        "toxicityLabel": "blue"
+    }
+}

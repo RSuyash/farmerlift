@@ -1,0 +1,34 @@
+{
+    "name": "ASPEE Bili HTP Knapsack Sprayer (16L)",
+    "brand": "ASPEE",
+    "category": "machinery",
+    "price": 3200,
+    "mrp": 3800,
+    "stock": 60,
+    "isOrganic": false,
+    "description": "Manual knapsack sprayer with high pressure sturdy tank. Brass pressure chamber and spray lance. Durable for long term field use.",
+    "sku": "ASPEE-BILI-16L",
+    "images": [
+        "/images/products/aspee-sprayer.png"
+    ],
+    "features": [
+        "Brass Chamber",
+        "Sturdy HDPE Tank",
+        "Right/Left Hand Operation",
+        "High Pressure Generation"
+    ],
+    "manufacturer": "American Spring & Pressing Works Pvt Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Backpack Sprayer",
+    "packagingType": "Box",
+    "netWeight": "7.5 kg",
+    "specifications": {
+        "type": "sprayer",
+        "powerSource": "manual",
+        "capacity": "16 Liters",
+        "pressure": "40-60 PSI",
+        "flowRate": "600-800 ml/min",
+        "weight": "7.5 kg",
+        "warranty": "6 Months"
+    }
+}

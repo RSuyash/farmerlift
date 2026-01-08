@@ -1,0 +1,54 @@
+{
+    "name": "FMC Coragen",
+    "brand": "FMC Corporation",
+    "category": "pesticide",
+    "price": 1850,
+    "mrp": 2100,
+    "stock": 100,
+    "isOrganic": false,
+    "description": "Coragen is a revolutionary Rynaxypyr based insecticide. Provides long-duration control against Stem Borer, Leaf Folder, and Bollworms.",
+    "sku": "FMC-CORAGEN-60ML",
+    "images": [
+        "/images/products/fmc-coragen.png"
+    ],
+    "features": [
+        "Active Ingredient: Chlorantraniliprole 18.5% SC",
+        "Long residual control (up to 21 days)",
+        "Green Label (Safe for Beneficial insects)",
+        "Ovicidal and Larvicidal action"
+    ],
+    "manufacturer": "FMC India Pvt Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Rynaxypyr",
+    "packagingType": "Bottle",
+    "netWeight": "60 ml",
+    "specifications": {
+        "type": "insecticide",
+        "chemicalGroup": "Diamide",
+        "activeIngredients": [
+            {
+                "name": "Chlorantraniliprole",
+                "concentration": "18.5%",
+                "formulation": "SC"
+            }
+        ],
+        "targetPests": [
+            "Stem Borer",
+            "Leaf Folder",
+            "American Bollworm",
+            "Diamond Back Moth"
+        ],
+        "targetCrops": [
+            "Paddy",
+            "Sugarcane",
+            "Cotton",
+            "Cabbage",
+            "Soybean"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "60ml/Acre",
+        "phi": 20,
+        "rainFastness": "2 hours",
+        "toxicityLabel": "green"
+    }
+}

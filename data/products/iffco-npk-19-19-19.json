@@ -1,0 +1,52 @@
+{
+    "name": "IFFCO NPK 19:19:19 (Water Soluble)",
+    "brand": "IFFCO",
+    "category": "fertilizer",
+    "price": 1250,
+    "mrp": 1400,
+    "stock": 500,
+    "isOrganic": false,
+    "description": "A 100% water-soluble fertilizer containing all three major plant nutrients (Nitrogen, Phosphorus, and Potash) in equal proportion. It is essential for vegetative growth and helps in the development of roots, flowers, and fruits.",
+    "sku": "IFF-NPK-191919-25KG",
+    "images": [
+        "/images/products/iffco-npk-19-19-19.png"
+    ],
+    "features": [
+        "100% Water Soluble Formula",
+        "Balanced Nutrition for Vegetative Growth",
+        "Suitable for Fertigation and Foliar Spray",
+        "Free from Sodium and Chloride"
+    ],
+    "manufacturer": "Indian Farmers Fertiliser Cooperative Limited",
+    "countryOfOrigin": "India",
+    "commonName": "NPK 19-19-19",
+    "packagingType": "HDPE Bag",
+    "netWeight": "25 kg",
+    "specifications": {
+        "type": "chemical",
+        "form": "water-soluble-powder",
+        "applicationMethod": [
+            "foliar",
+            "drip"
+        ],
+        "npkRatio": "19:19:19",
+        "targetCrops": [
+            "Wheat",
+            "Rice",
+            "Sugarcane",
+            "Tomato",
+            "Potato",
+            "Cotton"
+        ],
+        "dosePerAcre": "3-5 kg (Drip), 5-10 gm/L (Foliar)",
+        "composition": {
+            "n": 19,
+            "p": 19,
+            "k": 19,
+            "other": [
+                "Moisture 1.5% Max"
+            ]
+        },
+        "solubility": "100%"
+    }
+}

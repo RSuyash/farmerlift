@@ -1,0 +1,43 @@
+{
+    "name": "Rasi 659 BGII Bt Cotton Seeds",
+    "brand": "Rasi Seeds",
+    "category": "seed",
+    "price": 860,
+    "mrp": 960,
+    "stock": 500,
+    "isOrganic": false,
+    "description": "Advanced Bollgard II technology for Bollworm protection. Suitable for rainfed and irrigated conditions. Big boll size.",
+    "sku": "RASI-COTTON-659-450G",
+    "images": [
+        "/images/products/rasi-cotton.png"
+    ],
+    "features": [
+        "Bollgard II Technology",
+        "Sucking Pest Tolerant",
+        "Big Boll Size (5-6g)",
+        "Easy Picking"
+    ],
+    "manufacturer": "Rasi Seeds (P) Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Bt Cotton",
+    "packagingType": "Packet",
+    "netWeight": "450 g",
+    "specifications": {
+        "type": "gmo",
+        "crop": "Cotton",
+        "variety": "RCH 659 BGII",
+        "duration": "145-160 days",
+        "germinationPercentage": 75,
+        "purityPercentage": 98,
+        "geneticPurity": 95,
+        "season": [
+            "kharif"
+        ],
+        "sowingMethod": "dibbling",
+        "sowingDistance": "90x45 cm",
+        "yieldPotential": "12-15 Quintals/Acre",
+        "resistanceFeatures": [
+            "Bollworm Resistant (Cry1Ac+Cry2Ab)"
+        ]
+    }
+}

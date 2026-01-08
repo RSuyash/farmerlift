@@ -1,0 +1,44 @@
+{
+    "name": "Pioneer P3302 Maize Seeds",
+    "brand": "Pioneer (Corteva)",
+    "category": "seed",
+    "price": 1800,
+    "mrp": 2100,
+    "stock": 150,
+    "isOrganic": false,
+    "description": "High yielding hybrid maize variety suitable for Kharif and Rabi. Tolerant to water stress and lodging. Produces bold, orange-yellow grains.",
+    "sku": "PIO-MAIZE-P3302-4KG",
+    "images": [
+        "/images/products/pioneer-maize.png"
+    ],
+    "features": [
+        "High Shelling Percentage",
+        "Drought Tolerant",
+        "Bold Grains",
+        "Stay Green Fodder Quality"
+    ],
+    "manufacturer": "PHPI Pvt Ltd (Corteva)",
+    "countryOfOrigin": "India",
+    "commonName": "Hybrid Corn",
+    "packagingType": "Bag",
+    "netWeight": "4 kg",
+    "specifications": {
+        "type": "hybrid",
+        "crop": "Maize",
+        "variety": "P3302",
+        "duration": "95-100 days",
+        "germinationPercentage": 90,
+        "purityPercentage": 98,
+        "geneticPurity": 98,
+        "season": [
+            "kharif",
+            "rabi"
+        ],
+        "sowingMethod": "dibbling",
+        "sowingDistance": "60x20 cm",
+        "yieldPotential": "30-35 Quintals/Acre",
+        "resistanceFeatures": [
+            "Lodging Resistant"
+        ]
+    }
+}

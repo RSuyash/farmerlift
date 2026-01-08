@@ -1,0 +1,49 @@
+{
+    "name": "IPL MOP (Muriate of Potash)",
+    "brand": "Indian Potash Limited",
+    "category": "fertilizer",
+    "price": 1700,
+    "mrp": 1800,
+    "stock": 300,
+    "isOrganic": false,
+    "description": "Contains 60% Potash (K2O). Essential for root strength, disease resistance, and grain quality. Improves water retention in plants.",
+    "sku": "IPL-MOP-50KG",
+    "images": [
+        "/images/products/ipl-mop.png"
+    ],
+    "features": [
+        "High Potassium Content (60%)",
+        "Increases Disease Resistance",
+        "Improves Grain Quality",
+        "Reddish Granules"
+    ],
+    "manufacturer": "Indian Potash Limited",
+    "countryOfOrigin": "India",
+    "commonName": "MOP",
+    "packagingType": "HDPE Bag",
+    "netWeight": "50 kg",
+    "specifications": {
+        "type": "chemical",
+        "form": "granule",
+        "applicationMethod": [
+            "basal"
+        ],
+        "targetCrops": [
+            "Rice",
+            "Wheat",
+            "Maize",
+            "Potato",
+            "Fruits"
+        ],
+        "dosePerAcre": "30-50 kg",
+        "composition": {
+            "n": 0,
+            "p": 0,
+            "k": 60,
+            "other": [
+                "Moisture 0.5% Max"
+            ]
+        },
+        "solubility": "100%"
+    }
+}

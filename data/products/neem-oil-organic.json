@@ -1,0 +1,51 @@
+{
+    "name": "Organic Cold Pressed Neem Oil (10000 PPM)",
+    "brand": "Krishi Rasayan",
+    "category": "pesticide",
+    "price": 450,
+    "mrp": 600,
+    "stock": 500,
+    "isOrganic": true,
+    "description": "100% Organic Neem Kernel Oil containing Azadirachtin. Repels 200+ pest species. Safe for beneficial insects and pollinators.",
+    "sku": "ORG-NEEM-OIL-1L",
+    "images": [
+        "/images/products/neem-oil.png"
+    ],
+    "features": [
+        "100% Organic (NPOP Certified)",
+        "High Azadirachtin (10000 PPM)",
+        "Anti-feedant and Repellent Action",
+        "Eco-friendly"
+    ],
+    "manufacturer": "Krishi Rasayan Exports Pvt. Ltd.",
+    "countryOfOrigin": "India",
+    "commonName": "Neem Oil",
+    "packagingType": "Bottle",
+    "netWeight": "1 L",
+    "specifications": {
+        "type": "insecticide",
+        "chemicalGroup": "Botanical",
+        "activeIngredients": [
+            {
+                "name": "Azadirachtin",
+                "concentration": "1% (10000 ppm)",
+                "formulation": "EC"
+            }
+        ],
+        "targetPests": [
+            "Whitefly",
+            "Thrips",
+            "Aphids",
+            "Caterpillars",
+            "Mites"
+        ],
+        "targetCrops": [
+            "All Crops"
+        ],
+        "applicationMethod": "spray",
+        "dosage": "3-5 ml/L Water",
+        "phi": 0,
+        "rainFastness": "4 hours",
+        "toxicityLabel": "green"
+    }
+}

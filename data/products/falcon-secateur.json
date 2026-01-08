@@ -1,0 +1,32 @@
+{
+    "name": "Falcon Premium Secateurs (F-200)",
+    "brand": "Falcon",
+    "category": "machinery",
+    "price": 650,
+    "mrp": 750,
+    "stock": 200,
+    "isOrganic": false,
+    "description": "Professional pruning shears for gardening and horticulture. High carbon steel blade with comfortable grip. Ideal for cutting stems up to 20mm.",
+    "sku": "FAL-SECATEUR-F200",
+    "images": [
+        "/images/products/falcon-secateur.png"
+    ],
+    "features": [
+        "High Carbon Steel Blade",
+        "Self-Locking Mechanism",
+        "Ergonomic Grip",
+        "Heavy Duty Spring"
+    ],
+    "manufacturer": "Falcon Garden Tools",
+    "countryOfOrigin": "India",
+    "commonName": "Pruning Scissor",
+    "packagingType": "Blister Pack",
+    "netWeight": "350 g",
+    "specifications": {
+        "type": "tool",
+        "powerSource": "manual",
+        "capacity": "20mm Cut",
+        "weight": "350 g",
+        "warranty": "Lifetime (Limited)"
+    }
+}

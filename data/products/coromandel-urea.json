@@ -1,0 +1,47 @@
+{
+    "name": "Coromandel Gromor Urea",
+    "brand": "Coromandel International",
+    "category": "fertilizer",
+    "price": 266,
+    "mrp": 300,
+    "stock": 1000,
+    "isOrganic": false,
+    "description": "Neem coated Urea containing 46% Nitrogen. Promotes vigorous vegetative growth and chlorophyll production. Neem coating reduces nitrogen loss and improves efficiency.",
+    "sku": "COR-UREA-45KG",
+    "images": [
+        "/images/products/coromandel-urea.png"
+    ],
+    "features": [
+        "46% Nitrogen Content",
+        "Neem Coated for Slow Release",
+        "Reduces Leaching Loss",
+        "Standard Particle Size"
+    ],
+    "manufacturer": "Coromandel International Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "Urea",
+    "packagingType": "HDPE Bag",
+    "netWeight": "45 kg",
+    "specifications": {
+        "type": "chemical",
+        "form": "granule",
+        "applicationMethod": [
+            "basal",
+            "broadcasting"
+        ],
+        "targetCrops": [
+            "All Crops"
+        ],
+        "dosePerAcre": "50-100 kg",
+        "composition": {
+            "n": 46,
+            "p": 0,
+            "k": 0,
+            "other": [
+                "Biuret 1.5% Max",
+                "Neem Oil 100 PPM"
+            ]
+        },
+        "solubility": "100%"
+    }
+}

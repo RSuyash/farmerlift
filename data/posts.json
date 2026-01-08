@@ -1,0 +1,29 @@
+[
+  {
+    "id": "post_001",
+    "title": "5 Tips for Higher Wheat Yield",
+    "excerpt": "Discover the secret soil preparation techniques that can boost your wheat production by 20% this season.",
+    "content": "Full content placeholder...",
+    "date": "2025-10-15",
+    "author": "Dr. A. Patel",
+    "image": "/images/blog/wheat-field.jpg"
+  },
+  {
+    "id": "post_002",
+    "title": "Understanding Water Soluble Fertilizers",
+    "excerpt": "Why modern farmers are switching to drip irrigation compatible fertilizers for better efficiency.",
+    "content": "Full content placeholder...",
+    "date": "2025-11-02",
+    "author": "FarmerLift Team",
+    "image": "/images/blog/drip-irrigation.jpg"
+  },
+  {
+    "id": "post_003",
+    "title": "Organic Farming: Myths vs Reality",
+    "excerpt": "We debunk the common myths surrounding organic farming costs and long-term sustainability.",
+    "content": "Full content placeholder...",
+    "date": "2025-12-10",
+    "author": "S. Singh",
+    "image": "/images/blog/organic-farm.jpg"
+  }
+]

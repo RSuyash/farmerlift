@@ -1,0 +1,48 @@
+{
+    "name": "Multiplex Boron 20%",
+    "brand": "Multiplex",
+    "category": "fertilizer",
+    "price": 380,
+    "mrp": 450,
+    "stock": 150,
+    "isOrganic": false,
+    "description": "Foliar application Boron (Disodium Octaborate Tetrahydrate). Crucial for flowering, pollination, and fruit setting.",
+    "sku": "MUL-BORON-250G",
+    "images": [
+        "/images/products/multiplex-boron.png"
+    ],
+    "features": [
+        "20% Boron Content",
+        "Prevents Flower Drop",
+        "Improves Fruit Setting",
+        "Prevents Fruit Cracking"
+    ],
+    "manufacturer": "Karnataka Agro Chemicals",
+    "countryOfOrigin": "India",
+    "commonName": "Folibor",
+    "packagingType": "Pouch",
+    "netWeight": "250 g",
+    "specifications": {
+        "type": "chemical",
+        "form": "water-soluble-powder",
+        "applicationMethod": [
+            "foliar"
+        ],
+        "targetCrops": [
+            "Tomato",
+            "Cauliflower",
+            "Fruits",
+            "Cotton"
+        ],
+        "dosePerAcre": "200g",
+        "composition": {
+            "n": 0,
+            "p": 0,
+            "k": 0,
+            "other": [
+                "Boron (B) 20%"
+            ]
+        },
+        "solubility": "100%"
+    }
+}

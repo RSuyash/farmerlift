@@ -1,0 +1,45 @@
+{
+    "name": "Advanta Golden Seeds - Radhika Okra",
+    "brand": "Advanta",
+    "category": "seed",
+    "price": 420,
+    "mrp": 480,
+    "stock": 250,
+    "isOrganic": false,
+    "description": "Leading F1 Hybrid Okra variety. Short picking interval, dark green tender fruits. High resistance to YVMV (Yellow Vein Mosaic Virus).",
+    "sku": "ADV-OKRA-RADHIKA-100G",
+    "images": [
+        "/images/products/ok-radhika.png"
+    ],
+    "features": [
+        "YVMV Resistant",
+        "High Market Value (Dark Green)",
+        "Continuous Fruiting",
+        "Export Quality"
+    ],
+    "manufacturer": "Advanta Seeds",
+    "countryOfOrigin": "India",
+    "commonName": "Bhindi Seeds",
+    "packagingType": "Pouch",
+    "netWeight": "100 g",
+    "specifications": {
+        "type": "hybrid",
+        "crop": "Okra",
+        "variety": "Radhika",
+        "duration": "45-50 days (First Harvest)",
+        "germinationPercentage": 70,
+        "purityPercentage": 98,
+        "geneticPurity": 98,
+        "season": [
+            "kharif",
+            "summer"
+        ],
+        "sowingMethod": "dibbling",
+        "sowingDistance": "45x15 cm",
+        "yieldPotential": "8-10 Tonnes/Acre",
+        "resistanceFeatures": [
+            "YVMV Resistant",
+            "ELCV Tolerant"
+        ]
+    }
+}

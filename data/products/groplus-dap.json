@@ -1,0 +1,42 @@
+{
+    "name": "Coromandel GroPlus DAP",
+    "brand": "Coromandel International",
+    "category": "fertilizer",
+    "price": 1350,
+    "mrp": 1450,
+    "stock": 400,
+    "isOrganic": false,
+    "description": "Di-Ammonium Phosphate (DAP) fortified with Zinc and Boron. Contains 18% Nitrogen and 46% Phosphorus. Best for root establishment.",
+    "sku": "COR-DAP-50KG",
+    "images": [
+        "/images/products/groplus-dap.png"
+    ],
+    "features": [
+        "High Phosphorus (46%)",
+        "Fortified with Micro-nutrients",
+        "Promotes Root Development",
+        "Universal Basal Fertilizer"
+    ],
+    "manufacturer": "Coromandel International Ltd",
+    "countryOfOrigin": "India",
+    "commonName": "DAP",
+    "packagingType": "HDPE Bag",
+    "netWeight": "50 kg",
+    "specifications": {
+        "type": "chemical",
+        "form": "granule",
+        "applicationMethod": [
+            "basal"
+        ],
+        "targetCrops": [
+            "All Crops"
+        ],
+        "dosePerAcre": "50 kg",
+        "composition": {
+            "n": 18,
+            "p": 46,
+            "k": 0
+        },
+        "solubility": "medium"
+    }
+}
