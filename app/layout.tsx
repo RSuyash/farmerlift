@@ -34,8 +34,8 @@ export default function RootLayout({
       <body className="antialiased min-h-screen flex flex-col font-sans bg-background text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <Navbar />
