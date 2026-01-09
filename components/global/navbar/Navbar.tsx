@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, Search, Phone, Mail } from "lucide-react";
 import { useState } from "react";
@@ -38,9 +39,14 @@ export default function Navbar() {
                 <div className="container-width flex h-20 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        {/* Logo Icon Placeholder */}
-                        <div className="h-10 w-10 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
-                            FL
+                        <div className="relative h-10 w-10 md:h-12 md:w-12 transition-transform group-hover:scale-105">
+                            <Image
+                                src="/images/farmerlift_icon_logo.png"
+                                alt="FarmerLift Logo"
+                                fill
+                                className="object-contain" // Ensures aspect ratio is preserved (user mentioned it might be rectangular)
+                                priority
+                            />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-2xl font-bold font-outfit tracking-tight text-foreground leading-none">

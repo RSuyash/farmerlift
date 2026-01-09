@@ -1,11 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
     return (
         <footer className="w-full border-t bg-muted/40 py-12 md:py-16 lg:py-20">
             <div className="container-width grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-xl font-bold text-emerald-900">FarmerLift</h3>
+                    <div className="flex items-center gap-2 mb-2">
+                        <div className="relative h-8 w-8">
+                            <Image
+                                src="/images/farmerlift_icon_logo.png"
+                                alt="FarmerLift Logo"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                        <h3 className="text-xl font-bold text-emerald-900">FarmerLift</h3>
+                    </div>
                     <p className="text-sm text-muted-foreground">
                         By The Farmer, For The Farmers
                     </p>
