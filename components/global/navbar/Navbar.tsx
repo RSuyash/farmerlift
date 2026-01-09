@@ -19,9 +19,9 @@ export default function Navbar() {
             <div className="bg-emerald-900 dark:bg-black border-b border-white/10 text-white py-2 text-xs md:text-sm transition-colors duration-300">
                 <div className="container-width flex justify-between items-center">
                     <div className="flex items-center gap-4 opacity-90">
-                        <a href="tel:+919226411841" className="flex items-center gap-2 hover:text-emerald-300 transition-colors">
+                        <a href="tel:+918788113105" className="flex items-center gap-2 hover:text-emerald-300 transition-colors">
                             <Phone className="h-3 w-3 md:h-4 md:w-4" />
-                            <span>+91 92264-11841</span>
+                            <span>+91 87881-13105</span>
                         </a>
                         <a href="mailto:farmerliftmanagement@gmail.com" className="hidden sm:flex items-center gap-2 hover:text-emerald-300 transition-colors">
                             <Mail className="h-3 w-3 md:h-4 md:w-4" />
@@ -39,12 +39,12 @@ export default function Navbar() {
                 <div className="container-width flex h-20 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="relative h-10 w-10 md:h-12 md:w-12 transition-transform group-hover:scale-105">
+                        <div className="relative h-10 w-12 md:h-12 md:w-16 transition-transform group-hover:scale-105">
                             <Image
-                                src="/images/farmerlift_icon_logo.png"
+                                src="/images/farmerlift_icon_transparent.png"
                                 alt="FarmerLift Logo"
                                 fill
-                                className="object-contain" // Ensures aspect ratio is preserved (user mentioned it might be rectangular)
+                                className="object-contain object-left"
                                 priority
                             />
                         </div>
@@ -100,9 +100,9 @@ export default function Navbar() {
 
                         <ThemeToggle />
 
-                        <Link href="/register" className="hidden md:block">
+                        <Link href="/contact" className="hidden md:block">
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-md hover:shadow-lg transition-all rounded-full px-6">
-                                Get Started
+                                Contact Us
                             </Button>
                         </Link>
 

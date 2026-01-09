@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             <div className="mt-4 p-6 bg-emerald-50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-white/10">
               <p className="font-semibold text-emerald-900 dark:text-emerald-100">FarmerLift Privacy Team</p>
               <p className="text-emerald-700 dark:text-emerald-300">farmerliftmanagement@gmail.com</p>
-              <p className="text-emerald-700 dark:text-emerald-300">+91 92264-11841</p>
+              <p className="text-emerald-700 dark:text-emerald-300">+91 87881-13105</p>
             </div>
           </section>
         </div>

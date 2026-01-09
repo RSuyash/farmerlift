@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"; // Assuming Button is imported 
 export default function FloatingContact() {
     return (
         <div className="fixed bottom-6 right-6 z-50">
-            <a href="https://wa.me/919226411841" target="_blank" rel="noopener noreferrer">
+            <a href="tel:+918788113105" target="_blank" rel="noopener noreferrer">
                 <Button
                     className="rounded-full w-14 h-14 bg-green-500 hover:bg-green-600 text-white shadow-lg p-0 flex items-center justify-center hover:scale-110 transition-all duration-300"
                     aria-label="Contact on WhatsApp"

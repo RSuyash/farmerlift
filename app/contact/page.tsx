@@ -53,11 +53,11 @@ export default function ContactPage() {
               Direct Channels
             </h3>
             <div className="space-y-6">
-              <a href="tel:+919226411841" className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
+              <a href="tel:+918788113105" className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
                 <Phone className="h-5 w-5 text-emerald-600 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Customer Care</p>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400">+91 92264 11841</p>
+                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400">+91 87881 13105</p>
                 </div>
               </a>
               <a href="mailto:farmerliftmanagement@gmail.com" className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">

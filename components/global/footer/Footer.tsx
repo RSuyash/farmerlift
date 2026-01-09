@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import SocialMediaIcons from "./SocialMediaIcons";
 
 export default function Footer() {
     return (
@@ -9,7 +10,7 @@ export default function Footer() {
                     <div className="flex items-center gap-2 mb-2">
                         <div className="relative h-8 w-8">
                             <Image
-                                src="/images/farmerlift_icon_logo.png"
+                                src="/images/farmerlift_icon_transparent.png"
                                 alt="FarmerLift Logo"
                                 fill
                                 className="object-contain"
@@ -17,9 +18,10 @@ export default function Footer() {
                         </div>
                         <h3 className="text-xl font-bold text-emerald-900">FarmerLift</h3>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground mb-4">
                         By The Farmer, For The Farmers
                     </p>
+                    <SocialMediaIcons />
                     <div className="text-xs text-muted-foreground mt-4 leading-relaxed">
                         <p className="font-semibold">Manufactured & Marketed By:</p>
                         <p>Farmer Lift</p>

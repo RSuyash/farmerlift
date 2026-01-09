@@ -1,0 +1,30 @@
+[
+    {
+        "id": "instagram",
+        "name": "Instagram",
+        "url": "https://instagram.com/farmerlift",
+        "icon": "Instagram",
+        "color": "hover:text-pink-600"
+    },
+    {
+        "id": "linkedin",
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/company/farmerlift",
+        "icon": "Linkedin",
+        "color": "hover:text-blue-600"
+    },
+    {
+        "id": "youtube",
+        "name": "YouTube",
+        "url": "https://youtube.com/@farmerlift",
+        "icon": "Youtube",
+        "color": "hover:text-red-600"
+    },
+    {
+        "id": "facebook",
+        "name": "Facebook",
+        "url": "https://facebook.com/farmerlift",
+        "icon": "Facebook",
+        "color": "hover:text-blue-500"
+    }
+]
