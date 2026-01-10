@@ -43,7 +43,7 @@ export default async function FeaturedProducts() {
                         </p>
                     </div>
 
-                    <Link href="/products" className="hidden md:block">
+                    <Link href="/catalogue" className="hidden md:block">
                         <Button
                             className="bg-emerald-900/5 hover:bg-emerald-900/10 text-emerald-900 dark:text-emerald-100 dark:bg-white/10 dark:hover:bg-white/20 border-0 rounded-full px-6 font-semibold transition-all">
                             View Full Catalogue <ArrowRight className="ml-2 h-4 w-4" />
@@ -60,7 +60,7 @@ export default async function FeaturedProducts() {
                 </div>
 
                 <div className="mt-12 flex justify-center md:hidden">
-                    <Link href="/products">
+                    <Link href="/catalogue">
                         <Button variant="outline" className="w-full rounded-full border-emerald-200 text-emerald-900">
                             View All Catalogue <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>

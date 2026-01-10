@@ -1,0 +1,50 @@
+[
+    {
+        "id": "water-soluble-npk",
+        "name": "Water Soluble NPK Fertilizer",
+        "description": "100% Water Soluble Fertilizers for fertigation and foliar application.",
+        "icon": "Droplets"
+    },
+    {
+        "id": "water-soluble-special",
+        "name": "Water Soluble Special Grades",
+        "description": "Specialized nutrient formulations for specific crop stages.",
+        "icon": "FlaskConical"
+    },
+    {
+        "id": "organic-bio-fertilizers",
+        "name": "Organic and Bio fertilizers",
+        "description": "Eco-friendly natural nutrient sources for sustainable farming.",
+        "icon": "Leaf"
+    },
+    {
+        "id": "straight-micronutrients",
+        "name": "Straight Micronutrients",
+        "description": "Single nutrient formulations to correct specific deficiencies.",
+        "icon": "Atom"
+    },
+    {
+        "id": "micronutrients-mixtures",
+        "name": "Micronutrients Mixtures",
+        "description": "Balanced mix of essential micronutrients for overall growth.",
+        "icon": "Layers"
+    },
+    {
+        "id": "biostimulants-pgrs",
+        "name": "Biostimulants / PGRs",
+        "description": "Growth promoters and regulators for enhanced yield.",
+        "icon": "Zap"
+    },
+    {
+        "id": "chelated-micronutrients",
+        "name": "Chelated Micronutrients",
+        "description": "High-efficiency micronutrients in chelated form for better absorption.",
+        "icon": "Microscope"
+    },
+    {
+        "id": "secondary-nutrients",
+        "name": "Secondary Nutrients",
+        "description": "Calcium, Magnesium, and Sulphur based fertilizers.",
+        "icon": "Sprout"
+    }
+]

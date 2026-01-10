@@ -1,0 +1,32 @@
+{
+    "name": "Calcium Nitrate",
+    "brand": "FarmerLift",
+    "category": "secondary-nutrients",
+    "price": 1100,
+    "mrp": 1350,
+    "stock": 250,
+    "isOrganic": false,
+    "description": "High quality Calcium Nitrate for improving fruit quality and shelf life. Essential secondary nutrient.",
+    "sku": "FL-CN-25KG",
+    "images": [
+        "/images/products/ipl-mop.png"
+    ],
+    "features": [
+        "Improves Fruit Firmness",
+        "Prevents Cracking",
+        "Increases Shelf Life",
+        "Quick Acting"
+    ],
+    "manufacturer": "FarmerLift Industries",
+    "countryOfOrigin": "India",
+    "commonName": "Calcium Nitrate",
+    "packagingType": "Bag",
+    "netWeight": "25 kg",
+    "specifications": {
+        "type": "chemical",
+        "composition": {
+            "calcium": "18.8%",
+            "nitrogen": "15.5%"
+        }
+    }
+}
