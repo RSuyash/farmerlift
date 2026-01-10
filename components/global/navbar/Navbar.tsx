@@ -71,7 +71,7 @@ export default function Navbar() {
                     <nav className="hidden md:flex items-center gap-8">
                         {[
                             { name: "Home", href: "/" },
-                            { name: "Products", href: "/products" },
+                            { name: "Catalogue", href: "/catalogue" },
                             { name: "Blog", href: "/blog" },
                             { name: "Resources", href: "/resources" },
                             { name: "About", href: "/about" },
@@ -173,8 +173,7 @@ export default function Navbar() {
                         <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-2">
                             {[
                                 { name: "Home", href: "/" },
-                                { name: "Products", href: "/products" },
-                                { name: "Catalogue", href: "/catalogue" }, // Added Catalogue
+                                { name: "Catalogue", href: "/catalogue" },
                                 { name: "Blog", href: "/blog" },
                                 { name: "Resources", href: "/resources" },
                                 { name: "About", href: "/about" },
