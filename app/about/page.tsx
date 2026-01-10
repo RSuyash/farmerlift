@@ -10,7 +10,17 @@ export default function AboutPage() {
 
       {/* 1. Hero Section (Text Driven) */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-emerald-950 text-white border-b border-white/10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+        {/* Background Image Banner */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-black/70 z-10" />
+          <Image
+            src="/images/home-hero.png"
+            alt="About FarmerLift"
+            fill
+            className="object-cover opacity-60"
+            priority
+          />
+        </div>
         <div className="container-width relative z-10 text-center">
           <span className="inline-block py-1 px-4 rounded-full bg-emerald-800/50 border border-emerald-700/50 text-emerald-100 text-xs font-bold uppercase tracking-widest mb-6">
             Established 2025
@@ -25,22 +35,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2. Impact Stats */}
-      <section className="py-12 bg-emerald-900 border-b border-white/5 relative z-20 -mt-8 mx-4 md:mx-auto max-w-6xl rounded-2xl shadow-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
-          {[
-            { label: "Active Farmers", value: "10,000+" },
-            { label: "Partner Brands", value: "50+" },
-            { label: "Pincodes Covered", value: "2,500+" },
-            { label: "Yield Increase", value: "~20%" },
-          ].map((stat, idx) => (
-            <div key={idx} className="flex flex-col items-center">
-              <span className="text-3xl md:text-4xl font-bold text-white font-outfit mb-1">{stat.value}</span>
-              <span className="text-xs md:text-sm text-emerald-200 uppercase tracking-wider">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* 3. Our Story Section */}
       <section className="py-24 container-width">
@@ -92,21 +87,31 @@ export default function AboutPage() {
         <div className="container-width text-center">
           <h2 className="text-3xl font-bold font-outfit text-gray-900 dark:text-white mb-4">Meet the Minds</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-16 max-w-2xl mx-auto">
-            A diverse team of agricultural experts, technologists, and supply chain specialists united by a single mission.
+            A diverse team of agricultural experts and technologists united by a single mission.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 max-w-3xl mx-auto">
             {[
-              { name: "Suresh Patil", role: "Founder & CEO", bg: "bg-emerald-100 text-emerald-700" },
-              { name: "Dr. Anjali Deshmukh", role: "Head of Agronomy", bg: "bg-indigo-100 text-indigo-700" },
-              { name: "Vikram Singh", role: "Supply Chain Director", bg: "bg-orange-100 text-orange-700" },
+              {
+                name: "Dr. Mahesh Mahajan",
+                role: "Co-Founder",
+                subRole: "PhD Molecular Biology & Biotechnology",
+                bg: "bg-emerald-100 text-emerald-700"
+              },
+              {
+                name: "Er. Gaurav Mahajan",
+                role: "Co-Founder",
+                subRole: "M.Tech Computer Science",
+                bg: "bg-indigo-100 text-indigo-700"
+              },
             ].map((member, i) => (
               <div key={i} className="group">
                 <div className={`w-32 h-32 mx-auto rounded-full flex items-center justify-center text-3xl font-bold mb-6 ${member.bg} group-hover:scale-110 transition-transform shadow-lg`}>
-                  {member.name.split(" ").map(n => n[0]).join("")}
+                  {member.name.split(" ").slice(1).map(n => n[0]).join("")}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 font-outfit">{member.name}</h3>
-                <p className="text-sm font-medium text-emerald-600 uppercase tracking-wider">{member.role}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-outfit">{member.name}</h3>
+                <p className="text-base font-bold text-emerald-700 dark:text-emerald-500 uppercase tracking-wider mb-1">{member.role}</p>
+                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{member.subRole}</p>
               </div>
             ))}
           </div>

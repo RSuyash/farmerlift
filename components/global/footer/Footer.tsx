@@ -7,10 +7,10 @@ import { ArrowRight, Heart, MapPin, Mail, Phone, ChevronRight } from "lucide-rea
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-slate-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-200 border-t border-zinc-200 dark:border-white/5 font-sans relative overflow-hidden transition-colors duration-300">
+        <footer className="w-full bg-slate-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-200 border-t border-zinc-200 dark:border-white/5 font-sans relative overflow-hidden transition-colors duration-300" suppressHydrationWarning>
             {/* Background Decoration */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" suppressHydrationWarning />
+            <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" suppressHydrationWarning />
 
             {/* Main Content */}
             <div className="container-width py-16 md:py-24 grid gap-12 md:grid-cols-2 lg:grid-cols-4 relative z-10">

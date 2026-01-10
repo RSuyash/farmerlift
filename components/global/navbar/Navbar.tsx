@@ -48,7 +48,7 @@ export default function Navbar() {
             </div>
 
             {/* Main Navbar */}
-            <div className="sticky top-0 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm z-[50]">
+            <div className="sticky top-0 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm z-[50]" suppressHydrationWarning>
                 <div className="container-width flex h-20 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
@@ -61,7 +61,7 @@ export default function Navbar() {
                                 priority
                             />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col" suppressHydrationWarning>
                             <span className="text-2xl font-bold font-outfit tracking-tight text-foreground leading-none">
                                 FarmerLift
                             </span>

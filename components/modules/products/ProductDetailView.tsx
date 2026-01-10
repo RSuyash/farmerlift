@@ -7,9 +7,10 @@ import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Ch
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductDetailView({ product }: { product: Product }) {
-    const [activeImage, setActiveImage] = useState(product.images[0] || '/images/placeholder.png');
+    const [activeImage, setActiveImage] = useState(product.images[0] || '');
     const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
 
     // Enhanced WhatsApp Message
@@ -49,20 +50,22 @@ export default function ProductDetailView({ product }: { product: Product }) {
                     {/* Gallery Section */}
                     <div className="lg:col-span-7 space-y-6">
                         <div className="aspect-square lg:aspect-[4/3] relative bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-8 overflow-hidden group">
-                            <Image
+                            <ProductImage
                                 src={activeImage}
                                 alt={product.name}
-                                width={800}
-                                height={800}
+                                productName={product.name}
+                                category={product.category}
+                                fill
                                 className="object-contain max-h-full max-w-full transition-transform duration-500 group-hover:scale-105 will-change-transform"
                                 priority
                             />
+
                             {discount > 0 && (
                                 <div className="absolute top-4 left-4 bg-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-10">
                                     SAVE {discount}%
                                 </div>
                             )}
-                            <button className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-zinc-600 dark:text-zinc-300 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+                            <button className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-zinc-600 dark:text-zinc-300 hover:text-red-500 dark:hover:text-red-400 transition-colors z-20">
                                 <Heart className="h-5 w-5" />
                             </button>
                         </div>

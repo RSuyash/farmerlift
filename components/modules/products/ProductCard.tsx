@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShoppingCart } from "lucide-react";
+import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductCard({ product }: { product: Product }) {
     const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
@@ -36,9 +37,11 @@ export default function ProductCard({ product }: { product: Product }) {
                         )}
                     </div>
 
-                    <Image
-                        src={product.images[0] || '/images/placeholder.png'}
+                    <ProductImage
+                        src={product.images[0]}
                         alt={product.name}
+                        productName={product.name}
+                        category={product.category}
                         width={300}
                         height={300}
                         className="object-contain w-full h-full transform transition-transform duration-500 group-hover:scale-110 will-change-transform"
@@ -65,8 +68,21 @@ export default function ProductCard({ product }: { product: Product }) {
 
                     <div className="mt-auto flex items-end justify-between border-t border-zinc-100 dark:border-zinc-800 pt-3">
                         <div className="flex flex-col">
-                            <span className="text-xs text-zinc-400 line-through font-medium">₹{product.mrp}</span>
-                            <span className="font-bold text-xl text-zinc-900 dark:text-white font-outfit">₹{product.price}</span>
+                            {typeof product.price === 'number' && product.mrp > product.price && (
+                                <span className="text-xs text-zinc-400 line-through font-medium">₹{product.mrp}</span>
+                            )}
+                            <div className="flex items-baseline gap-0.5">
+                                {typeof product.price === 'number' ? (
+                                    <>
+                                        <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">₹</span>
+                                        <span className="font-bold text-xl text-zinc-900 dark:text-white font-outfit">{product.price}</span>
+                                    </>
+                                ) : (
+                                    <span className="font-bold text-base text-emerald-600 dark:text-emerald-400 leading-tight">
+                                        {product.price}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         <Button
