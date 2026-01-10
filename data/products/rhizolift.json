@@ -1,0 +1,22 @@
+{
+    "id": "rhizolift",
+    "name": "RhizoLift (Rhizobium)",
+    "description": "Root nodule forming bacteria specifically for leguminous crops.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "250 ml / 500 ml",
+    "images": [
+        "/images/products/rhizolift.png"
+    ],
+    "specifications": {
+        "Target Crops": "Soybean, Groundnut, Pulses",
+        "Organism": "Rhizobium spp.",
+        "Application": "Seed Treatment"
+    },
+    "features": [
+        "Fixes atmospheric Nitrogen in root nodules.",
+        "Increases protein content in pulses.",
+        "Boosts crop yield significantly.",
+        "Cost-effective nitrogen source."
+    ]
+}

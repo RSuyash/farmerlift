@@ -1,0 +1,21 @@
+{
+    "id": "nakshtra-flowering",
+    "name": "Nakshtra",
+    "description": "Specialized formula for induction of flowering.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "100 ml / 250 ml",
+    "images": [
+        "/images/products/nakshtra.png"
+    ],
+    "specifications": {
+        "Function": "Flowering Stimulant",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Induces profuse flowering.",
+        "Prevents flower drop.",
+        "Synchronizes flowering.",
+        "Increases female flower ratio in cucurbits."
+    ]
+}

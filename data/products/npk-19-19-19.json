@@ -1,33 +1,24 @@
 {
-    "name": "19:19:19 NPK Fertilizer",
-    "brand": "FarmerLift",
+    "id": "npk-19-19-19",
+    "name": "FarmerLift 19:19:19",
+    "description": "Balanced Water Soluble Fertilizer for overall crop growth at vegetative stage.",
     "category": "water-soluble-npk",
-    "price": 950,
-    "mrp": 1200,
-    "stock": 500,
-    "isOrganic": false,
-    "description": "Balanced ratio of Nitrogen, Phosphorus, and Potassium for overall crop growth. 100% Water Soluble.",
-    "sku": "FL-NPK-191919-25KG",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
     "images": [
-        "/images/products/nsc-wheat-hd2967.png"
+        "/images/products/npk-19-19-19.png"
     ],
-    "features": [
-        "100% Water Soluble",
-        "Balanced Nutrition",
-        "Instant Uptake",
-        "Suitable for Foliar & Drip"
-    ],
-    "manufacturer": "FarmerLift Industries",
-    "countryOfOrigin": "India",
-    "commonName": "19:19:19",
-    "packagingType": "Bag",
-    "netWeight": "25 kg",
     "specifications": {
-        "type": "chemical",
-        "composition": {
-            "n": 19,
-            "p": 19,
-            "k": 19
-        }
-    }
+        "N (Nitrogen)": "19%",
+        "P (Phosphorus)": "19%",
+        "K (Potassium)": "19%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Balanced NPK ratio for general growth.",
+        "Promotes healthy vegetative growth.",
+        "Suitable for all crops.",
+        "Quick absorption by leaves and roots."
+    ]
 }

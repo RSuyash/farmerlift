@@ -1,0 +1,26 @@
+{
+    "id": "microlift-grade-1",
+    "name": "MicroLift Grade I (Foliar)",
+    "description": "State Govt. Certified Micronutrient Mixture for foliar spray.",
+    "category": "micronutrients-mixtures",
+    "price": "Enquire for Price",
+    "unit": "250g / 500g / 1kg",
+    "images": [
+        "/images/products/microlift-grade-1.png"
+    ],
+    "specifications": {
+        "Zn": "3%",
+        "Fe": "2.5%",
+        "Mn": "1%",
+        "Cu": "1%",
+        "B": "0.5%",
+        "Mo": "0.1%",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Balanced nutrition for all crops.",
+        "Corrects multiple deficiencies instantly.",
+        "Improves photosynthetic activity.",
+        "Essential for metabolic processes."
+    ]
+}

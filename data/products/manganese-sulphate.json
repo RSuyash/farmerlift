@@ -1,0 +1,22 @@
+{
+    "id": "manganese-sulphate",
+    "name": "FarmerLift Manganese Sulphate",
+    "description": "Corrects Manganese deficiency, crucial for photosynthesis.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 10 kg",
+    "images": [
+        "/images/products/manganese-sulphate.png"
+    ],
+    "specifications": {
+        "Mn (Manganese)": "30.5%",
+        "S (Sulphur)": "Content available",
+        "Solubility": "Water Soluble"
+    },
+    "features": [
+        "Activator of enzymes.",
+        "Essential for chlorophyll synthesis.",
+        "Prevents interveinal chlorosis.",
+        "Improves Nitrogen metabolism."
+    ]
+}

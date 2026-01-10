@@ -1,0 +1,22 @@
+{
+    "id": "chelated-cu",
+    "name": "FarmerLift Chelated Cu-EDTA",
+    "description": "100% Chelated Copper for maximum absorption.",
+    "category": "chelated-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "100 g / 250 g",
+    "images": [
+        "/images/products/chelated-cu.png"
+    ],
+    "specifications": {
+        "Cu (Copper)": "12%",
+        "Chelating Agent": "EDTA",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Highly effective at low doses.",
+        "Compatible with most agrochemicals.",
+        "Rapid correction of Copper deficiency.",
+        "Safe for crop tissues."
+    ]
+}

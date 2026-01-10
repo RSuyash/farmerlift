@@ -1,0 +1,25 @@
+{
+    "id": "npk-00-00-50",
+    "name": "FarmerLift 00:00:50 (Sulfate of Potash)",
+    "description": "Chloride-free source of Potassium and Sulphur for quality production.",
+    "category": "water-soluble-npk",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/npk-00-00-50.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "00%",
+        "P (Phosphorus)": "00%",
+        "K (Potassium)": "50%",
+        "S (Sulphur)": "17.5%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Ideal for chloride-sensitive crops.",
+        "Improves quality of produce (luster, uniform color).",
+        "Increases produce keeping quality.",
+        "Provides essential Sulphur."
+    ]
+}

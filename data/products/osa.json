@@ -1,0 +1,21 @@
+{
+    "id": "osa-orthosilicic",
+    "name": "FarmerLift OSA (Ortho Silicic Acid)",
+    "description": "Bioavailable Silicon for plant strength and stress resistance.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "250 ml / 500 ml",
+    "images": [
+        "/images/products/osa.png"
+    ],
+    "specifications": {
+        "Si (Silicon)": "2.0% (Ortho form)",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Thickens cell walls.",
+        "Provides physical barrier against pests/fungi.",
+        "Reduces transpiration loss.",
+        "Prevents lodging in crops."
+    ]
+}

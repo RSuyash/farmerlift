@@ -60,8 +60,8 @@ export default function ProductFilters({ filters, setFilters, facets }: ProductF
             <div className="space-y-3">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Brand</h3>
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                    {facets.brands.map((brand) => (
-                        <div key={brand} className="flex items-center gap-2">
+                    {facets.brands.map((brand, index) => (
+                        <div key={`${brand}-${index}`} className="flex items-center gap-2">
                             <input
                                 type="checkbox"
                                 id={`brand-${brand}`}

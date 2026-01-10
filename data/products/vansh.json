@@ -1,0 +1,21 @@
+{
+    "id": "vansh-biostimulant",
+    "name": "Vansh",
+    "description": "Advanced biostimulant for vegetative growth.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/vansh.png"
+    ],
+    "specifications": {
+        "Type": "Biological Growth Promoter",
+        "Application": "Foliar"
+    },
+    "features": [
+        "Promotes branching and new shoots.",
+        "Increases leaf area index.",
+        "Enhances photosynthetic efficiency.",
+        "Compatible with other agrochemicals."
+    ]
+}

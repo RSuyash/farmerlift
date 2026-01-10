@@ -1,0 +1,22 @@
+{
+    "id": "znlift",
+    "name": "ZnLift (ZSB)",
+    "description": "Zinc Solubilizing Bacteria for correcting zinc deficiency.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/znlift.png"
+    ],
+    "specifications": {
+        "Organism": "Thiobacillus / Pseudomonas spp.",
+        "Function": "Zn-Solubilization",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Oxidizes zinc sulfide/oxide to available zinc sulphate.",
+        "Essential for enzyme activation and auxin synthesis.",
+        "Corrects chlorosis (yellowing) in leaves.",
+        "Increases crop yield."
+    ]
+}

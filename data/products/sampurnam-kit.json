@@ -1,0 +1,22 @@
+{
+    "id": "sampurnam-npk-kit",
+    "name": "Sampurnam NPK Kit",
+    "description": "Complete Bio-Fertilizer Kit containing NPK consortia.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 Kit",
+    "images": [
+        "/images/products/sampurnam-kit.png"
+    ],
+    "specifications": {
+        "Components": "N-Fixer, P-Solubilizer, K-Mobilizer",
+        "Form": "Liquid / Powder",
+        "Application": "Soil Drenching / Drip"
+    },
+    "features": [
+        "All-in-one nutrition solution.",
+        "Ensures balanced nutrient supply.",
+        "Improves soil fertility index.",
+        "Eco-friendly and sustainable."
+    ]
+}

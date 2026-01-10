@@ -1,0 +1,22 @@
+{
+    "id": "humilift",
+    "name": "HumiLift (Humic Acid)",
+    "description": "Concentrated Humic and Fulvic Acid for soil conditioning.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/humilift.png"
+    ],
+    "specifications": {
+        "Composition": "Humic Acid 12%",
+        "Form": "Liquid",
+        "Application": "Drip Irrigation / Drenching"
+    },
+    "features": [
+        "Improves white root development.",
+        "Enhances nutrient holding capacity of soil.",
+        "Increases cation exchange capacity (CEC).",
+        "Promotes seed germination."
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "id": "sugarcane-special",
+    "name": "Sugarcane Special",
+    "description": "Customized booster for maximizing cane weight and sugar recovery.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/sugarcane-special.png"
+    ],
+    "specifications": {
+        "Target Crop": "Sugarcane",
+        "Form": "Liquid",
+        "Application": "Foliar Spray / Drip"
+    },
+    "features": [
+        "Increases internode length.",
+        "Improves cane girth.",
+        "Enhances sugar recovery.",
+        "Boosts tillering."
+    ]
+}

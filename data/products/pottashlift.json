@@ -1,0 +1,22 @@
+{
+    "id": "pottashlift",
+    "name": "PottashLift (KMB)",
+    "description": "Potash Mobilizing Bacteria to mobilize soil potash.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/pottashlift.png"
+    ],
+    "specifications": {
+        "Organism": "Frateuria aurantia",
+        "Function": "K-Mobilization",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Mobilizes fixed potash in soil lattice.",
+        "Saves costly chemical potash fertilizers.",
+        "Improves grain filling and fruit quality.",
+        "Enhances resistance to stress."
+    ]
+}

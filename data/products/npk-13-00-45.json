@@ -1,0 +1,24 @@
+{
+    "id": "npk-13-00-45",
+    "name": "FarmerLift 13:00:45 (Potassium Nitrate)",
+    "description": "High Potassium fertilizer for fruit development, size, and quality.",
+    "category": "water-soluble-npk",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/npk-13-00-45.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "13%",
+        "P (Phosphorus)": "00%",
+        "K (Potassium)": "45%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Improves fruit size, color, and taste.",
+        "Increases sugar content in fruits.",
+        "Prevents cracking of fruits.",
+        "Enhances shelf life."
+    ]
+}

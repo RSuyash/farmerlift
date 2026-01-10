@@ -1,0 +1,24 @@
+{
+    "id": "potassium-schoenite",
+    "name": "FarmerLift Potassium Schoenite",
+    "description": "Natural double salt of Potassium and Magnesium with Sulphur.",
+    "category": "water-soluble-special",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/potassium-schoenite.png"
+    ],
+    "specifications": {
+        "K (Potassium)": "23%",
+        "Mg (Magnesium)": "11%",
+        "S (Sulphur)": "Content available",
+        "Solubility": "Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Ideal Magnesium source.",
+        "Neutral pH impact.",
+        "Enhances photosynthesis rate.",
+        "Balanced K:Mg ratio for specific crops."
+    ]
+}

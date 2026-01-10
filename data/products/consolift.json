@@ -1,0 +1,23 @@
+{
+    "id": "consolift-bio",
+    "name": "ConsoLift (Microbial Consortium)",
+    "description": "Powerful consortium of beneficial microbes for NPK mobilization.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/consolift.png"
+    ],
+    "specifications": {
+        "Composition": "N-fixing, P-solubilizing, K-mobilizing bacteria",
+        "Form": "Liquid / Carrier based",
+        "Count": "Minimum 1x10^8 CFU/ml",
+        "Application": "Soil Drenching / Drip"
+    },
+    "features": [
+        "Reduces dependency on chemical fertilizers.",
+        "Improves soil health and structure.",
+        "Enhances nutrient availability.",
+        "Sustainable solution for long-term fertility."
+    ]
+}

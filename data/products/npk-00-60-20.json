@@ -1,0 +1,24 @@
+{
+    "id": "npk-00-60-20",
+    "name": "FarmerLift 00:60:20 (Super P&K)",
+    "description": "High Phosphorus and Potassium combination for peak reproductive stages.",
+    "category": "water-soluble-special",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/npk-00-60-20.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "00%",
+        "P (Phosphorus)": "60%",
+        "K (Potassium)": "20%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Highly acidic, suitable for alkaline soils.",
+        "Prevents clogging of drip pipes.",
+        "Enhances flowering retention.",
+        "Quick acting source of P & K."
+    ]
+}

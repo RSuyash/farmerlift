@@ -1,0 +1,22 @@
+{
+    "id": "aminolift",
+    "name": "AminoLift",
+    "description": "Hydrolyzed protein-based amino acid mixture.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/aminolift.png"
+    ],
+    "specifications": {
+        "Content": "Amino Acids > 20%",
+        "Source": "Soy / Animal Protein",
+        "Application": "Foliar / Soil"
+    },
+    "features": [
+        "Readily available nitrogen source.",
+        "Acts as a chelating agent.",
+        "Reduces crop stress.",
+        "Improves protein synthesis."
+    ]
+}

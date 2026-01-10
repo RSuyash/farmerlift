@@ -1,0 +1,22 @@
+{
+    "id": "copper-sulphate",
+    "name": "FarmerLift Copper Sulphate",
+    "description": "Essential Copper source for fungal disease resistance.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 5 kg",
+    "images": [
+        "/images/products/copper-sulphate.png"
+    ],
+    "specifications": {
+        "Cu (Copper)": "24%",
+        "Form": "Blue Crystals",
+        "Application": "Soil / Fungicide Preparation"
+    },
+    "features": [
+        "Prevents die-back disease.",
+        "Key component of Bordeaux mixture.",
+        "Essential for lignin synthesis.",
+        "Improves flavor and color of fruits."
+    ]
+}

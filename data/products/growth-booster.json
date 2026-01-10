@@ -1,0 +1,21 @@
+{
+    "id": "growth-booster",
+    "name": "Growth Booster",
+    "description": "All-purpose plant growth promoter.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "250 ml / 500 ml / 1 L",
+    "images": [
+        "/images/products/growth-booster.png"
+    ],
+    "specifications": {
+        "Active Ingredients": "Amino Acids, Vitamins",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Stimulates vegetative growth.",
+        "Increases chlorophyll production.",
+        "Revives stressed plants.",
+        "Improves uptake of fertilizers."
+    ]
+}

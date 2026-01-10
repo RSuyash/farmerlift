@@ -1,0 +1,22 @@
+{
+    "id": "acetolift",
+    "name": "AcetoLift (Acetobacter)",
+    "description": "Endophytic Nitrogen Fixing Bacteria for Sugarcane.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/acetolift.png"
+    ],
+    "specifications": {
+        "Target Crops": "Sugarcane, Sweet Sorghum",
+        "Organism": "Acetobacter diazotrophicus",
+        "Application": "Set Treatment / Soil"
+    },
+    "features": [
+        "Fixes atmospheric nitrogen within cane tissues.",
+        "Reduces urea requirement by 50%.",
+        "Increases sugar percentage (recovery).",
+        "Promotes overall growth."
+    ]
+}

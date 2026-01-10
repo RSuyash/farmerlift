@@ -1,0 +1,22 @@
+{
+    "id": "turmeric-special",
+    "name": "Turmeric Special",
+    "description": "Specialized nutrient mix for rhizome development.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 5 kg",
+    "images": [
+        "/images/products/turmeric-special.png"
+    ],
+    "specifications": {
+        "Target Crop": "Turmeric, Ginger",
+        "Form": "Powder / Liquid",
+        "Application": "Soil / Drip"
+    },
+    "features": [
+        "Increases rhizome size and weight.",
+        "Improves curcumin content and color.",
+        "Prevents rhizome rot.",
+        "Enhances keeping quality."
+    ]
+}

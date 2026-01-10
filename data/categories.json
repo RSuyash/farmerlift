@@ -46,5 +46,11 @@
         "name": "Secondary Nutrients",
         "description": "Calcium, Magnesium, and Sulphur based fertilizers.",
         "icon": "Sprout"
+    },
+    {
+        "id": "other-products",
+        "name": "Other Products",
+        "description": "Additional agricultural solutions for diverse farming needs.",
+        "icon": "Package"
     }
 ]

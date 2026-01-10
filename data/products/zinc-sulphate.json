@@ -1,0 +1,22 @@
+{
+    "id": "zinc-sulphate-mono",
+    "name": "FarmerLift Zinc Sulphate Mono-hydrate",
+    "description": "High concentration Zinc source for preventing Khaira disease and deficiency.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "5 kg / 10 kg",
+    "images": [
+        "/images/products/zinc-sulphate.png"
+    ],
+    "specifications": {
+        "Zn (Zinc)": "33%",
+        "S (Sulphur)": "15%",
+        "Form": "Powder / Granular"
+    },
+    "features": [
+        "Essential for auxin production.",
+        "Prevents stunted growth.",
+        "Corrects little leaf disease.",
+        "Increases grain yield."
+    ]
+}

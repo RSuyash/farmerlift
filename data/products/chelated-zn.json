@@ -1,0 +1,22 @@
+{
+    "id": "chelated-zn",
+    "name": "FarmerLift Chelated Zn-EDTA",
+    "description": "High absorption Zinc for preventing deficiency.",
+    "category": "chelated-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "250 g / 500 g",
+    "images": [
+        "/images/products/chelated-zn.png"
+    ],
+    "specifications": {
+        "Zn (Zinc)": "12%",
+        "Chelating Agent": "EDTA",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "More efficient than Zinc Sulphate.",
+        "Promotes auxin synthesis.",
+        "Enhances grain formation.",
+        "Suitable for fertigation."
+    ]
+}

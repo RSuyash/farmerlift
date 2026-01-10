@@ -3,11 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, Search, Phone, Mail } from "lucide-react";
+import { Menu, Search, Phone, Mail, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/global/ThemeToggle";
+import categories from "@/data/categories.json";
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -69,9 +70,49 @@ export default function Navbar() {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-8">
+                        <Link
+                            href="/"
+                            className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative"
+                        >
+                            Home
+                        </Link>
+
+                        {/* Catalogue Dropdown */}
+                        <div className="relative group">
+                            <Link
+                                href="/catalogue"
+                                className="flex items-center gap-1 text-sm font-semibold text-muted-foreground group-hover:text-primary transition-colors py-4"
+                            >
+                                Catalogue
+                                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                            </Link>
+
+                            {/* Dropdown Menu */}
+                            <div className="absolute top-full left-0 w-64 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-xl border border-gray-100 dark:border-white/10 overflow-hidden p-2">
+                                    <div className="flex flex-col">
+                                        {categories.slice(0, 9).map((category) => (
+                                            <Link
+                                                key={category.id}
+                                                href={`/catalogue/${category.id}`}
+                                                className="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-white/5 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg transition-colors"
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        ))}
+                                        <div className="h-px bg-gray-100 dark:bg-white/10 my-1" />
+                                        <Link
+                                            href="/catalogue"
+                                            className="block px-4 py-3 text-sm font-semibold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-white/5 rounded-lg text-center"
+                                        >
+                                            View Full Catalogue
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {[
-                            { name: "Home", href: "/" },
-                            { name: "Catalogue", href: "/catalogue" },
                             { name: "Blog", href: "/blog" },
                             { name: "Resources", href: "/resources" },
                             { name: "About", href: "/about" },

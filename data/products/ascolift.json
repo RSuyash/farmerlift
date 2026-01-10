@@ -1,0 +1,22 @@
+{
+    "id": "ascolift",
+    "name": "AscoLift (Seaweed Extract)",
+    "description": "Natural extract from Ascophyllum nodosum for stress tolerance.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "500 ml / 1 L",
+    "images": [
+        "/images/products/ascolift.png"
+    ],
+    "specifications": {
+        "Source": "Ascophyllum nodosum",
+        "Form": "Liquid",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Rich in Cytokinins, Auxins, and Betaines.",
+        "Increases resistance to drought and heat.",
+        "Improves fruit setting and quality.",
+        "Eco-friendly organic input."
+    ]
+}

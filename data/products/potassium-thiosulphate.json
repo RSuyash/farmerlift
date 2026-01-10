@@ -1,0 +1,22 @@
+{
+    "id": "potassium-thiosulphate",
+    "name": "FarmerLift Potassium Thiosulphate (KTS)",
+    "description": "Clear liquid fertilizer providing Potassium and Sulphur.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/kts.png"
+    ],
+    "specifications": {
+        "K (Potassium)": "25%",
+        "S (Sulphur)": "17%",
+        "Form": "Liquid"
+    },
+    "features": [
+        "Highly compatible liquid fertilizer.",
+        "Source of rapidly available potash.",
+        "Increases nitrogen use efficiency.",
+        "Improves soil structure."
+    ]
+}

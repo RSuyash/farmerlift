@@ -1,0 +1,21 @@
+{
+    "id": "ferrous-sulphate",
+    "name": "FarmerLift Ferrous Sulphate",
+    "description": "Iron source to combat chlorosis and improve greening.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "10 kg / 25 kg",
+    "images": [
+        "/images/products/ferrous-sulphate.png"
+    ],
+    "specifications": {
+        "Fe (Iron)": "19%",
+        "Application": "Soil / Foliar (Neutralized)"
+    },
+    "features": [
+        "Key component of chlorophyll.",
+        "Rapidly corrects yellowing of leaves.",
+        "Crucial for respiration in plants.",
+        "Improves crop quality."
+    ]
+}

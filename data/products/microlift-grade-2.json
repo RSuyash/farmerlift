@@ -1,0 +1,25 @@
+{
+    "id": "microlift-grade-2",
+    "name": "MicroLift Grade II (Soil)",
+    "description": "State Govt. Certified Micronutrient Mixture for soil application.",
+    "category": "micronutrients-mixtures",
+    "price": "Enquire for Price",
+    "unit": "5 kg / 10 kg",
+    "images": [
+        "/images/products/microlift-grade-2.png"
+    ],
+    "specifications": {
+        "Zn": "5%",
+        "Fe": "2%",
+        "Mn": "1%",
+        "Cu": "0.5%",
+        "B": "0.5%",
+        "Application": "Soil Application (Basal Dose)"
+    },
+    "features": [
+        "Long-lasting micronutrient supply.",
+        "Enhances nutrient uptake efficiency.",
+        "Prevents hidden hunger.",
+        "Promotes overall plant vigor."
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "id": "soybean-tur-special",
+    "name": "Soybean/Tur Special",
+    "description": "Booster for leguminous oilseeds and pulses.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/soybean-special.png"
+    ],
+    "specifications": {
+        "Target Crop": "Soybean, Pigeon Pea (Tur)",
+        "Form": "Liquid",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Increases number of pods.",
+        "Reduces flower dropping.",
+        "Improves grain filling.",
+        "Enhances oil content."
+    ]
+}

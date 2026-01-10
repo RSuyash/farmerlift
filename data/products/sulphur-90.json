@@ -1,0 +1,22 @@
+{
+    "id": "sulphur-90",
+    "name": "FarmerLift Sulphur 90% (SulpMax)",
+    "description": "Granular Sulphur fertilizer and soil conditioner.",
+    "category": "secondary-nutrients",
+    "price": "Enquire for Price",
+    "unit": "3 kg / 30 kg",
+    "images": [
+        "/images/products/sulphur-90.png"
+    ],
+    "specifications": {
+        "S (Sulphur)": "90%",
+        "Form": "Bentonite Sulphur Granules",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Improves soil pH (lowers excessive alkalinity).",
+        "Essential for protein and oil synthesis.",
+        "Slow release for long-term availability.",
+        "Acts as a mild fungicide."
+    ]
+}

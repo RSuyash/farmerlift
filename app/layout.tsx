@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn(inter.variable, outfit.variable)} suppressHydrationWarning>
-      <body className="antialiased min-h-screen flex flex-col font-sans bg-background text-foreground">
+      <body className="antialiased min-h-screen flex flex-col font-sans bg-background text-foreground" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

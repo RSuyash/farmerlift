@@ -1,0 +1,22 @@
+{
+    "id": "silicon-soil",
+    "name": "FarmerLift Silicon (Soil Conditioner)",
+    "description": "Silicon based soil enhancer for stronger plants.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "10 kg / 25 kg",
+    "images": [
+        "/images/products/silicon-soil.png"
+    ],
+    "specifications": {
+        "Si (Silicon)": "Calcium Silicate / Magnesium Silicate",
+        "Form": "Granules",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Neutralizes soil acidity.",
+        "Improves phosphorus uptake.",
+        "Increases drought tolerance.",
+        "Strengthens stems against wind."
+    ]
+}

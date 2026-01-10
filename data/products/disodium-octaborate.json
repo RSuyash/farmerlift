@@ -1,0 +1,22 @@
+{
+    "id": "disodium-octaborate",
+    "name": "FarmerLift Di-Sodium Octaborate Tetrahydrate",
+    "description": "High concentration Boron (20%) for foliar application.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "250 g / 500 g",
+    "images": [
+        "/images/products/disodium-octaborate.png"
+    ],
+    "specifications": {
+        "B (Boron)": "20%",
+        "Solubility": "Highly Water Soluble",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Corrects Boron deficiency rapidly.",
+        "Prevents cracking of fruits.",
+        "Essential for cell wall strength.",
+        "Enhances seed filling."
+    ]
+}

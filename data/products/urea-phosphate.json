@@ -1,0 +1,24 @@
+{
+    "id": "urea-phosphate-17-44-00",
+    "name": "FarmerLift 17:44:00 (Urea Phosphate)",
+    "description": "Acidic fertilizer providing Urea Nitrogen and Phosphorus, ideal for calcareous soils.",
+    "category": "water-soluble-special",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/urea-phosphate.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "17%",
+        "P (Phosphorus)": "44%",
+        "K (Potassium)": "00%",
+        "pH": "Acidic (< 2.0)",
+        "Solubility": "100% Water Soluble"
+    },
+    "features": [
+        "Cleans drip irrigation systems (anti-clogging).",
+        "Increases nutrient availability in alkaline soils.",
+        "Rapid Nitrogen and Phosphorus uptake.",
+        "Improves root growth in early stages."
+    ]
+}

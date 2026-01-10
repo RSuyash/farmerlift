@@ -1,0 +1,22 @@
+{
+    "id": "potash-rhodophyte",
+    "name": "FarmerLift Red Potash (Rhodophyte Derived)",
+    "description": "Organic Potash derived from Red Seaweed.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "25 kg / 50 kg",
+    "images": [
+        "/images/products/potash-rhodophyte.png"
+    ],
+    "specifications": {
+        "Source": "Rhodophyte Algae",
+        "K (Potassium)": "20% (Bio-available)",
+        "Form": "Granules / Powder"
+    },
+    "features": [
+        "Rich in natural growth hormones.",
+        "Improves fruit weight and color.",
+        "Free from chloride.",
+        "Sustainable potash source."
+    ]
+}

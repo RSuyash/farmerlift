@@ -1,0 +1,22 @@
+{
+    "id": "cotton-special",
+    "name": "Cotton Special",
+    "description": "Yield enhancer specifically designed for cotton crop.",
+    "category": "biostimulants-pgrs",
+    "price": "Enquire for Price",
+    "unit": "1 L / 5 L",
+    "images": [
+        "/images/products/cotton-special.png"
+    ],
+    "specifications": {
+        "Target Crop": "Cotton",
+        "Form": "Liquid",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Prevents flower and square dropping.",
+        "Increases boll size.",
+        "Improves staple length.",
+        "Enhances branching."
+    ]
+}

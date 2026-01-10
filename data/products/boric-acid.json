@@ -1,0 +1,22 @@
+{
+    "id": "boric-acid",
+    "name": "FarmerLift Boric Acid",
+    "description": "Premium Boron source for flowering and pollination.",
+    "category": "straight-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/boric-acid.png"
+    ],
+    "specifications": {
+        "B (Boron)": "17%",
+        "Form": "Powder",
+        "Solubility": "Water Soluble"
+    },
+    "features": [
+        "Essential for pollen tube growth.",
+        "Prevents flower dropping.",
+        "Improves fruit setting.",
+        "Regulates sugar transport."
+    ]
+}

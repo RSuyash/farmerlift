@@ -1,0 +1,22 @@
+{
+    "id": "azolift",
+    "name": "AzoLift (Azotobacter)",
+    "description": "Free-living nitrogen fixing bacteria for non-leguminous crops.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/azolift.png"
+    ],
+    "specifications": {
+        "Target Crops": "Wheat, Rice, Cotton, Vegetables",
+        "Organism": "Azotobacter chroococcum",
+        "Application": "Soil / Seed Treatment"
+    },
+    "features": [
+        "Fixes 20-30 kg Nitrogen per hectare.",
+        "Produces growth promoting substances (IAA, GA).",
+        "Enhances seed germination.",
+        "Improves plant vigor."
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "id": "chelated-fe",
+    "name": "FarmerLift Chelated Fe-EDTA",
+    "description": "Premium Iron chelate for correcting severe chlorosis.",
+    "category": "chelated-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "250 g / 500 g",
+    "images": [
+        "/images/products/chelated-fe.png"
+    ],
+    "specifications": {
+        "Fe (Iron)": "12%",
+        "Chelating Agent": "EDTA",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Stable over a wide pH range.",
+        "Instant greening effect.",
+        "Prevents iron chlorosis in calcareous soils.",
+        "Increases chlorophyll content."
+    ]
+}

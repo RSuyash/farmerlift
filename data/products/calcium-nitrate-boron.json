@@ -1,0 +1,23 @@
+{
+    "id": "calcium-nitrate-boron",
+    "name": "FarmerLift Calcium Nitrate with Boron",
+    "description": "Fortified Calcium Nitrate with added Boron.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "25 kg",
+    "images": [
+        "/images/products/calcium-nitrate-boron.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "15.5%",
+        "Ca (Calcium)": "18.5%",
+        "B (Boron)": "0.3%",
+        "Application": "Foliar / Fertigation"
+    },
+    "features": [
+        "Synergistic effect of Ca and B.",
+        "Improves fruit setting.",
+        "Prevents cracking and rotting.",
+        "Essential for quality export produce."
+    ]
+}

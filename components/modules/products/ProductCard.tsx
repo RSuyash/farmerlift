@@ -9,11 +9,20 @@ export default function ProductCard({ product }: { product: Product }) {
 
     return (
         <Link href={`/products/${product.id}`} className="group block h-full">
-            <div className="relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-4 h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:border-emerald-500/30 hover:-translate-y-1">
+            <div
+                className="relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-4 h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:border-emerald-500/30 hover:-translate-y-1"
+                suppressHydrationWarning
+            >
 
                 {/* Image Section */}
-                <div className="relative aspect-square w-full bg-zinc-50 dark:bg-zinc-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
-                    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1.5">
+                <div
+                    className="relative aspect-square w-full bg-zinc-50 dark:bg-zinc-950 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4"
+                    suppressHydrationWarning
+                >
+                    <div
+                        className="absolute top-2 left-2 z-10 flex flex-col gap-1.5"
+                        suppressHydrationWarning
+                    >
                         {discount > 0 && (
                             <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm tracking-wide">
                                 {discount}% OFF
@@ -42,7 +51,7 @@ export default function ProductCard({ product }: { product: Product }) {
                         <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-sm">
                             {product.category}
                         </span>
-                        <div className="flex gap-0.5">
+                        <div className="flex gap-0.5" suppressHydrationWarning>
                             {/* Placeholder for ratings if we had them */}
                         </div>
                     </div>

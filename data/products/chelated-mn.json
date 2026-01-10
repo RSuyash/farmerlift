@@ -1,0 +1,22 @@
+{
+    "id": "chelated-mn",
+    "name": "FarmerLift Chelated Mn-EDTA",
+    "description": "Manganese chelate for ensuring photosynthesis efficiency.",
+    "category": "chelated-micronutrients",
+    "price": "Enquire for Price",
+    "unit": "250 g / 500 g",
+    "images": [
+        "/images/products/chelated-mn.png"
+    ],
+    "specifications": {
+        "Mn (Manganese)": "12%",
+        "Chelating Agent": "EDTA",
+        "Application": "Foliar Spray"
+    },
+    "features": [
+        "Corrects interveinal chlorosis.",
+        "Essential for nitrogen metabolism.",
+        "Improves pollen germination.",
+        "Quickly absorbed by leaves."
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "id": "spread-plus",
+    "name": "Spread+",
+    "description": "High performance Silicon-based Spreader and Activator.",
+    "category": "other-products",
+    "price": "Enquire for Price",
+    "unit": "100 ml / 250 ml / 1 L",
+    "images": [
+        "/images/products/spread-plus.png"
+    ],
+    "specifications": {
+        "Type": "Non-ionic Silicon Spreader",
+        "Dosage": "0.5 ml per liter of water",
+        "Application": "With any foliar spray"
+    },
+    "features": [
+        "Super spreading action.",
+        "Quick penetration into leaves.",
+        "Rain-fastness within 30 minutes.",
+        "Reduces chemical wastage."
+    ]
+}

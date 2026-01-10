@@ -1,0 +1,22 @@
+{
+    "id": "phospolift",
+    "name": "PhospoLift (PSB)",
+    "description": "Phosphate Solubilizing Bacteria to unlock fixed phosphorus in soil.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "1 L",
+    "images": [
+        "/images/products/phospolift.png"
+    ],
+    "specifications": {
+        "Organism": "Bacillus megaterium / Pseudomonas striata",
+        "Function": "P-Solubilization",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Converts insoluble phosphorus to soluble form.",
+        "Saves up to 25% phosphatic fertilizer application.",
+        "Increases root development.",
+        "Effective in both acidic and alkaline soils."
+    ]
+}

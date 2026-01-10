@@ -19,13 +19,13 @@ interface CatalogueSectionProps {
 
 export default function CatalogueSection({ category, products }: CatalogueSectionProps) {
     return (
-        <section id={category.id} className="scroll-mt-28 py-8 border-b border-gray-100 dark:border-white/5 last:border-0 relative">
-            <div className="absolute top-8 right-0 text-[10rem] font-bold text-gray-50 dark:text-white/[0.02] -z-10 leading-none pointer-events-none opacity-50 select-none hidden xl:block">
+        <section id={category.id} className="scroll-mt-28 py-8 border-b border-gray-100 dark:border-white/5 last:border-0 relative" suppressHydrationWarning>
+            <div className="absolute top-8 right-0 text-[10rem] font-bold text-gray-50 dark:text-white/[0.02] -z-10 leading-none pointer-events-none opacity-50 select-none hidden xl:block" suppressHydrationWarning>
                 {category.name.split(" ")[0]}
             </div>
 
             {/* Section Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8" suppressHydrationWarning>
                 <div>
                     <h2 className="text-3xl font-bold font-outfit text-emerald-950 dark:text-emerald-50 mb-2">
                         {category.name}
@@ -44,22 +44,23 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
 
             {/* Products Grid */}
             {products.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6" suppressHydrationWarning>
                     {products.map((product) => (
                         <Link
                             href={`/products/${product.id}`}
                             key={product.id}
                             className="group flex flex-col sm:flex-row bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-2xl overflow-hidden hover:shadow-xl hover:border-emerald-500/20 dark:hover:border-emerald-500/20 transition-all duration-300 h-auto sm:h-52"
+                            suppressHydrationWarning
                         >
                             {/* Image Section */}
-                            <div className="w-full sm:w-2/5 relative bg-gray-50 dark:bg-black/20 p-6 min-h-[160px] sm:min-h-0">
+                            <div className="w-full sm:w-2/5 relative bg-gray-50 dark:bg-black/20 p-6 min-h-[160px] sm:min-h-0" suppressHydrationWarning>
                                 <Image
                                     src={product.images[0]}
                                     alt={product.name}
                                     fill
                                     className="object-contain p-2 group-hover:scale-110 transition-transform duration-500 mix-blend-multiply dark:mix-blend-normal"
                                 />
-                                <div className="absolute top-3 left-3">
+                                <div className="absolute top-3 left-3" suppressHydrationWarning>
                                     <span className="text-[10px] font-bold font-mono text-gray-400 bg-white/80 dark:bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md border border-gray-100 dark:border-white/10">
                                         {product.sku}
                                     </span>
@@ -67,7 +68,7 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
                             </div>
 
                             {/* Content Section */}
-                            <div className="w-full sm:w-3/5 p-5 flex flex-col justify-between">
+                            <div className="w-full sm:w-3/5 p-5 flex flex-col justify-between" suppressHydrationWarning>
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
                                         <div className="h-0.5 w-4 bg-emerald-500 rounded-full" />
@@ -87,12 +88,12 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50 dark:border-white/5">
+                                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50 dark:border-white/5" suppressHydrationWarning>
                                     <div className="flex flex-col">
                                         {product.mrp > product.price && (
                                             <span className="text-[10px] text-gray-400 line-through">MRP: ₹{product.mrp}</span>
                                         )}
-                                        <div className="flex items-baseline gap-1">
+                                        <div className="flex items-baseline gap-1" suppressHydrationWarning>
                                             <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">₹</span>
                                             <span className="font-bold text-xl text-emerald-700 dark:text-emerald-400">{product.price}</span>
                                         </div>
@@ -107,7 +108,7 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
                     ))}
                 </div>
             ) : (
-                <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-8 text-center border border-dashed border-gray-200 dark:border-white/10">
+                <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-8 text-center border border-dashed border-gray-200 dark:border-white/10" suppressHydrationWarning>
                     <p className="text-gray-500 dark:text-gray-400">No products available currently.</p>
                 </div>
             )}

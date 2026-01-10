@@ -1,0 +1,24 @@
+{
+    "id": "npk-12-61-00",
+    "name": "FarmerLift 12:61:00 (Mono Ammonium Phosphate)",
+    "description": "High Phosphorus fertilizer for root development and flowering.",
+    "category": "water-soluble-npk",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/npk-12-61-00.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "12%",
+        "P (Phosphorus)": "61%",
+        "K (Potassium)": "00%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Highest Phosphorus content.",
+        "Boosts root system development.",
+        "Promotes vigorous flowering.",
+        "Essential for early growth stages."
+    ]
+}

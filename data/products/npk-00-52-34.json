@@ -1,0 +1,24 @@
+{
+    "id": "npk-00-52-34",
+    "name": "FarmerLift 00:52:34 (Mono Potassium Phosphate)",
+    "description": "Nitrogen-free source of P and K for flowering and fruiting.",
+    "category": "water-soluble-npk",
+    "price": "Enquire for Price",
+    "unit": "1 kg / 25 kg",
+    "images": [
+        "/images/products/npk-00-52-34.png"
+    ],
+    "specifications": {
+        "N (Nitrogen)": "00%",
+        "P (Phosphorus)": "52%",
+        "K (Potassium)": "34%",
+        "Solubility": "100% Water Soluble",
+        "Application": "Foliar Spray & Fertigation"
+    },
+    "features": [
+        "Control excessive vegetative growth.",
+        "Promotes flowering and fruiting.",
+        "Improves fruit quality and weight.",
+        "Strengthens plant immunity."
+    ]
+}

@@ -37,69 +37,46 @@ interface CatalogueNavigationProps {
     categories: Category[];
 }
 
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
 export default function CatalogueNavigation({ categories }: CatalogueNavigationProps) {
-    const [activeId, setActiveId] = useState<string>("");
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveId(entry.target.id);
-                    }
-                });
-            },
-            { rootMargin: "-20% 0px -60% 0px" } // Trigger when element is near top
-        );
-
-        categories.forEach((category) => {
-            const element = document.getElementById(category.id);
-            if (element) observer.observe(element);
-        });
-
-        return () => observer.disconnect();
-    }, [categories]);
-
-    const scrollToCategory = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            // Offset for fixed header
-            const y = element.getBoundingClientRect().top + window.scrollY - 100;
-            window.scrollTo({ top: y, behavior: "smooth" });
-        }
-    };
+    const pathname = usePathname();
+    // Extract category ID from path: /catalogue/water-soluble-npk -> water-soluble-npk
+    const activeId = pathname.split("/").pop();
 
     return (
-        <div className="sticky top-24 self-start max-h-[calc(100vh-8rem)] overflow-y-auto hidden lg:block py-2 pr-4">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 px-4">
-                Categories
-            </h3>
-            <div className="flex flex-col gap-1 relative border-l border-gray-200 dark:border-white/10 ml-2">
-                {categories.map((category) => {
-                    const isActive = activeId === category.id;
+        <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm sticky top-24">
+            <div className="flex items-center justify-between mb-6">
+                <h3 className="font-bold font-outfit text-lg text-zinc-900 dark:text-white">Categories</h3>
+            </div>
 
-                    return (
-                        <button
-                            key={category.id}
-                            onClick={() => scrollToCategory(category.id)}
-                            className={cn(
-                                "flex items-center justify-between pl-4 py-2 text-sm font-medium transition-all duration-300 w-full text-left relative",
-                                isActive
-                                    ? "text-emerald-600 dark:text-emerald-400 font-bold"
-                                    : "text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400"
-                            )}
-                        >
-                            {/* Active Indicator Line */}
-                            {isActive && (
-                                <span className="absolute left-[-1px] top-0 bottom-0 w-[2px] bg-emerald-600 dark:bg-emerald-400 transition-all" />
-                            )}
+            <div className="space-y-3">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Product Range</h3>
+                <div className="space-y-1">
+                    {categories.map((category) => {
+                        const isActive = activeId === category.id;
 
-                            <span>{category.name}</span>
-
-                            {/* Count or minimal chevron could go here if needed, but keeping it minimal */}
-                        </button>
-                    );
-                })}
+                        return (
+                            <Link
+                                key={category.id}
+                                href={`/catalogue/${category.id}`}
+                                className={cn(
+                                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                                    isActive
+                                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"
+                                        : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
+                                )}
+                            >
+                                <span className={cn(
+                                    "w-1.5 h-1.5 rounded-full transition-colors",
+                                    isActive ? "bg-emerald-500" : "bg-zinc-300 dark:bg-zinc-700 group-hover:bg-zinc-400"
+                                )} />
+                                {category.name}
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

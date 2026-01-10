@@ -1,0 +1,22 @@
+{
+    "id": "mycolift",
+    "name": "MycoLift (VAM)",
+    "description": "Vesicular Arbuscular Mycorrhiza to extend root reach.",
+    "category": "organic-bio-fertilizers",
+    "price": "Enquire for Price",
+    "unit": "100 g / 500 g",
+    "images": [
+        "/images/products/mycolift.png"
+    ],
+    "specifications": {
+        "Organism": "Glomus spp.",
+        "Spore Count": "1200 IP/gm",
+        "Application": "Soil Application"
+    },
+    "features": [
+        "Increases root surface area by 100x.",
+        "Mobilizes Phosphorus and Micronutrients.",
+        "Improves drought tolerance.",
+        "Protect roots from pathogens."
+    ]
+}
