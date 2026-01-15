@@ -14,7 +14,7 @@ import {
     Package
 } from "lucide-react";
 
-// Map icon strings to lucide components
+// Map icon strings to lucide components.
 const iconMap: any = {
     Droplets,
     Leaf,
