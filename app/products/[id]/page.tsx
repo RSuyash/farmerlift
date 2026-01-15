@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProductById, getAllProducts } from "@/lib/db";
+import { getProductById, getAllProducts } from "@/lib/cms";
 import ProductDetailView from "@/components/modules/products/ProductDetailView";
 
 export async function generateStaticParams() {

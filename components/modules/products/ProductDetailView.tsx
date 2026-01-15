@@ -11,11 +11,19 @@ import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
-    const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+
+    // Determine discount if price is a number
+    let discount = 0;
+    if (typeof product.price === 'number' && product.mrp > 0) {
+        discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+    }
+
+    // Format Price for Message
+    const priceText = typeof product.price === 'number' ? `₹${product.price}` : product.price;
 
     // Enhanced WhatsApp Message
     const whatsAppMessage = encodeURIComponent(
-        `Hi FarmerLift, I am interested in *${product.name}*.\n\nSKU: ${product.sku || 'N/A'}\nPrice: ₹${product.price}\n\nPlease share more details and availability.`
+        `Hi FarmerLift, I am interested in *${product.name}*.\n\nSKU: ${product.sku || 'N/A'}\nPrice: ${priceText}\n\nPlease share more details and availability.`
     );
     // Updated Contact Number
     const waLink = `https://wa.me/919226411841?text=${whatsAppMessage}`;
@@ -97,11 +105,21 @@ export default function ProductDetailView({ product }: { product: Product }) {
                         </h1>
 
                         <div className="flex items-end gap-3 mb-8 border-b border-zinc-100 dark:border-zinc-800 pb-8">
-                            <span className="text-5xl font-bold text-zinc-900 dark:text-white tracking-tight">₹{product.price}</span>
-                            <div className="flex flex-col mb-1.5">
-                                <span className="text-lg text-zinc-400 line-through font-medium">₹{product.mrp}</span>
-                                <span className="text-sm text-emerald-600 font-medium">Inclusive of all taxes</span>
-                            </div>
+                            {typeof product.price === 'number' ? (
+                                <>
+                                    <span className="text-5xl font-bold text-zinc-900 dark:text-white tracking-tight">₹{product.price}</span>
+                                    <div className="flex flex-col mb-1.5">
+                                        {product.mrp > product.price && (
+                                            <span className="text-lg text-zinc-400 line-through font-medium">₹{product.mrp}</span>
+                                        )}
+                                        <span className="text-sm text-emerald-600 font-medium">Inclusive of all taxes</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <span className="text-2xl md:text-3xl font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-4 py-2 rounded-lg uppercase tracking-wide">
+                                    {product.price}
+                                </span>
+                            )}
                         </div>
 
                         {/* Description Short */}

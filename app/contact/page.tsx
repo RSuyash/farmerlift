@@ -1,8 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, MapPin, Phone, MessageSquare, Clock } from "lucide-react";
+import { getPageBanner, getSiteConfig } from "@/lib/cms";
 
-export default function ContactPage() {
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
+export default async function ContactPage() {
+  const banner = await getPageBanner('contact');
+  const config = await getSiteConfig();
+
+  // Fallbacks
+  const content = {
+    heading: banner?.heading || "Contact Support",
+    subtext: banner?.subtext || "By The Farmer, For The Farmers. Reach out for any inquiries.",
+    address: config?.hqAddress || "Plot No. A2, MIDC Industrial Area,\nKandhar, Dist. Nanded, Maharashtra – 431714",
+    phone: config?.phone || "+91 87881 13105",
+    email: config?.email || "farmerliftmanagement@gmail.com",
+    hours: config?.businessHours || "Mon - Sat: 9AM - 7PM"
+  };
+
   return (
     <div className="bg-background min-h-screen">
 
@@ -10,9 +27,9 @@ export default function ContactPage() {
       <section className="relative py-20 bg-emerald-950 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
         <div className="container-width relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-outfit mb-4">Contact Support</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-outfit mb-4">{content.heading}</h1>
           <p className="text-emerald-100/70 max-w-xl mx-auto text-lg font-light">
-            By The Farmer, For The Farmers. Reach out for any inquiries.
+            {content.subtext}
           </p>
         </div>
       </section>
@@ -28,9 +45,8 @@ export default function ContactPage() {
                 <MapPin className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-gray-900 dark:text-white mb-2 font-outfit">Headquarters</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
-                Plot No. A2, MIDC Industrial Area,<br />
-                Kandhar, Dist. Nanded, Maharashtra – 431714
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6 whitespace-pre-line">
+                {content.address}
               </p>
             </div>
             {/* Google Maps Embed - Nanded Area Approx */}
@@ -53,25 +69,25 @@ export default function ContactPage() {
               Direct Channels
             </h3>
             <div className="space-y-6">
-              <a href="tel:+918788113105" className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
+              <a href={`tel:${content.phone.replace(/\s+/g, '')}`} className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
                 <Phone className="h-5 w-5 text-emerald-600 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Customer Care</p>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400">+91 87881 13105</p>
+                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400">{content.phone}</p>
                 </div>
               </a>
-              <a href="mailto:farmerliftmanagement@gmail.com" className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
+              <a href={`mailto:${content.email}`} className="flex items-start gap-4 group hover:bg-emerald-50 dark:hover:bg-emerald-900/10 p-2 -mx-2 rounded-lg transition-colors">
                 <Mail className="h-5 w-5 text-emerald-600 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Email Us</p>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400 text-sm break-all">farmerliftmanagement@gmail.com</p>
+                  <p className="text-gray-700 dark:text-gray-200 font-medium group-hover:text-emerald-700 dark:group-hover:text-emerald-400 text-sm break-all">{content.email}</p>
                 </div>
               </a>
               <div className="flex items-start gap-4 p-2 -mx-2">
                 <Clock className="h-5 w-5 text-emerald-600 mt-0.5" />
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Business Hours</p>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium">Mon - Sat: 9AM - 7PM</p>
+                  <p className="text-gray-700 dark:text-gray-200 font-medium">{content.hours}</p>
                 </div>
               </div>
             </div>
@@ -79,7 +95,7 @@ export default function ContactPage() {
         </div>
 
         {/* 3. Contact Form (Right Column - Wider) */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 mt-8 lg:mt-0">
           <div className="bg-white dark:bg-white/5 p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-white/10 shadow-xl h-full">
             <div className="mb-8">
               <h2 className="text-2xl font-bold font-outfit text-gray-900 dark:text-white mb-2">Send us a Message</h2>
@@ -119,6 +135,5 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
-
   );
 }

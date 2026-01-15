@@ -1,4 +1,5 @@
-import { getAllCategories, getAllProducts } from "@/lib/db";
+import { getAllCategories } from "@/lib/db";
+import { getAllProducts } from "@/lib/cms";
 import CatalogueNavigation from "@/components/modules/catalogue/CatalogueNavigation";
 import CatalogueSection from "@/components/modules/catalogue/CatalogueSection";
 import CatalogueHeader from "@/components/modules/catalogue/CatalogueHeader";

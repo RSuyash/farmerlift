@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "admin.farmerlift.in",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com", // For video thumbnails
+      },
     ],
   },
 };

@@ -1,6 +1,7 @@
-import { getCategoryById, getProductsByCategory, getAllCategories } from "@/lib/db";
+import { getCategoryById, getAllCategories } from "@/lib/db";
+import { getProductsByCategory } from "@/lib/cms";
 import CatalogueNavigation from "@/components/modules/catalogue/CatalogueNavigation";
-import Image from "next/image";
+import ProductImage from "@/components/ui/ProductImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -56,9 +57,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                                     >
                                         {/* Image Section */}
                                         <div className="w-1/3 relative bg-gray-50 dark:bg-black/20 p-4">
-                                            <Image
+                                            <ProductImage
                                                 src={product.images[0]}
                                                 alt={product.name}
+                                                productName={product.name}
+                                                category={product.category}
                                                 fill
                                                 className="object-contain p-2 group-hover:scale-110 transition-transform duration-500"
                                             />

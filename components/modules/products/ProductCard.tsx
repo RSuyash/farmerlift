@@ -6,7 +6,11 @@ import { ArrowRight, ShoppingCart } from "lucide-react";
 import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductCard({ product }: { product: Product }) {
-    const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+    // Determine discount if price is a number
+    let discount = 0;
+    if (typeof product.price === 'number' && product.mrp > 0) {
+        discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+    }
 
     return (
         <Link href={`/products/${product.id}`} className="group block h-full">
@@ -78,7 +82,7 @@ export default function ProductCard({ product }: { product: Product }) {
                                         <span className="font-bold text-xl text-zinc-900 dark:text-white font-outfit">{product.price}</span>
                                     </>
                                 ) : (
-                                    <span className="font-bold text-base text-emerald-600 dark:text-emerald-400 leading-tight">
+                                    <span className="font-bold text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-md uppercase tracking-wide">
                                         {product.price}
                                     </span>
                                 )}

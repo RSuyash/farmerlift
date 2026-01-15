@@ -58,6 +58,8 @@ export default function ProductImage({
             sizes={sizes}
             priority={priority}
             onError={() => setError(true)}
+            // Prevent server crash if local image file is missing by disabling optimization for local paths
+            unoptimized={imageSrc.startsWith('/')}
         />
     );
 }

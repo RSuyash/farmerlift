@@ -5,7 +5,7 @@ export interface BaseProduct {
     name: string;
     brand: string;
     category: ProductCategory;
-    price: number;
+    price: number | string;
     mrp: number; // Maximum Retail Price for discount calc
     stock: number;
     isOrganic: boolean;

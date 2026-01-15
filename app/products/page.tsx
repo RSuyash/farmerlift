@@ -1,9 +1,10 @@
-import { getAllProducts, getAllCategories } from "@/lib/db";
+import { getAllCategories } from "@/lib/db";
+import { getAllProducts } from "@/lib/cms";
 import ProductBrowser from "@/components/modules/products/ProductBrowser";
 import CatalogueHeader from "@/components/modules/catalogue/CatalogueHeader";
 
 export default async function ProductsPage() {
-  const products = await getAllProducts(); // Server-side data fetching
+  const products = await getAllProducts(); // Fetch dynamically from WP
   const categories = await getAllCategories();
 
   return (
