@@ -224,6 +224,20 @@ if( function_exists('acf_add_local_field_group') ):
             array( 'key' => 'field_app_method', 'label' => 'Application Method Text', 'name' => 'application_method', 'type' => 'textarea', 'instructions' => 'e.g., Foliar Spray details, Drip instruction' ),
             array( 'key' => 'field_dose', 'label' => 'Dosage Instructions', 'name' => 'dosage_info', 'type' => 'text', 'instructions' => 'e.g., 2-3ml per liter' ),
             array( 'key' => 'field_target_crops', 'label' => 'Target Crops', 'name' => 'target_crops_list', 'type' => 'text' ),
+            
+            // Recommended Crops (Visual)
+            array(
+                'key' => 'field_rec_crops',
+                'label' => 'Recommended Crops (Visual)',
+                'name' => 'recommended_crops',
+                'type' => 'repeater',
+                'layout' => 'table',
+                'button_label' => 'Add Crop',
+                'sub_fields' => array(
+                    array( 'key' => 'field_crop_name', 'label' => 'Crop Name', 'name' => 'crop_name', 'type' => 'text' ),
+                    array( 'key' => 'field_crop_img', 'label' => 'Crop Image', 'name' => 'crop_image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'thumbnail' ),
+                ),
+            ),
         ),
         'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
         'show_in_rest' => true,
