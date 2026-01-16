@@ -170,12 +170,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* Description Short */}
-                        <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-base">
-                            {product.description}
-                        </p>
-
-                        {/* Value Props */}
+                        {/* Value Props - Moved UP for Catalog Look */}
                         <div className="grid grid-cols-2 gap-3 mb-6">
                             <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
                                 <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
@@ -192,6 +187,11 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Description Short */}
+                        <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-base">
+                            {product.description}
+                        </p>
 
                         {/* Available Packs Chips */}
                         {product.availablePackSizes && product.availablePackSizes.length > 0 && (
