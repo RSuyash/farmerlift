@@ -78,6 +78,40 @@ export function mapWpProductToApp(wpPost: any): Product {
     const rawDescription = wpPost.content.rendered || "";
     const cleanDescription = rawDescription.replace(/<[^>]+>/g, '');
 
+    // --- IMAGES (Featured + Gallery) ---
+    const images: string[] = [];
+
+    // 1. Featured Image
+    if (wpPost._embedded && wpPost._embedded['wp:featuredmedia'] && wpPost._embedded['wp:featuredmedia'][0]) {
+        images.push(wpPost._embedded['wp:featuredmedia'][0].source_url);
+    } else {
+        // Fallback if no featured image
+        images.push('/images/placeholder.png');
+    }
+
+    // 2. Extra Gallery Images (1-8)
+    // PRIORITY: Check for server-side resolved gallery from our custom REST field
+    if (Array.isArray(wpPost.farmerlift_gallery) && wpPost.farmerlift_gallery.length > 0) {
+        images.push(...wpPost.farmerlift_gallery);
+    }
+    // FALLBACK: Manual ACF check (if custom field missing or empty)
+    else {
+        for (let i = 1; i <= 8; i++) {
+            const val = acf[`gallery_image_${i}`];
+            // Handle both Return Format: URL (string) and Image Array (object)
+            if (typeof val === 'string' && val.trim() !== '') {
+                images.push(val);
+            } else if (typeof val === 'object' && val?.url) {
+                images.push(val.url);
+            }
+        }
+    }
+
+    // If completely empty (shouldn't happen due to fallback above, but safety)
+    if (images.length === 0) {
+        images.push('/images/placeholder.png');
+    }
+
     return {
         id: wpPost.slug,
         name: wpPost.title.rendered,
@@ -88,7 +122,7 @@ export function mapWpProductToApp(wpPost: any): Product {
         isOrganic: acf.is_organic || false,
         description: cleanDescription, // Clean text without p tags
         sku: acf.sku || 'N/A',
-        images: [getImageUrl(wpPost)],
+        images: images,
         features: acf.features_list ? acf.features_list.split('\n') : [],
         manufacturer: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
         countryOfOrigin: 'India',

@@ -358,46 +358,23 @@ if( function_exists('acf_add_local_field_group') ):
         'show_in_rest' => true,
     ));
 
-    // ACF Filter to dynamically populate choices for 'field_prod_packs'
-    add_filter('acf/load_field/key=field_prod_packs', 'farmerlift_populate_pack_sizes');
-    function farmerlift_populate_pack_sizes( $field ) {
-        // Reset choices
-        $field['choices'] = array();
-
-        // 1. Find the Site Config Post ID safely
-        $config_posts = get_posts(array(
-            'post_type' => 'site_config',
-            'posts_per_page' => 1,
-            'post_status' => 'any', // Include drafts/published
-            'fields' => 'ids' // Just get ID
-        ));
-
-        if( !empty($config_posts) ) {
-            $config_id = $config_posts[0];
-            
-            // 2. Get the field from that specific ID
-            // Note: Using get_post_meta is sometimes safer if ACF get_field context is weird, 
-            // but get_field is usually fine if ID is passed.
-            $raw_sizes = get_field('standard_pack_sizes', $config_id);
-
-            if( !empty($raw_sizes) ) {
-                $sizes_array = explode( ',', $raw_sizes );
-                foreach( $sizes_array as $size ) {
-                    $clean = trim($size);
-                    if( !empty($clean) ) {
-                        $field['choices'][ $clean ] = $clean;
-                    }
-                }
-            }
-        }
-
-        // Fallback / Debugging
-        if( empty($field['choices']) ) {
-            $field['choices']['0'] = 'Please add sizes in Global Settings -> Master Packaging List';
-        }
-
-        return $field;
-    }
+    // XX. PRODUCT GALLERY (Extra Images for Slider)
+    acf_add_local_field_group(array(
+        'key' => 'group_product_gallery',
+        'title' => 'Product Gallery (Slider Images)',
+        'fields' => array(
+            array( 'key' => 'field_gal_1', 'label' => 'Gallery Image 1', 'name' => 'gallery_image_1', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_2', 'label' => 'Gallery Image 2', 'name' => 'gallery_image_2', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_3', 'label' => 'Gallery Image 3', 'name' => 'gallery_image_3', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_4', 'label' => 'Gallery Image 4', 'name' => 'gallery_image_4', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_5', 'label' => 'Gallery Image 5', 'name' => 'gallery_image_5', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_6', 'label' => 'Gallery Image 6', 'name' => 'gallery_image_6', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_7', 'label' => 'Gallery Image 7', 'name' => 'gallery_image_7', 'type' => 'image', 'return_format' => 'url' ),
+            array( 'key' => 'field_gal_8', 'label' => 'Gallery Image 8', 'name' => 'gallery_image_8', 'type' => 'image', 'return_format' => 'url' ),
+        ),
+        'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
+        'show_in_rest' => true,
+    ));
 
     // 02. Method of Application
     acf_add_local_field_group(array(
@@ -470,6 +447,47 @@ if( function_exists('acf_add_local_field_group') ):
 
 endif;
 
+// =================================================================
+// 4. REST FIELD REGISTRATION (Force URLs cleanly via API)
+// =================================================================
+add_action( 'rest_api_init', function () {
+    register_rest_field( 'product', 'farmerlift_gallery', array(
+        'get_callback' => function( $object ) {
+            $images = array();
+            $post_id = $object['id'];
+            
+            for ($i = 1; $i <= 8; $i++) {
+                // Get raw value from ACF
+                // We access the meta directly to be safe, or use get_field
+                $key = "gallery_image_$i";
+                $val = get_post_meta($post_id, $key, true);
+                
+                if ( ! empty($val) ) {
+                    // 1. If it's a numeric ID (which is the problem we are solving)
+                    if ( is_numeric($val) ) {
+                        $url = wp_get_attachment_url( (int)$val );
+                        if ($url) {
+                            $images[] = $url;
+                        }
+                    }
+                    // 2. If it's ALREADY a URL string
+                    else if ( is_string($val) && filter_var($val, FILTER_VALIDATE_URL) ) {
+                        $images[] = $val;
+                    }
+                    // 3. If it's a serialized array (unlikely from get_post_meta unless false passed, but standard ACF logic)
+                }
+            }
+            return $images;
+        },
+        'schema' => null,
+    ));
+});
+
 // Security: Enable App Passwords for Auto-Migration scripts
 add_filter( 'wp_is_application_passwords_available', '__return_true' );
+
+// =================================================================
+// 5. INCLUDE QR CODE STUDIO (Modular)
+// =================================================================
+require_once get_template_directory() . '/qr-code-system.php';
 ?>

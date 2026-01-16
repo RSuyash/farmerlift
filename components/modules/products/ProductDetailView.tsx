@@ -3,14 +3,46 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product, FertilizerSpecs, PesticideSpecs, SeedSpecs, MachinerySpecs } from "@/types/product";
-import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package } from "lucide-react";
+import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
+    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+    // Auto-Slider Logic
+    const nextImage = useCallback(() => {
+        if (!product.images || product.images.length <= 1) return;
+        const currentIndex = product.images.indexOf(activeImage);
+        const nextIndex = (currentIndex + 1) % product.images.length;
+        setActiveImage(product.images[nextIndex]);
+    }, [activeImage, product.images]);
+
+    const prevImage = useCallback(() => {
+        if (!product.images || product.images.length <= 1) return;
+        const currentIndex = product.images.indexOf(activeImage);
+        const prevIndex = (currentIndex - 1 + product.images.length) % product.images.length;
+        setActiveImage(product.images[prevIndex]);
+    }, [activeImage, product.images]);
+
+    useEffect(() => {
+        if (!isAutoPlaying || product.images.length <= 1) return;
+
+        const interval = setInterval(() => {
+            nextImage();
+        }, 4000); // 4 seconds per slide
+
+        return () => clearInterval(interval);
+    }, [isAutoPlaying, nextImage, product.images.length]);
+
+    // Handle Image Selection Manually (Stop Autoplay momentarily? Optional, keeping simple)
+    const handleThumbnailClick = (img: string) => {
+        setActiveImage(img);
+        // Optional: setIsAutoPlaying(false);
+    };
 
     // Determine discount if price is a number
     let discount = 0;
@@ -57,7 +89,11 @@ export default function ProductDetailView({ product }: { product: Product }) {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
                     {/* Gallery Section */}
                     <div className="lg:col-span-6 space-y-6">
-                        <div className="relative h-[400px] lg:h-[450px] w-full bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-8 overflow-hidden group">
+                        <div
+                            className="relative h-[400px] lg:h-[450px] w-full bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-8 overflow-hidden group"
+                            onMouseEnter={() => setIsAutoPlaying(false)}
+                            onMouseLeave={() => setIsAutoPlaying(true)}
+                        >
                             <ProductImage
                                 src={activeImage}
                                 alt={product.name}
@@ -76,6 +112,24 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             <button className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-zinc-600 dark:text-zinc-300 hover:text-red-500 dark:hover:text-red-400 transition-colors z-20">
                                 <Heart className="h-5 w-5" />
                             </button>
+
+                            {/* Slider Arrows (Only if multiple images) */}
+                            {product.images.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-800 shadow-md transition-all opacity-0 group-hover:opacity-100 z-20"
+                                    >
+                                        <ChevronLeft className="h-6 w-6" />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-800 shadow-md transition-all opacity-0 group-hover:opacity-100 z-20"
+                                    >
+                                        <ChevronRight className="h-6 w-6" />
+                                    </button>
+                                </>
+                            )}
                         </div>
 
                         {product.images.length > 1 && (
@@ -83,7 +137,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 {product.images.map((img, idx) => (
                                     <button
                                         key={idx}
-                                        onClick={() => setActiveImage(img)}
+                                        onClick={() => handleThumbnailClick(img)}
                                         className={`relative w-16 h-16 rounded-xl border-2 bg-zinc-50 dark:bg-zinc-900 p-2 flex-shrink-0 transition-all ${activeImage === img ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-transparent hover:border-zinc-300 dark:hover:border-zinc-700'}`}
                                     >
                                         <Image src={img} alt="" width={64} height={64} className="w-full h-full object-contain" />
