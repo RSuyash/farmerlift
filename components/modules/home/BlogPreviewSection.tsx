@@ -1,35 +1,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { getAllPosts } from "@/lib/cms";
 
-const articles = [
-    {
-        id: 1,
-        title: "5 Tips for Maximizing Wheat Yield in 2026",
-        category: "Crop Management",
-        date: "Jan 5, 2026",
-        image: "/images/blog/wheat-field.jpg", // Placeholder until Quota reset
-        excerpt: "Discover the secret soil preparation techniques that can boost your wheat production."
-    },
-    {
-        id: 2,
-        title: "Understanding Organic Fertilizers vs Synthetic",
-        category: "Soil Health",
-        date: "Dec 28, 2025",
-        image: "/images/blog/organic-farm.jpg", // Placeholder until Quota reset
-        excerpt: "Why modern farmers are switching to drip irrigation compatible fertilizers for better efficiency."
-    },
-    {
-        id: 3,
-        title: "Government Subsidies for Drip Irrigation",
-        category: "Policy & Finance",
-        date: "Dec 15, 2025",
-        image: "/images/blog/drip-irrigation.jpg", // Placeholder until Quota reset
-        excerpt: "A comprehensive guide to availing the latest government schemes for irrigation."
-    }
-];
-
-export default function BlogPreviewSection() {
+export default async function BlogPreviewSection() {
+    const articles = await getAllPosts(3);
     return (
         <section className="py-24 bg-gray-50 dark:bg-black/40 border-t border-emerald-100 dark:border-white/5">
             <div className="container-width">
@@ -58,11 +33,15 @@ export default function BlogPreviewSection() {
                         <Link key={article.id} href={`/blog/${article.id}`} className="group flex flex-col h-full bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 dark:hover:shadow-black/50 transition-all duration-300 hover:-translate-y-1">
                             {/* Image Container */}
                             <div className="aspect-[4/3] w-full bg-gray-200 dark:bg-white/10 relative overflow-hidden">
-                                {/* Placeholder for actual image */}
+                                <img
+                                    src={article.image}
+                                    alt={article.title}
+                                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                                />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4">
                                     <span className="inline-block py-1 px-3 rounded-md bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                                        {article.category}
+                                        {article.tags[0] || 'Insights'}
                                     </span>
                                 </div>
                             </div>
@@ -72,7 +51,7 @@ export default function BlogPreviewSection() {
                                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-3 font-medium">
                                     <span>{article.date}</span>
                                     <span>•</span>
-                                    <span>5 min read</span>
+                                    <span>{article.readTime || '5 min read'}</span>
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 font-outfit leading-tight group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                                     {article.title}

@@ -1,6 +1,8 @@
 // lib/cms.ts
 const WP_API = 'https://admin.farmerlift.in/wp-json/wp/v2';
-import { mapWpProductToApp } from './mapper';
+import { Product, ProductCategory } from '@/types/product';
+import { BlogPost } from '@/types/blog';
+import { mapWpProductToApp, mapWpPostToBlog } from './mapper';
 
 // 1. GET HOME BANNERS (Carousel)
 export async function getHomeBanners() {
@@ -8,14 +10,20 @@ export async function getHomeBanners() {
     const data = await res.json();
     if (!Array.isArray(data)) return [];
 
-    return data.map((item: any) => ({
-        id: item.id,
-        image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-        heading: item.acf?.heading || item.title.rendered,
-        subtext: item.acf?.subtext || '',
-        buttonText: item.acf?.button_text || 'Explore',
-        buttonUrl: item.acf?.button_url || '/products' // Default to products if missing
-    }));
+    return data.map((item: any) => {
+        // Strip HTML p tags from content for the subtext, if content.rendered is used
+        const rawSubtext = item.acf?.subtext || item.content?.rendered || '';
+        const cleanSubtext = rawSubtext.replace(/<[^>]+>/g, '');
+
+        return {
+            id: item.id,
+            image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+            heading: item.acf?.heading || item.title.rendered,
+            subtext: cleanSubtext, // Use the cleaned subtext
+            buttonText: item.acf?.button_text || 'Explore',
+            buttonUrl: item.acf?.button_url || '/products' // Default to products if missing
+        };
+    });
 }
 
 // 2. GET PAGE SPECIFIC BANNER (For Product, Blog, About pages)
@@ -54,31 +62,19 @@ export async function getSiteConfig() {
         phone: s.contact_phone || '', // Corrected key to match ACF definition in functions.php
         channels: s.direct_channels ? s.direct_channels.split('\n') : [],
         businessHours: s.business_hours || 'Mon - Sat: 9AM - 7PM', // Added field with default
-        footerText: s.footer_text || '' // Corrected key to match ACF definition
+        footerText: s.footer_text || '', // Corrected key to match ACF definition
+        social: {
+            facebook: s.facebook_url || '',
+            twitter: s.twitter_url || '',
+            instagram: s.instagram_url || '',
+            youtube: s.youtube_url || '',
+            linkedin: s.linkedin_url || ''
+        }
     };
 }
 
 // 4. GET GALLERIES
-export async function getPhotoGallery() {
-    const res = await fetch(`${WP_API}/photo_resource?_embed&per_page=50`, { next: { revalidate: 60 } });
-    const data = await res.json();
-    return Array.isArray(data) ? data.map((item: any) => ({
-        id: item.id,
-        title: item.title.rendered,
-        image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''
-    })) : [];
-}
 
-export async function getVideoGallery() {
-    const res = await fetch(`${WP_API}/video_resource?_embed&per_page=50`, { next: { revalidate: 60 } });
-    const data = await res.json();
-    return Array.isArray(data) ? data.map((item: any) => ({
-        id: item.id,
-        title: item.title.rendered,
-        thumbnail: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-        videoUrl: item.acf?.video_url || ''
-    })) : [];
-}
 
 // 5. GET ALL PRODUCTS
 export async function getAllProducts() {
@@ -98,4 +94,45 @@ export async function getProductById(slug: string) {
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return null;
     return mapWpProductToApp(data[0]);
+}
+
+export async function getAllPosts(limit?: number) {
+    const perPage = limit ? `&per_page=${limit}` : '&per_page=100';
+    const res = await fetch(`${WP_API}/posts?_embed${perPage}`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    return Array.isArray(data) ? data.map(mapWpPostToBlog) : [];
+}
+
+export async function getPostBySlug(slug: string) {
+    const res = await fetch(`${WP_API}/posts?slug=${slug}&_embed`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return null;
+    return mapWpPostToBlog(data[0]);
+}
+
+// 5. GET GALLERIES (Photo & Video)
+export async function getPhotoGallery() {
+    const res = await fetch(`${WP_API}/photo_resource?_embed&per_page=100`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+
+    return data.map((item: any) => ({
+        id: item.id,
+        title: item.title.rendered,
+        image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/placeholder.jpg'
+    }));
+}
+
+export async function getVideoGallery() {
+    const res = await fetch(`${WP_API}/video_resource?_embed&per_page=100`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    if (!Array.isArray(data)) return [];
+
+    return data.map((item: any) => ({
+        id: item.id,
+        title: item.title.rendered,
+        thumbnail: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/video-placeholder.jpg',
+        videoUrl: item.acf?.video_url || '',
+        date: item.acf?.event_date || item.date
+    }));
 }

@@ -1,33 +1,13 @@
-import { BlogPost } from "@/types/blog";
-import fs from "fs";
-import path from "path";
+import { getAllPosts } from "@/lib/cms";
 import BlogCard from "@/components/modules/blog/BlogCard";
-
-// Helper to get all blog posts
-function getBlogPosts(): BlogPost[] {
-    const blogDir = path.join(process.cwd(), "data/blog");
-    if (!fs.existsSync(blogDir)) return [];
-
-    const fileNames = fs.readdirSync(blogDir);
-    const posts = fileNames
-        .filter(file => file.endsWith(".json"))
-        .map(file => {
-            const filePath = path.join(blogDir, file);
-            const fileContent = fs.readFileSync(filePath, "utf8");
-            return JSON.parse(fileContent) as BlogPost;
-        });
-
-    // Sort by date descending
-    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
 
 export const metadata = {
     title: "FarmerLift Knowledge Hub | Expert Farming Tips, Guides & News",
     description: "Stay updated with the latest in agriculture. Read expert articles on crop management, fertilizers, machinery, and sustainable farming practices."
 };
 
-export default function BlogListingPage() {
-    const posts = getBlogPosts();
+export default async function BlogListingPage() {
+    const posts = await getAllPosts();
 
     return (
         <div className="min-h-screen bg-white dark:bg-black">

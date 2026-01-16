@@ -1,52 +1,22 @@
 import { BlogPost } from "@/types/blog";
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Calendar, User, Clock, Share2, Facebook, Twitter, Linkedin, Link as LinkIcon } from "lucide-react";
-
-// Helper to get a single blog post
-// Helper to get a single blog post
-function getBlogPost(id: string): BlogPost | null {
-    const blogDir = path.join(process.cwd(), "data/blog");
-    const filePath = path.join(blogDir, `${id}.json`);
-
-    if (fs.existsSync(filePath)) {
-        return JSON.parse(fs.readFileSync(filePath, "utf8")) as BlogPost;
-    }
-
-    // Fallback: Case-insensitive search
-    try {
-        const files = fs.readdirSync(blogDir);
-        const foundFile = files.find(f => f.toLowerCase().replace('.json', '') === id.toLowerCase());
-        if (foundFile) {
-            return JSON.parse(fs.readFileSync(path.join(blogDir, foundFile), "utf8")) as BlogPost;
-        }
-    } catch (error) {
-        console.error("Error reading blog directory:", error);
-    }
-
-    return null;
-}
+import { getAllPosts, getPostBySlug } from "@/lib/cms";
 
 // Generate Static Params for all posts
 export async function generateStaticParams() {
-    const blogDir = path.join(process.cwd(), "data/blog");
-    if (!fs.existsSync(blogDir)) return [];
-
-    const fileNames = fs.readdirSync(blogDir);
-    return fileNames
-        .filter(file => file.endsWith(".json"))
-        .map(file => ({
-            id: file.replace(".json", "")
-        }));
+    const posts = await getAllPosts();
+    return posts.map((post: BlogPost) => ({
+        id: post.id
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const post = getBlogPost(id);
+    const post = await getPostBySlug(id);
     if (!post) return { title: 'Post Not Found' };
 
     return {
@@ -57,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const post = getBlogPost(id);
+    const post = await getPostBySlug(id);
 
     if (!post) {
         notFound();
@@ -122,51 +92,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                         {/* Article Body */}
                         <div className="lg:col-span-8">
-                            <div className="prose prose-lg dark:prose-invert prose-emerald max-w-none">
-                                {/* Simple Markdown Rendering (Since content is markdown string like ## Header) */}
-                                {/* In a real app we'd use react-markdown. For now, we'll manually parse basic headers or just render lines. */}
-                                {/* Given the prompt asked for "json based... same logic", we will render the raw text with newlines or basic formatting */}
-
-                                {post.content.split('\n').map((line, index) => {
-                                    // Helper for inline parsing (bold, etc.)
-                                    const parseText = (text: string) => {
-                                        return text.split(/(\*\*.*?\*\*)/g).map((part, i) => {
-                                            if (part.startsWith('**') && part.endsWith('**')) {
-                                                return <strong key={i} className="font-bold text-zinc-900 dark:text-zinc-100">{part.slice(2, -2)}</strong>;
-                                            }
-                                            return part;
-                                        });
-                                    };
-
-                                    if (line.startsWith('## ')) return <h2 key={index} className="text-3xl font-bold mt-8 mb-4 font-outfit text-zinc-900 dark:text-white">{parseText(line.replace('## ', ''))}</h2>;
-                                    if (line.startsWith('### ')) return <h3 key={index} className="text-2xl font-bold mt-6 mb-3 font-outfit text-zinc-900 dark:text-white">{parseText(line.replace('### ', ''))}</h3>;
-
-                                    if (line.startsWith('- ')) return (
-                                        <div key={index} className="flex items-start gap-2 mb-2 ml-4">
-                                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
-                                            <span className="text-zinc-700 dark:text-zinc-300">{parseText(line.replace('- ', ''))}</span>
-                                        </div>
-                                    );
-
-                                    const numberedMatch = line.match(/^(\d+)\.\s(.+)/);
-                                    if (numberedMatch) {
-                                        return (
-                                            <div key={index} className="flex items-start gap-2 mb-2 ml-4">
-                                                <span className="font-bold text-emerald-600 flex-shrink-0">{numberedMatch[1]}.</span>
-                                                <span className="text-zinc-700 dark:text-zinc-300">{parseText(numberedMatch[2])}</span>
-                                            </div>
-                                        );
-                                    }
-
-                                    if (line.trim() === '') return <div key={index} className="h-4" />;
-
-                                    return (
-                                        <p key={index} className="mb-4 text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                                            {parseText(line)}
-                                        </p>
-                                    );
-                                })}
-                            </div>
+                            <div
+                                className="prose prose-lg dark:prose-invert prose-emerald max-w-none [&>h2]:font-outfit [&>h2]:text-zinc-900 [&>h2]:dark:text-white [&>h3]:font-outfit [&>h3]:text-zinc-900 [&>h3]:dark:text-white [&>p]:text-zinc-700 [&>p]:dark:text-zinc-300 [&>li]:text-zinc-700 [&>li]:dark:text-zinc-300"
+                                dangerouslySetInnerHTML={{ __html: post.content }}
+                            />
                         </div>
 
                         {/* Sidebar / Share */}

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product, FertilizerSpecs, PesticideSpecs, SeedSpecs, MachinerySpecs } from "@/types/product";
-import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info } from "lucide-react";
+import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -56,8 +56,8 @@ export default function ProductDetailView({ product }: { product: Product }) {
             <div className="container-width py-8 lg:py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
                     {/* Gallery Section */}
-                    <div className="lg:col-span-7 space-y-6">
-                        <div className="aspect-square lg:aspect-[4/3] relative bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-8 overflow-hidden group">
+                    <div className="lg:col-span-6 space-y-6">
+                        <div className="relative h-[400px] lg:h-[450px] w-full bg-zinc-50 dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center p-8 overflow-hidden group">
                             <ProductImage
                                 src={activeImage}
                                 alt={product.name}
@@ -79,14 +79,14 @@ export default function ProductDetailView({ product }: { product: Product }) {
                         </div>
 
                         {product.images.length > 1 && (
-                            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide justify-center">
                                 {product.images.map((img, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setActiveImage(img)}
-                                        className={`relative w-24 h-24 rounded-xl border-2 bg-zinc-50 dark:bg-zinc-900 p-2 flex-shrink-0 transition-all ${activeImage === img ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-transparent hover:border-zinc-300 dark:hover:border-zinc-700'}`}
+                                        className={`relative w-16 h-16 rounded-xl border-2 bg-zinc-50 dark:bg-zinc-900 p-2 flex-shrink-0 transition-all ${activeImage === img ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-transparent hover:border-zinc-300 dark:hover:border-zinc-700'}`}
                                     >
-                                        <Image src={img} alt="" width={96} height={96} className="w-full h-full object-contain" />
+                                        <Image src={img} alt="" width={64} height={64} className="w-full h-full object-contain" />
                                     </button>
                                 ))}
                             </div>
@@ -94,164 +94,255 @@ export default function ProductDetailView({ product }: { product: Product }) {
                     </div>
 
                     {/* Info Section */}
-                    <div className="lg:col-span-5 flex flex-col">
+                    <div className="lg:col-span-6 flex flex-col">
                         <div className="mb-4">
                             <span className="text-emerald-700 dark:text-emerald-400 font-bold text-xs uppercase tracking-widest bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 rounded-full">
                                 {product.brand}
                             </span>
                         </div>
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white font-outfit leading-tight mb-4">
+                        <h1 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white font-outfit leading-tight mb-4">
                             {product.name}
                         </h1>
 
-                        <div className="flex items-end gap-3 mb-8 border-b border-zinc-100 dark:border-zinc-800 pb-8">
-                            {typeof product.price === 'number' ? (
-                                <>
-                                    <span className="text-5xl font-bold text-zinc-900 dark:text-white tracking-tight">₹{product.price}</span>
-                                    <div className="flex flex-col mb-1.5">
-                                        {product.mrp > product.price && (
-                                            <span className="text-lg text-zinc-400 line-through font-medium">₹{product.mrp}</span>
-                                        )}
-                                        <span className="text-sm text-emerald-600 font-medium">Inclusive of all taxes</span>
-                                    </div>
-                                </>
-                            ) : (
-                                <span className="text-2xl md:text-3xl font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-4 py-2 rounded-lg uppercase tracking-wide">
-                                    {product.price}
-                                </span>
-                            )}
-                        </div>
+                        {typeof product.price === 'number' && (
+                            <div className="flex items-end gap-3 mb-6 border-b border-zinc-100 dark:border-zinc-800 pb-6">
+                                <span className="text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">₹{product.price}</span>
+                                <div className="flex flex-col mb-1.5">
+                                    {product.mrp > product.price && (
+                                        <span className="text-base text-zinc-400 line-through font-medium">₹{product.mrp}</span>
+                                    )}
+                                    <span className="text-xs text-emerald-600 font-medium">Inclusive of all taxes</span>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Description Short */}
-                        <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-8">
+                        <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-base">
                             {product.description}
                         </p>
 
                         {/* Value Props */}
-                        <div className="grid grid-cols-2 gap-4 mb-8">
-                            <div className="flex items-start gap-3 p-4 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-2xl border border-emerald-100 dark:border-emerald-900/20">
-                                <Truck className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-0.5" />
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                            <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
+                                <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
                                 <div>
-                                    <span className="block font-bold text-sm text-zinc-900 dark:text-white">Fast Delivery</span>
-                                    <span className="text-xs text-zinc-500">To your farm gate</span>
+                                    <span className="block font-bold text-xs text-zinc-900 dark:text-white">Fast Delivery</span>
+                                    <span className="text-[10px] text-zinc-500">To your farm gate</span>
                                 </div>
                             </div>
-                            <div className="flex items-start gap-3 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/20">
-                                <ShieldCheck className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
+                            <div className="flex items-center gap-3 p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20">
+                                <ShieldCheck className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                 <div>
-                                    <span className="block font-bold text-sm text-zinc-900 dark:text-white">Verified Authentic</span>
-                                    <span className="text-xs text-zinc-500">Direct from manufacturer</span>
+                                    <span className="block font-bold text-xs text-zinc-900 dark:text-white">Verified Authentic</span>
+                                    <span className="text-[10px] text-zinc-500">Direct from manufacturer</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Call to Action - Desktop */}
-                        <div className="hidden lg:flex flex-col gap-4 mb-8">
+                        {/* Available Packs Chips */}
+                        {product.availablePackSizes && product.availablePackSizes.length > 0 && (
+                            <div className="mb-8">
+                                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <Package className="h-4 w-4" /> Available Packs
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {product.availablePackSizes.map((size, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:border-emerald-500 hover:text-emerald-600 dark:hover:border-emerald-500 dark:hover:text-emerald-400 transition-colors cursor-default"
+                                        >
+                                            {size}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Desktop CTA */}
+                        <div className="hidden lg:flex flex-col gap-3 mb-8">
                             <a
                                 href={waLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center justify-center gap-4 w-full p-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1"
+                                className="group flex items-center justify-center gap-4 w-full p-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1"
                             >
-                                <MessageCircle className="h-8 w-8" />
+                                <MessageCircle className="h-6 w-6" />
                                 <div className="flex flex-col items-start">
-                                    <span className="font-bold text-lg leading-none mb-1">Get Best Price</span>
-                                    <span className="text-xs font-medium text-emerald-100 opacity-90">on WhatsApp</span>
+                                    <span className="font-bold text-base leading-none mb-0.5">Get Best Price</span>
+                                    <span className="text-[10px] font-medium text-emerald-100 opacity-90">on WhatsApp</span>
                                 </div>
                                 <ChevronRight className="ml-auto h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                             </a>
-                            <div className="flex items-center justify-center gap-2 text-xs text-zinc-500">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                </span>
-                                Responds within 5 minutes
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Detailed Tabs */}
-                <div className="mt-16 lg:mt-24">
-                    <Tabs defaultValue="specs" className="w-full max-w-4xl mx-auto">
-                        <TabsList className="w-full flex justify-center bg-transparent border-b border-zinc-200 dark:border-zinc-800 rounded-none h-auto p-0 mb-8 space-x-8">
-                            <TabsTrigger
-                                value="specs"
-                                className="bg-transparent border-b-2 border-transparent data-[state=active]:border-emerald-600 data-[state=active]:text-emerald-700 data-[state=active]:shadow-none rounded-none px-4 py-3 text-lg font-medium text-zinc-500"
-                            >
-                                Specifications
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="features"
-                                className="bg-transparent border-b-2 border-transparent data-[state=active]:border-emerald-600 data-[state=active]:text-emerald-700 data-[state=active]:shadow-none rounded-none px-4 py-3 text-lg font-medium text-zinc-500"
-                            >
-                                Key Features
-                            </TabsTrigger>
+                <div className="mt-12 lg:mt-16">
+                    <Tabs defaultValue="key-benefits" className="w-full max-w-5xl mx-auto">
+                        <TabsList className="w-full flex flex-wrap justify-center sm:justify-between bg-transparent border-b border-zinc-200 dark:border-zinc-800 rounded-none h-auto p-0 mb-8">
+                            {['Key Benefits', 'Specifications', 'Method of Application', 'QR Details'].map((tab) => {
+                                const val = tab.toLowerCase().replace(/ /g, '-');
+                                return (
+                                    <TabsTrigger
+                                        key={val}
+                                        value={val}
+                                        className="flex-1 min-w-[140px] bg-transparent border-b-2 border-transparent data-[state=active]:border-emerald-600 data-[state=active]:text-emerald-700 data-[state=active]:shadow-none rounded-none px-2 py-3 text-sm sm:text-base font-medium text-zinc-500 hover:text-zinc-700 whitespace-nowrap"
+                                    >
+                                        {tab}
+                                    </TabsTrigger>
+                                )
+                            })}
                         </TabsList>
 
-                        <TabsContent value="features" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {product.features.map((feature, i) => (
-                                    <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-colors">
-                                        <div className="mt-1 h-6 w-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center flex-shrink-0">
-                                            <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                        {/* 1. Key Benefits */}
+                        <TabsContent value="key-benefits" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8">
+                                <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+                                    <Leaf className="h-5 w-5 text-emerald-600" /> Key Benefits
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {product.features.map((feature, i) => (
+                                        <div key={i} className="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/10 transition-colors">
+                                            <div className="mt-1 h-6 w-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center flex-shrink-0">
+                                                <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
+                                            <span className="text-zinc-700 dark:text-zinc-300 font-medium">{feature}</span>
                                         </div>
-                                        <span className="text-zinc-700 dark:text-zinc-300 font-medium">{feature}</span>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </TabsContent>
 
-                        <TabsContent value="specs" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        {/* 2. Specifications */}
+                        <TabsContent value="specifications" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8">
                                 <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                                    <Info className="h-5 w-5 text-emerald-600" /> Technical Details
+                                    <Info className="h-5 w-5 text-emerald-600" /> Technical Specifications
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
                                     <SpecRow label="Brand Name" value={product.brand} />
                                     <SpecRow label="Manufacturer" value={product.manufacturer} />
                                     <SpecRow label="Country of Origin" value={product.countryOfOrigin} />
-                                    <SpecRow label="Net Weight / Volume" value={product.netWeight} />
                                     <SpecRow label="SKU Code" value={product.sku} />
 
-                                    {/* Dynamic Specs based on Category */}
+                                    {/* Category Specific Specs */}
                                     {product.category === 'fertilizer' && (
                                         <>
-                                            <SpecRow label="Fertilizer Type" value={(product.specifications as FertilizerSpecs).type} />
-                                            <SpecRow label="Physical Form" value={(product.specifications as FertilizerSpecs).form} />
+                                            <SpecRow label="Type" value={(product.specifications as FertilizerSpecs).type} />
+                                            <SpecRow label="Form" value={(product.specifications as FertilizerSpecs).form} />
                                             <SpecRow label="NPK Ratio" value={(product.specifications as FertilizerSpecs).npkRatio} />
-                                            <SpecRow label="Water Solubility" value={(product.specifications as FertilizerSpecs).solubility} />
-                                            <SpecRow label="Recommended Dose" value={(product.specifications as FertilizerSpecs).dosePerAcre} />
+                                            <SpecRow label="Solubility" value={(product.specifications as FertilizerSpecs).solubility} />
                                         </>
                                     )}
-
                                     {product.category === 'pesticide' && (
                                         <>
                                             <SpecRow label="Chemical Group" value={(product.specifications as PesticideSpecs).chemicalGroup} />
                                             <SpecRow label="Active Ingredient" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.name} />
-                                            <SpecRow label="Target Application" value={(product.specifications as PesticideSpecs).targetPests.slice(0, 3).join(", ")} />
-                                            <SpecRow label="Dosage" value={(product.specifications as PesticideSpecs).dosage} />
-                                            <SpecRow label="Pre-Harvest Interval" value={(product.specifications as PesticideSpecs).phi + ' Days'} />
+                                            <SpecRow label="Formulation" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.formulation} />
                                         </>
                                     )}
-
                                     {product.category === 'seed' && (
                                         <>
-                                            <SpecRow label="Seed Variety" value={(product.specifications as SeedSpecs).variety} />
-                                            <SpecRow label="Crop Duration" value={(product.specifications as SeedSpecs).duration} />
-                                            <SpecRow label="Germination Rate" value={(product.specifications as SeedSpecs).germinationPercentage + '%'} />
-                                            <SpecRow label="Yield Potential" value={(product.specifications as SeedSpecs).yieldPotential} />
+                                            <SpecRow label="Variety" value={(product.specifications as SeedSpecs).variety} />
+                                            <SpecRow label="Duration" value={(product.specifications as SeedSpecs).duration} />
+                                            <SpecRow label="Season" value={(product.specifications as SeedSpecs).season?.join(', ')} />
                                         </>
                                     )}
                                     {product.category === 'machinery' && (
                                         <>
                                             <SpecRow label="Power Source" value={(product.specifications as MachinerySpecs).powerSource} />
-                                            <SpecRow label="Operating Capacity" value={(product.specifications as MachinerySpecs).capacity} />
-                                            <SpecRow label="Machine Weight" value={(product.specifications as MachinerySpecs).weight} />
-                                            <SpecRow label="Warranty Period" value={(product.specifications as MachinerySpecs).warranty} />
+                                            <SpecRow label="Capacity" value={(product.specifications as MachinerySpecs).capacity} />
+                                            <SpecRow label="Warranty" value={(product.specifications as MachinerySpecs).warranty} />
                                         </>
                                     )}
                                 </div>
+                            </div>
+                        </TabsContent>
+
+                        {/* 3. Method of Application */}
+                        <TabsContent value="method-of-application" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8">
+                                <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+                                    <Leaf className="h-5 w-5 text-emerald-600" /> Method of Application
+                                </h3>
+                                {(product.applicationDescription || product.dosageDescription || product.targetCropsDescription) ? (
+                                    <div className="space-y-4">
+                                        {/* Render as Paragraphs since it's description text now, not just rows */}
+                                        {product.applicationDescription && (
+                                            <div>
+                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Application Method</h4>
+                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.applicationDescription}</p>
+                                            </div>
+                                        )}
+                                        {product.dosageDescription && (
+                                            <div>
+                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Dosage</h4>
+                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.dosageDescription}</p>
+                                            </div>
+                                        )}
+                                        {product.targetCropsDescription && (
+                                            <div>
+                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Target Crops</h4>
+                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.targetCropsDescription}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
+                                        {product.category === 'fertilizer' && (
+                                            <>
+                                                <SpecRow label="Application Method" value={(product.specifications as FertilizerSpecs).applicationMethod?.join(', ')} />
+                                                <SpecRow label="Dose Per Acre" value={(product.specifications as FertilizerSpecs).dosePerAcre} />
+                                                <SpecRow label="Target Crops" value={(product.specifications as FertilizerSpecs).targetCrops?.join(', ')} />
+                                            </>
+                                        )}
+                                        {product.category === 'pesticide' && (
+                                            <>
+                                                <SpecRow label="Application Method" value={(product.specifications as PesticideSpecs).applicationMethod} />
+                                                <SpecRow label="Dosage" value={(product.specifications as PesticideSpecs).dosage} />
+                                                <SpecRow label="Target Pests" value={(product.specifications as PesticideSpecs).targetPests?.join(', ')} />
+                                                <SpecRow label="Target Crops" value={(product.specifications as PesticideSpecs).targetCrops?.join(', ')} />
+                                                <SpecRow label="Pre-Harvest Interval (PHI)" value={(product.specifications as PesticideSpecs).phi ? `${(product.specifications as PesticideSpecs).phi} Days` : undefined} />
+                                            </>
+                                        )}
+                                        {product.category === 'seed' && (
+                                            <>
+                                                <SpecRow label="Sowing Method" value={(product.specifications as SeedSpecs).sowingMethod} />
+                                                <SpecRow label="Sowing Distance" value={(product.specifications as SeedSpecs).sowingDistance} />
+                                            </>
+                                        )}
+                                        {product.category === 'machinery' && (
+                                            <div className="text-zinc-500 italic">Refer to the operation manual provided with the machinery.</div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </TabsContent>
+
+                        {/* 4. QR Details */}
+                        <TabsContent value="qr-details" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col items-center justify-center text-center">
+                                <div className="bg-white p-4 rounded-xl border border-zinc-100 shadow-sm mb-4">
+                                    {product.qrCodeImage ? (
+                                        <div className="relative w-48 h-48">
+                                            <Image
+                                                src={product.qrCodeImage}
+                                                alt="Authenticity QR Code"
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-48 h-48 bg-zinc-100 flex items-center justify-center rounded-lg">
+                                            <span className="text-zinc-400 text-sm font-mono">NO QR AVAILABLE</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <h3 className="font-bold text-lg mb-2">Scan to Verify Authenticity</h3>
+                                <p className="text-zinc-500 text-sm max-w-md">
+                                    {(product.batchDetails) ? product.batchDetails : "Scan the QR code found on the physical product packaging to verify authenticity, view batch details, and access detailed usage instructions."}
+                                </p>
                             </div>
                         </TabsContent>
                     </Tabs>

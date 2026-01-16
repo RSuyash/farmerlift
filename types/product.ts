@@ -20,6 +20,16 @@ export interface BaseProduct {
     commonName?: string; // e.g., "Urea", "Glyphosate"
     packagingType?: string; // e.g., "HDPE Bag", "Bottle"
     netWeight?: string; // e.g., "50 kg", "1 L"
+
+    // New Fields from WP Sync
+    availablePackSizes?: string[];
+    qrCodeImage?: string;
+    batchDetails?: string;
+
+    // Universal App Method / Dosage (overrides category specifics if needed)
+    applicationDescription?: string;
+    dosageDescription?: string;
+    targetCropsDescription?: string;
 }
 
 export interface FertilizerSpecs {

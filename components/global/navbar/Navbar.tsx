@@ -216,7 +216,7 @@ export default function Navbar() {
                                 { name: "Home", href: "/" },
                                 { name: "Catalogue", href: "/catalogue" },
                                 { name: "Blog", href: "/blog" },
-                                { name: "Resources", href: "/resources" },
+                                { name: "Gallery", href: "/gallery" },
                                 { name: "About", href: "/about" },
                                 { name: "Contact", href: "/contact" },
                             ].map((link) => (

@@ -1,4 +1,5 @@
 import { Product, FertilizerSpecs, SeedSpecs, PesticideSpecs, MachinerySpecs, ProductCategory } from '@/types/product';
+import { BlogPost } from '@/types/blog';
 
 // Helper to safely get the image URL
 const getImageUrl = (wpPost: any) => {
@@ -70,7 +71,6 @@ export function mapWpProductToApp(wpPost: any): Product {
     }
 
     // --- 2. RETURN FINAL PRODUCT ---
-    // --- 2. RETURN FINAL PRODUCT ---
     const sellingPrice = Number(acf.selling_price) || 0;
     const priceDisplay = sellingPrice > 0 ? sellingPrice : "Enquire for Price";
 
@@ -92,7 +92,54 @@ export function mapWpProductToApp(wpPost: any): Product {
         features: acf.features_list ? acf.features_list.split('\n') : [],
         manufacturer: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
         countryOfOrigin: 'India',
+
+        // New Mappings: Aggregate all packaging inputs (Liquid + Solid + Custom)
+        availablePackSizes: [
+            ...(Array.isArray(acf.pack_sizes_liquid) ? acf.pack_sizes_liquid : []),
+            ...(Array.isArray(acf.pack_sizes_solid) ? acf.pack_sizes_solid : []),
+            ...(acf.custom_pack_sizes ? acf.custom_pack_sizes.split(',').map((s: string) => s.trim()) : [])
+        ],
+        qrCodeImage: acf.qr_code_image || null,
+        batchDetails: acf.batch_details || '',
+        applicationDescription: acf.application_method || '',
+        dosageDescription: acf.dosage_info || '',
+        targetCropsDescription: acf.target_crops_list || '',
+
         specifications: specs,
         brand: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
     } as Product;
+}
+
+export function mapWpPostToBlog(wpPost: any): BlogPost {
+    const acf = wpPost.acf || {};
+
+    // Feature Media
+    const image = getImageUrl(wpPost);
+
+    // Calculate Read Time if not provided in ACF (fallback)
+    let readTime = acf.read_time;
+    if (!readTime) {
+        const wordCount = (wpPost.content.rendered || "").split(/\s+/).length;
+        const minutes = Math.ceil(wordCount / 200);
+        readTime = `${minutes} min read`;
+    }
+
+    // Author
+    // Fallback to WP User Display Name if ACF is empty
+    const author = acf.author_name || wpPost._embedded?.author?.[0]?.name || 'FarmerLift Team';
+
+    // Tags/Categories
+    const tags = wpPost._embedded?.['wp:term']?.[0]?.map((t: any) => t.name) || [];
+
+    return {
+        id: wpPost.slug,
+        title: wpPost.title.rendered,
+        excerpt: (wpPost.excerpt.rendered || "").replace(/<[^>]+>/g, '').slice(0, 160) + '...',
+        content: wpPost.content.rendered,
+        author: author,
+        date: new Date(wpPost.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        image: image,
+        tags: tags,
+        readTime: readTime
+    };
 }

@@ -81,11 +81,7 @@ export default function ProductCard({ product }: { product: Product }) {
                                         <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">₹</span>
                                         <span className="font-bold text-xl text-zinc-900 dark:text-white font-outfit">{product.price}</span>
                                     </>
-                                ) : (
-                                    <span className="font-bold text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-md uppercase tracking-wide">
-                                        {product.price}
-                                    </span>
-                                )}
+                                ) : null}
                             </div>
                         </div>
 

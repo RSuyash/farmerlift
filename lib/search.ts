@@ -33,7 +33,8 @@ export function searchProducts(products: Product[], filters: SearchFilters): Pro
 
         // 3. Price Range
         if (filters.priceRange) {
-            if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) return false;
+            const currentPrice = typeof product.price === 'string' ? parseFloat(product.price) || 0 : product.price;
+            if (currentPrice < filters.priceRange[0] || currentPrice > filters.priceRange[1]) return false;
         }
 
         // 4. Brands

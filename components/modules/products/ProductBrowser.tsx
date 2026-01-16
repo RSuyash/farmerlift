@@ -19,9 +19,17 @@ export default function ProductBrowser({ initialProducts }: { initialProducts: P
 
         // Sorting
         if (sortBy === "price_asc") {
-            result.sort((a, b) => a.price - b.price);
+            result.sort((a, b) => {
+                const priceA = typeof a.price === 'string' ? parseFloat(a.price) || 0 : a.price;
+                const priceB = typeof b.price === 'string' ? parseFloat(b.price) || 0 : b.price;
+                return priceA - priceB;
+            });
         } else if (sortBy === "price_desc") {
-            result.sort((a, b) => b.price - a.price);
+            result.sort((a, b) => {
+                const priceA = typeof a.price === 'string' ? parseFloat(a.price) || 0 : a.price;
+                const priceB = typeof b.price === 'string' ? parseFloat(b.price) || 0 : b.price;
+                return priceB - priceA;
+            });
         } else if (sortBy === "name_asc") {
             result.sort((a, b) => a.name.localeCompare(b.name));
         }
