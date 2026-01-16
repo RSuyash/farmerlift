@@ -23,8 +23,9 @@ export async function GET(request: NextRequest, props: { params: Promise<{ id: s
 
         if (slug) {
             // 2. SUCCESS: Redirect to the actual product page
-            // Use 307 (Temporary Redirect) so browsers always check for new slugs
-            return NextResponse.redirect(new URL(`/products/${slug}`, request.url));
+            // FORCE the domain to be farmerlift.in to avoid Netlify internal URLs
+            const destination = `https://farmerlift.in/products/${slug}`;
+            return NextResponse.redirect(destination, 307);
         }
 
     } catch (error) {
@@ -32,5 +33,5 @@ export async function GET(request: NextRequest, props: { params: Promise<{ id: s
     }
 
     // Fallback for any other errors -> Go to Catalog
-    return NextResponse.redirect(new URL('/products', request.url));
+    return NextResponse.redirect('https://farmerlift.in/products', 307);
 }
