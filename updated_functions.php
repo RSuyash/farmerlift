@@ -489,5 +489,9 @@ add_filter( 'wp_is_application_passwords_available', '__return_true' );
 // =================================================================
 // 5. INCLUDE QR CODE STUDIO (Modular)
 // =================================================================
-require_once get_template_directory() . '/qr-code-system.php';
+// Safe include: Only load if the file exists in the same directory
+$qr_system_path = dirname(__FILE__) . '/qr-code-system.php';
+if ( file_exists( $qr_system_path ) ) {
+    require_once $qr_system_path;
+}
 ?>
