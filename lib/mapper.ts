@@ -1,5 +1,6 @@
 import { Product, FertilizerSpecs, SeedSpecs, PesticideSpecs, MachinerySpecs, ProductCategory } from '@/types/product';
 import { BlogPost } from '@/types/blog';
+import { CropGuide, CropGuideStage } from '@/types/crop-guide';
 
 // Helper to safely get the image URL
 const getImageUrl = (wpPost: any) => {
@@ -206,5 +207,55 @@ export function mapWpPostToBlog(wpPost: any): BlogPost {
         image: image,
         tags: tags,
         readTime: readTime
+    };
+}
+
+export function mapWpPostToCropGuide(wpPost: any): CropGuide {
+    const acf = wpPost.acf || {};
+    const image = getImageUrl(wpPost);
+
+    // Parse Season (Checkbox returns array, or string if single)
+    let seasons: string[] = [];
+    if (Array.isArray(acf.season)) {
+        seasons = acf.season.map((s: any) => s.label || s);
+    } else if (typeof acf.season === 'string') {
+        seasons = [acf.season];
+    } else if (acf.season && acf.season.label) {
+        seasons = [acf.season.label];
+    }
+
+    // Parse Stages (Fixed Slots 1-6)
+    const stages: CropGuideStage[] = [];
+    for (let i = 1; i <= 6; i++) {
+        const name = acf[`stage_${i}_name`];
+        // If name exists, we assume stage exists
+        if (name) {
+            const productsVal = acf[`stage_${i}_products`];
+            let productIds: number[] = [];
+
+            // ACF Relationship returns array of IDs (or objects if formatted)
+            // We set 'return_format' => 'id' in backend but good to handle both
+            if (Array.isArray(productsVal)) {
+                productIds = productsVal.map((p: any) => typeof p === 'object' ? p.ID : p);
+            }
+
+            stages.push({
+                name: name,
+                description: acf[`stage_${i}_desc`] || '',
+                products: productIds
+            });
+        }
+    }
+
+    return {
+        id: wpPost.slug,
+        title: wpPost.title.rendered,
+        scientificName: acf.scientific_name || '',
+        duration: acf.duration || 'N/A',
+        season: seasons,
+        image: image,
+        videoUrl: acf.video_url || null,
+        content: wpPost.content.rendered,
+        stages: stages
     };
 }

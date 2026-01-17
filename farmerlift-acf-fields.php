@@ -334,5 +334,55 @@ if( function_exists('acf_add_local_field_group') ):
         'show_in_rest' => true,
     ));
 
+    // 07. Crop Guide Details
+    acf_add_local_field_group(array(
+        'key' => 'group_crop_guide',
+        'title' => 'Crop Guide Details',
+        'fields' => array(
+            array( 'key' => 'field_sci_name', 'label' => 'Scientific Name', 'name' => 'scientific_name', 'type' => 'text' ),
+            array( 'key' => 'field_cg_duration', 'label' => 'Duration (Days)', 'name' => 'duration', 'type' => 'text', 'placeholder' => '120-150 Days' ),
+            array( 'key' => 'field_cg_season', 'label' => 'Season', 'name' => 'season', 'type' => 'checkbox', 'choices' => array('kharif'=>'Kharif', 'rabi'=>'Rabi', 'summer'=>'Summer', 'all_season'=>'All Season') ),
+            array( 'key' => 'field_cg_video', 'label' => 'Video Guide URL', 'name' => 'video_url', 'type' => 'url' ),
+
+            // STAGE 1
+            array( 'key' => 'field_s1_tab', 'label' => 'Stage 1', 'type' => 'tab' ),
+            array( 'key' => 'field_s1_name', 'label' => 'Stage Name', 'name' => 'stage_1_name', 'type' => 'text', 'placeholder' => 'e.g. Sowing (0-15 Days)' ),
+            array( 'key' => 'field_s1_desc', 'label' => 'Description', 'name' => 'stage_1_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s1_prod', 'label' => 'Recommended Products', 'name' => 'stage_1_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+
+            // STAGE 2
+            array( 'key' => 'field_s2_tab', 'label' => 'Stage 2', 'type' => 'tab' ),
+            array( 'key' => 'field_s2_name', 'label' => 'Stage Name', 'name' => 'stage_2_name', 'type' => 'text' ),
+            array( 'key' => 'field_s2_desc', 'label' => 'Description', 'name' => 'stage_2_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s2_prod', 'label' => 'Recommended Products', 'name' => 'stage_2_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+
+            // STAGE 3
+            array( 'key' => 'field_s3_tab', 'label' => 'Stage 3', 'type' => 'tab' ),
+            array( 'key' => 'field_s3_name', 'label' => 'Stage Name', 'name' => 'stage_3_name', 'type' => 'text' ),
+            array( 'key' => 'field_s3_desc', 'label' => 'Description', 'name' => 'stage_3_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s3_prod', 'label' => 'Recommended Products', 'name' => 'stage_3_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+
+             // STAGE 4
+            array( 'key' => 'field_s4_tab', 'label' => 'Stage 4', 'type' => 'tab' ),
+            array( 'key' => 'field_s4_name', 'label' => 'Stage Name', 'name' => 'stage_4_name', 'type' => 'text' ),
+            array( 'key' => 'field_s4_desc', 'label' => 'Description', 'name' => 'stage_4_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s4_prod', 'label' => 'Recommended Products', 'name' => 'stage_4_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+
+             // STAGE 5
+            array( 'key' => 'field_s5_tab', 'label' => 'Stage 5', 'type' => 'tab' ),
+            array( 'key' => 'field_s5_name', 'label' => 'Stage Name', 'name' => 'stage_5_name', 'type' => 'text' ),
+            array( 'key' => 'field_s5_desc', 'label' => 'Description', 'name' => 'stage_5_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s5_prod', 'label' => 'Recommended Products', 'name' => 'stage_5_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+
+             // STAGE 6
+            array( 'key' => 'field_s6_tab', 'label' => 'Stage 6', 'type' => 'tab' ),
+            array( 'key' => 'field_s6_name', 'label' => 'Stage Name', 'name' => 'stage_6_name', 'type' => 'text' ),
+            array( 'key' => 'field_s6_desc', 'label' => 'Description', 'name' => 'stage_6_desc', 'type' => 'textarea' ),
+            array( 'key' => 'field_s6_prod', 'label' => 'Recommended Products', 'name' => 'stage_6_products', 'type' => 'relationship', 'post_type' => array('product'), 'max' => 4, 'return_format' => 'id' ),
+        ),
+        'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'crop_guide' ) ) ),
+        'show_in_rest' => true,
+    ));
+
 endif;
 ?>

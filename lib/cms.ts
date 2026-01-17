@@ -2,7 +2,7 @@
 const WP_API = 'https://admin.farmerlift.in/wp-json/wp/v2';
 import { Product, ProductCategory } from '@/types/product';
 import { BlogPost } from '@/types/blog';
-import { mapWpProductToApp, mapWpPostToBlog } from './mapper';
+import { mapWpProductToApp, mapWpPostToBlog, mapWpPostToCropGuide } from './mapper';
 
 // 1. GET HOME BANNERS (Carousel)
 export async function getHomeBanners() {
@@ -170,4 +170,18 @@ export async function getVideoGallery() {
         videoUrl: item.acf?.video_url || '',
         date: item.acf?.event_date || item.date
     }));
+}
+
+// 6. CROP GUIDES
+export async function getAllCropGuides() {
+    const res = await fetch(`${WP_API}/crop_guide?_embed&per_page=100`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    return Array.isArray(data) ? data.map(mapWpPostToCropGuide) : [];
+}
+
+export async function getCropGuideBySlug(slug: string) {
+    const res = await fetch(`${WP_API}/crop_guide?slug=${slug}&_embed`, { next: { revalidate: 60 } });
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return null;
+    return mapWpPostToCropGuide(data[0]);
 }

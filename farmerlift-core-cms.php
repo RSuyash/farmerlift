@@ -64,5 +64,16 @@ function farmerlift_register_cms() {
         'taxonomies' => array( 'category' ),
         'has_archive' => true
     ));
+
+    // 5. CROP GUIDES (Knowledge / SOPs)
+    register_post_type( 'crop_guide', array(
+        'labels' => array( 'name' => 'Crop Guides', 'singular_name' => 'Crop Guide' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'rest_base' => 'crop_guide', // Endpoint: /wp-json/wp/v2/crop_guide
+        'menu_icon' => 'dashicons-book',
+        'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt' ), // editor for Body Text
+        'has_archive' => true
+    ));
 }
 ?>

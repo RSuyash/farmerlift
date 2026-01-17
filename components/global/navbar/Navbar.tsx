@@ -113,6 +113,7 @@ export default function Navbar() {
                         </div>
 
                         {[
+                            { name: "Crop Guides", href: "/crop-guides" },
                             { name: "Blog", href: "/blog" },
                             { name: "Resources", href: "/resources" },
                             { name: "About", href: "/about" },
@@ -131,20 +132,7 @@ export default function Navbar() {
                     {/* Actions */}
                     <div className="flex items-center gap-3">
                         <div className="hidden lg:flex relative group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                            <input
-                                type="text"
-                                placeholder="Search products..."
-                                className="h-10 w-64 rounded-full border border-input bg-muted/50 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pb-0.5"
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        const target = e.target as HTMLInputElement;
-                                        if (target.value.trim()) {
-                                            router.push(`/products?q=${encodeURIComponent(target.value)}`);
-                                        }
-                                    }
-                                }}
-                            />
+                            {/* Search Removed for Cleaner Look */}
                         </div>
 
                         <Button variant="ghost" size="icon" className="lg:hidden">
