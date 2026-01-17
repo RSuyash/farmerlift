@@ -225,19 +225,54 @@ if( function_exists('acf_add_local_field_group') ):
             array( 'key' => 'field_dose', 'label' => 'Dosage Instructions', 'name' => 'dosage_info', 'type' => 'text', 'instructions' => 'e.g., 2-3ml per liter' ),
             array( 'key' => 'field_target_crops', 'label' => 'Target Crops', 'name' => 'target_crops_list', 'type' => 'text' ),
             
-            // Recommended Crops (Visual)
-            array(
-                'key' => 'field_rec_crops',
-                'label' => 'Recommended Crops (Visual)',
-                'name' => 'recommended_crops',
-                'type' => 'repeater',
-                'layout' => 'table',
-                'button_label' => 'Add Crop',
-                'sub_fields' => array(
-                    array( 'key' => 'field_crop_name', 'label' => 'Crop Name', 'name' => 'crop_name', 'type' => 'text' ),
-                    array( 'key' => 'field_crop_img', 'label' => 'Crop Image', 'name' => 'crop_image', 'type' => 'image', 'return_format' => 'url', 'preview_size' => 'thumbnail' ),
-                ),
-            ),
+            // Recommended Crops (Visual) - Fixed Fields for ACF Free Compatibility
+            // Slot 1
+            array( 'key' => 'field_rc_1_n', 'label' => 'Crop 1 Name', 'name' => 'rec_crop_1_name', 'type' => 'text', 'placeholder' => 'e.g. Tomato' ),
+            array( 'key' => 'field_rc_1_i', 'label' => 'Crop 1 Image', 'name' => 'rec_crop_1_img', 'type' => 'image', 'return_format' => 'url' ),
+            
+            // Slot 2
+            array( 'key' => 'field_rc_2_n', 'label' => 'Crop 2 Name', 'name' => 'rec_crop_2_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_2_i', 'label' => 'Crop 2 Image', 'name' => 'rec_crop_2_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 3
+            array( 'key' => 'field_rc_3_n', 'label' => 'Crop 3 Name', 'name' => 'rec_crop_3_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_3_i', 'label' => 'Crop 3 Image', 'name' => 'rec_crop_3_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 4
+            array( 'key' => 'field_rc_4_n', 'label' => 'Crop 4 Name', 'name' => 'rec_crop_4_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_4_i', 'label' => 'Crop 4 Image', 'name' => 'rec_crop_4_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 5
+            array( 'key' => 'field_rc_5_n', 'label' => 'Crop 5 Name', 'name' => 'rec_crop_5_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_5_i', 'label' => 'Crop 5 Image', 'name' => 'rec_crop_5_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 6
+            array( 'key' => 'field_rc_6_n', 'label' => 'Crop 6 Name', 'name' => 'rec_crop_6_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_6_i', 'label' => 'Crop 6 Image', 'name' => 'rec_crop_6_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 7
+            array( 'key' => 'field_rc_7_n', 'label' => 'Crop 7 Name', 'name' => 'rec_crop_7_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_7_i', 'label' => 'Crop 7 Image', 'name' => 'rec_crop_7_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 8
+            array( 'key' => 'field_rc_8_n', 'label' => 'Crop 8 Name', 'name' => 'rec_crop_8_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_8_i', 'label' => 'Crop 8 Image', 'name' => 'rec_crop_8_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 9
+            array( 'key' => 'field_rc_9_n', 'label' => 'Crop 9 Name', 'name' => 'rec_crop_9_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_9_i', 'label' => 'Crop 9 Image', 'name' => 'rec_crop_9_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 10
+            array( 'key' => 'field_rc_10_n', 'label' => 'Crop 10 Name', 'name' => 'rec_crop_10_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_10_i', 'label' => 'Crop 10 Image', 'name' => 'rec_crop_10_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 11
+            array( 'key' => 'field_rc_11_n', 'label' => 'Crop 11 Name', 'name' => 'rec_crop_11_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_11_i', 'label' => 'Crop 11 Image', 'name' => 'rec_crop_11_img', 'type' => 'image', 'return_format' => 'url' ),
+
+            // Slot 12
+            array( 'key' => 'field_rc_12_n', 'label' => 'Crop 12 Name', 'name' => 'rec_crop_12_name', 'type' => 'text' ),
+            array( 'key' => 'field_rc_12_i', 'label' => 'Crop 12 Image', 'name' => 'rec_crop_12_img', 'type' => 'image', 'return_format' => 'url' ),
         ),
         'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
         'show_in_rest' => true,

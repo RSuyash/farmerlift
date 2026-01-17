@@ -5,6 +5,7 @@
  * Purpose:
  * 1. API Modifications (Fixing Gallery Images).
  * 2. Admin Interface Enhancements (Custom Columns for Products).
+ * 3. Crop Image URL Fixes.
  * 
  * Included by: functions.php
  */
@@ -48,7 +49,39 @@ add_filter( 'wp_is_application_passwords_available', '__return_true' );
 
 
 // =================================================================
-// 2. ADMIN LIST COLUMNS (PRO) - Better "All Products" View
+// 2. FORCE CROP IMAGES TO URLS (Fix for ID return issue)
+// =================================================================
+add_action('init', function() {
+    for ($i = 1; $i <= 12; $i++) {
+        // High priority (20) to override default ACF formatting
+        add_filter("acf/format_value/name=rec_crop_{$i}_img", 'farmerlift_force_url_output', 20, 3);
+    }
+});
+
+function farmerlift_force_url_output($value, $post_id, $field) {
+    // 1. If it's a numeric ID, get the URL
+    if ( is_numeric($value) ) {
+        $url = wp_get_attachment_url( (int)$value );
+        if ($url) return $url;
+    }
+    
+    // 2. If it's an array (ACF Image Object), return url key
+    if ( is_array($value) && isset($value['url']) ) {
+        return $value['url'];
+    }
+    
+    // 3. IMPORTANT: If it's empty/false, return null or empty string so frontend handles it
+    if ( empty($value) ) {
+        return '';
+    }
+
+    // 4. Otherwise return as is (string)
+    return $value;
+}
+
+
+// =================================================================
+// 3. ADMIN LIST COLUMNS (PRO) - Better "All Products" View
 // =================================================================
 
 // A. Add New Columns

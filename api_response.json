@@ -1,0 +1,352 @@
+[
+  {
+    "id": 318,
+    "date": "2026-01-15T18:57:21",
+    "date_gmt": "2026-01-15T18:57:21",
+    "guid": {
+      "rendered": "https://admin.farmerlift.in/product/npk-19-19-19/"
+    },
+    "modified": "2026-01-17T15:04:16",
+    "modified_gmt": "2026-01-17T15:04:16",
+    "slug": "npk-19-19-19",
+    "status": "publish",
+    "type": "product",
+    "link": "https://admin.farmerlift.in/product/npk-19-19-19/",
+    "title": {
+      "rendered": "FarmerLift 19:19:19"
+    },
+    "content": {
+      "rendered": "<p>Balanced Water Soluble Fertilizer for overall crop growth at vegetative stage.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Balanced Water Soluble Fertilizer for overall crop growth at vegetative stage.</p>\n",
+      "protected": false
+    },
+    "featured_media": 391,
+    "template": "",
+    "categories": [
+      3
+    ],
+    "class_list": [
+      "post-318",
+      "product",
+      "type-product",
+      "status-publish",
+      "has-post-thumbnail",
+      "hentry",
+      "category-water-soluble-npk"
+    ],
+    "acf": {
+      "spec_type": "fertilizer",
+      "sku": "FL-NPK-191919",
+      "hsn_code": "",
+      "mrp": 0,
+      "selling_price": 0,
+      "stock_qty": 0,
+      "is_organic": false,
+      "brand_manufacturer": "FarmerLift",
+      "features_list": "Promotes vigorous vegetative growth and lush green foliage.\r\n100% water-soluble formula ensures rapid nutrient uptake. \r\nBalanced NPK ratio (1:1:1) suitable for all stages of crop development. \r\nEnhances root development and overall plant metabolic functions. \r\nIdeal for correcting nutrient deficiencies quickly.",
+      "packaging_type": "liquid",
+      "pack_sizes_liquid": "",
+      "pack_sizes_solid": [
+        "500 g",
+        "5 kg",
+        "25 kg",
+        "50 kg"
+      ],
+      "custom_pack_sizes": "30kg, 60kg",
+      "application_method": "Apply through drip irrigation systems to deliver nutrients directly to the root zone. Ensure the system is flushed after application.\r\nFoliar Spray: Use a high-volume sprayer to cover the leaf surface thoroughly. Best applied during early morning or late evening to prevent evaporation.",
+      "dosage_info": "3–5 kg per acre, 5–10 g per liter of water",
+      "target_crops_list": "Suitable for Cotton, Soybeans, Sugarcane, Vegetables (Tomato, Chilli), and Fruit crops (Grapes, Pomegranate).",
+      "rec_crop_1_name": "Tomato",
+      "rec_crop_1_img": 398,
+      "rec_crop_2_name": "Brinjal",
+      "rec_crop_2_img": 400,
+      "rec_crop_3_name": "Jowar",
+      "rec_crop_3_img": 401,
+      "rec_crop_4_name": "Wheet",
+      "rec_crop_4_img": 402,
+      "rec_crop_5_name": "Bajra",
+      "rec_crop_5_img": 403,
+      "rec_crop_6_name": "Corn",
+      "rec_crop_6_img": 404,
+      "rec_crop_7_name": "",
+      "rec_crop_7_img": "",
+      "rec_crop_8_name": "",
+      "rec_crop_8_img": "",
+      "rec_crop_9_name": "",
+      "rec_crop_9_img": "",
+      "rec_crop_10_name": "",
+      "rec_crop_10_img": "",
+      "rec_crop_11_name": "",
+      "rec_crop_11_img": "",
+      "rec_crop_12_name": "",
+      "rec_crop_12_img": "",
+      "qr_code_image": "",
+      "batch_details": "Scan the QR code on the packaging to verify authenticity. This product is manufactured under strict quality control at our MIDC Kandhar facility. Direct from manufacturer to farm gate.",
+      "form": "powder",
+      "npk_ratio": "19:19:19",
+      "n_content": 19,
+      "p_content": 19,
+      "k_content": 19,
+      "solubility": "100% Water Soluble",
+      "seed_crop": "",
+      "seed_variety": "",
+      "germination_percentage": "",
+      "duration": "",
+      "chemical_group": "",
+      "active_ingredients": "",
+      "toxicity_label": "green",
+      "phi_days": "",
+      "banner_image": "",
+      "banner_heading": "",
+      "banner_subtext": "",
+      "gallery_image_1": 392,
+      "gallery_image_2": 393,
+      "gallery_image_3": 394,
+      "gallery_image_4": 395,
+      "gallery_image_5": 396,
+      "gallery_image_6": "",
+      "gallery_image_7": "",
+      "gallery_image_8": ""
+    },
+    "farmerlift_gallery": [
+      "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_52_57-PM.png",
+      "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_57_35-PM.png",
+      "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_57_35-PM-1.png",
+      "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-04_06_50-PM.png",
+      "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-04_07_37-PM.png"
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/product/318",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/product"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/types/product"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/media/391"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/media?parent=318"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://admin.farmerlift.in/wp-json/wp/v2/categories?post=318"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "id": 391,
+          "date": "2026-01-16T09:22:03",
+          "slug": "chatgpt-image-jan-16-2026-02_51_44-pm",
+          "type": "attachment",
+          "link": "https://admin.farmerlift.in/product/npk-19-19-19/chatgpt-image-jan-16-2026-02_51_44-pm/",
+          "title": {
+            "rendered": "ChatGPT Image Jan 16, 2026, 02_51_44 PM"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "acf": [],
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/png",
+          "media_details": {
+            "width": 1024,
+            "height": 1536,
+            "file": "2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM.png",
+            "filesize": 1641795,
+            "sizes": {
+              "medium": {
+                "file": "ChatGPT-Image-Jan-16-2026-02_51_44-PM-200x300.png",
+                "width": 200,
+                "height": 300,
+                "filesize": 80181,
+                "mime_type": "image/png",
+                "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM-200x300.png"
+              },
+              "large": {
+                "file": "ChatGPT-Image-Jan-16-2026-02_51_44-PM-683x1024.png",
+                "width": 683,
+                "height": 1024,
+                "filesize": 659810,
+                "mime_type": "image/png",
+                "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM-683x1024.png"
+              },
+              "thumbnail": {
+                "file": "ChatGPT-Image-Jan-16-2026-02_51_44-PM-150x150.png",
+                "width": 150,
+                "height": 150,
+                "filesize": 33735,
+                "mime_type": "image/png",
+                "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM-150x150.png"
+              },
+              "medium_large": {
+                "file": "ChatGPT-Image-Jan-16-2026-02_51_44-PM-768x1152.png",
+                "width": 768,
+                "height": 1152,
+                "filesize": 807338,
+                "mime_type": "image/png",
+                "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM-768x1152.png"
+              },
+              "full": {
+                "file": "ChatGPT-Image-Jan-16-2026-02_51_44-PM.png",
+                "width": 1024,
+                "height": 1536,
+                "mime_type": "image/png",
+                "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM.png"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://admin.farmerlift.in/wp-content/uploads/2026/01/ChatGPT-Image-Jan-16-2026-02_51_44-PM.png",
+          "_links": {
+            "self": [
+              {
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/media/391",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/comments?post=391"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "product",
+                "id": 318,
+                "href": "https://admin.farmerlift.in/wp-json/wp/v2/product/318"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 3,
+            "link": "https://admin.farmerlift.in/category/water-soluble-npk/",
+            "name": "Water Soluble NPK Fertilizer",
+            "slug": "water-soluble-npk",
+            "taxonomy": "category",
+            "acf": [],
+            "_links": {
+              "self": [
+                {
+                  "href": "https://admin.farmerlift.in/wp-json/wp/v2/categories/3",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://admin.farmerlift.in/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://admin.farmerlift.in/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://admin.farmerlift.in/wp-json/wp/v2/posts?categories=3"
+                },
+                {
+                  "href": "https://admin.farmerlift.in/wp-json/wp/v2/product?categories=3"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  }
+]

@@ -9,7 +9,7 @@ const getImageUrl = (wpPost: any) => {
     return '/images/placeholder.png'; // Fallback
 };
 
-export function mapWpProductToApp(wpPost: any): Product {
+export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> = {}): Product {
     const acf = wpPost.acf || {};
 
     // Extract Category from WP Taxonomy (inserted via _embed)
@@ -114,6 +114,7 @@ export function mapWpProductToApp(wpPost: any): Product {
 
     return {
         id: wpPost.slug,
+        wordpressId: wpPost.id,
         name: wpPost.title.rendered,
         category: type,
         price: priceDisplay,  // MATCHES "Selling Price" field or Text
@@ -138,6 +139,36 @@ export function mapWpProductToApp(wpPost: any): Product {
         applicationDescription: acf.application_method || '',
         dosageDescription: acf.dosage_info || '',
         targetCropsDescription: acf.target_crops_list || '',
+
+        recommendedCrops: (() => {
+            const crops = [];
+            for (let i = 1; i <= 12; i++) {
+                const name = acf[`rec_crop_${i}_name`];
+                const rawImg = acf[`rec_crop_${i}_img`];
+
+                // Strict Image Resolution
+                let finalImg = '/images/farmerlift_icon_transparent.png'; // Default Fallback
+
+                if (typeof rawImg === 'string' && rawImg.trim() !== '') {
+                    finalImg = rawImg;
+                } else if (typeof rawImg === 'object' && rawImg?.url) {
+                    finalImg = rawImg.url;
+                } else if (typeof rawImg === 'number') {
+                    // Try to resolve from mediaMap if available
+                    if (mediaMap[rawImg]) {
+                        finalImg = mediaMap[rawImg];
+                    }
+                }
+
+                if (name) {
+                    crops.push({
+                        name: name,
+                        image: finalImg
+                    });
+                }
+            }
+            return crops;
+        })(),
 
         specifications: specs,
         brand: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift

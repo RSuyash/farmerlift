@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import ProductImage from "@/components/ui/ProductImage";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
@@ -170,7 +171,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* Value Props - Moved UP for Catalog Look */}
+                        {/* Value Props */}
                         <div className="grid grid-cols-2 gap-3 mb-6">
                             <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
                                 <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
@@ -187,6 +188,32 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Recommended Crops Slider */}
+                        {product.recommendedCrops && product.recommendedCrops.length > 0 && (
+                            <div className="mb-6">
+                                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <Leaf className="h-4 w-4" /> Recommended Crops
+                                </h4>
+                                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
+                                    {product.recommendedCrops.map((crop, idx) => (
+                                        <div key={idx} className="flex flex-col items-center gap-2 flex-shrink-0 snap-start group cursor-default">
+                                            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100 dark:border-zinc-800 group-hover:border-emerald-500 transition-colors shadow-sm">
+                                                <Image
+                                                    src={crop.image || '/images/farmerlift_icon_transparent.png'}
+                                                    alt={crop.name}
+                                                    fill
+                                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                                />
+                                            </div>
+                                            <span className="text-[10px] font-medium text-zinc-700 dark:text-zinc-300 text-center max-w-[64px] leading-tight truncate">
+                                                {crop.name}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Description Short */}
                         <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-base">
@@ -320,6 +347,31 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
                                     <Leaf className="h-5 w-5 text-emerald-600" /> Method of Application
                                 </h3>
+
+                                {/* Visual Recommended Crops */}
+                                {product.recommendedCrops && product.recommendedCrops.length > 0 && (
+                                    <div className="mb-8 p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-100 dark:border-zinc-700/50">
+                                        <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-4 uppercase tracking-wider">Recommended for Crops</h4>
+                                        <div className="flex flex-wrap gap-6">
+                                            {product.recommendedCrops.map((crop, idx) => (
+                                                <div key={idx} className="flex flex-col items-center gap-2 group">
+                                                    <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 group-hover:border-emerald-500 transition-colors shadow-sm">
+                                                        <Image
+                                                            src={crop.image}
+                                                            alt={crop.name}
+                                                            fill
+                                                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                                        />
+                                                    </div>
+                                                    <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300 text-center max-w-[80px] leading-tight">
+                                                        {crop.name}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {(product.applicationDescription || product.dosageDescription || product.targetCropsDescription) ? (
                                     <div className="space-y-4">
                                         {/* Render as Paragraphs since it's description text now, not just rows */}
@@ -378,25 +430,33 @@ export default function ProductDetailView({ product }: { product: Product }) {
                         <TabsContent value="qr-details" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col items-center justify-center text-center">
                                 <div className="bg-white p-4 rounded-xl border border-zinc-100 shadow-sm mb-4">
-                                    {product.qrCodeImage ? (
-                                        <div className="relative w-48 h-48">
-                                            <Image
-                                                src={product.qrCodeImage}
-                                                alt="Authenticity QR Code"
-                                                fill
-                                                className="object-contain"
+                                    {product.wordpressId ? (
+                                        <div className="relative w-48 h-48 flex items-center justify-center">
+                                            <QRCodeSVG
+                                                value={`https://farmerlift.in/qr/${product.wordpressId}`}
+                                                size={192}
+                                                level="H"
+                                                includeMargin={true}
                                             />
                                         </div>
                                     ) : (
                                         <div className="w-48 h-48 bg-zinc-100 flex items-center justify-center rounded-lg">
-                                            <span className="text-zinc-400 text-sm font-mono">NO QR AVAILABLE</span>
+                                            <span className="text-zinc-400 text-sm font-mono">NO ID FOUND</span>
                                         </div>
                                     )}
                                 </div>
                                 <h3 className="font-bold text-lg mb-2">Scan to Verify Authenticity</h3>
-                                <p className="text-zinc-500 text-sm max-w-md">
-                                    {(product.batchDetails) ? product.batchDetails : "Scan the QR code found on the physical product packaging to verify authenticity, view batch details, and access detailed usage instructions."}
-                                </p>
+                                <div className="text-zinc-500 text-sm max-w-md space-y-1">
+                                    <p>Scan the code above or on the packaging.</p>
+                                    <p className="text-xs font-mono bg-zinc-100 dark:bg-zinc-800 inline-block px-2 py-1 rounded">
+                                        ID: {product.wordpressId}
+                                    </p>
+                                </div>
+                                {product.batchDetails && (
+                                    <p className="mt-4 text-zinc-600 dark:text-zinc-300 text-sm border-t border-zinc-100 dark:border-zinc-800 pt-4 w-full">
+                                        {product.batchDetails}
+                                    </p>
+                                )}
                             </div>
                         </TabsContent>
                     </Tabs>

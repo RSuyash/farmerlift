@@ -1,7 +1,8 @@
 export type ProductCategory = "fertilizer" | "pesticide" | "seed" | "machinery" | "growth_promoter";
 
 export interface BaseProduct {
-    id: string;
+    id: string; // This is the Slug
+    wordpressId: number; // This is the Numeric ID (for QR)
     name: string;
     brand: string;
     category: ProductCategory;
@@ -30,6 +31,9 @@ export interface BaseProduct {
     applicationDescription?: string;
     dosageDescription?: string;
     targetCropsDescription?: string;
+
+    // Visual Crops
+    recommendedCrops?: { name: string; image: string; }[];
 }
 
 export interface FertilizerSpecs {
