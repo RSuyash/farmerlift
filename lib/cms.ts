@@ -2,7 +2,9 @@
 const WP_API = 'https://admin.farmerlift.in/wp-json/wp/v2';
 import { Product, ProductCategory } from '@/types/product';
 import { BlogPost } from '@/types/blog';
+import { Certification } from '@/types/certification';
 import { mapWpProductToApp, mapWpPostToBlog, mapWpPostToCropGuide } from './mapper';
+
 
 // 1. GET HOME BANNERS (Carousel)
 export async function getHomeBanners() {
@@ -171,8 +173,9 @@ export async function getVideoGallery() {
         date: item.acf?.event_date || item.date
     }));
 }
-
-// 6. CROP GUIDES
+// --------------------------------------------------------------------------
+// CROP GUIDES
+// --------------------------------------------------------------------------
 export async function getAllCropGuides() {
     const res = await fetch(`${WP_API}/crop_guide?_embed&per_page=100`, { next: { revalidate: 60 } });
     const data = await res.json();
@@ -184,4 +187,61 @@ export async function getCropGuideBySlug(slug: string) {
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return null;
     return mapWpPostToCropGuide(data[0]);
+}
+
+// --------------------------------------------------------------------------
+// CERTIFICATIONS
+// --------------------------------------------------------------------------
+export async function getAllCertifications(): Promise<Certification[]> {
+    const res = await fetch(`${WP_API}/certification?_embed&per_page=100`, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+
+    const data = await res.json();
+
+    // Map response
+    const certs = await Promise.all(data.map(async (item: any) => {
+        const acf = item.acf || {};
+        let fileUrl = '';
+
+        // Resolve File URL
+        if (typeof acf.cert_file === 'string') {
+            fileUrl = acf.cert_file;
+        } else if (typeof acf.cert_file === 'number') {
+            // Fetch Media URL if ID
+            try {
+                const mediaRes = await fetch(`${WP_API}/media/${acf.cert_file}`);
+                if (mediaRes.ok) {
+                    const media = await mediaRes.json();
+                    fileUrl = media.source_url || '';
+                }
+            } catch (e) {
+                console.error(`Failed to fetch media ${acf.cert_file}`, e);
+            }
+        } else if (acf.cert_file?.url) {
+            fileUrl = acf.cert_file.url;
+        }
+
+        return {
+            id: item.id,
+            title: item.title.rendered,
+            image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/placeholder_cert.png',
+            content: item.content?.rendered,
+            details: {
+                certNumber: acf.cert_number || '',
+                authority: acf.cert_authority || '',
+                fileUrl: fileUrl,
+                validUntil: acf.valid_until || undefined,
+                type: acf.cert_type || 'other',
+                standard: acf.cert_standard || '',
+                scope: acf.cert_scope || '',
+                relatedProduct: acf.related_product ? {
+                    id: acf.related_product.ID,
+                    name: acf.related_product.post_title,
+                    slug: acf.related_product.post_name
+                } : undefined
+            }
+        } as Certification;
+    }));
+
+    return certs;
 }

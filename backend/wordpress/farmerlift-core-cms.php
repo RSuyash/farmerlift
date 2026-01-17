@@ -75,5 +75,16 @@ function farmerlift_register_cms() {
         'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt' ), // editor for Body Text
         'has_archive' => true
     ));
+
+    // 6. CERTIFICATIONS (Trust Elements)
+    register_post_type( 'certification', array(
+        'labels' => array( 'name' => 'Certifications', 'singular_name' => 'Certification' ),
+        'public' => true,
+        'show_in_rest' => true,
+        'rest_base' => 'certification',
+        'menu_icon' => 'dashicons-awards',
+        'supports' => array( 'title', 'thumbnail', 'editor' ), 
+        'has_archive' => false
+    ));
 }
 ?>

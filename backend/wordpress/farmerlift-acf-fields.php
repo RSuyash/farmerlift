@@ -384,5 +384,53 @@ if( function_exists('acf_add_local_field_group') ):
         'show_in_rest' => true,
     ));
 
+    // 08. Certification Details (Trust Page)
+    acf_add_local_field_group(array(
+        'key' => 'group_cert_details',
+        'title' => 'Certification Details',
+        'fields' => array(
+            // Basic ID & Authority
+            array( 'key' => 'field_cert_id', 'label' => 'License / Registration No.', 'name' => 'cert_number', 'type' => 'text' ),
+            array( 'key' => 'field_cert_auth', 'label' => 'Issuing Authority', 'name' => 'cert_authority', 'type' => 'text', 'placeholder' => 'e.g. Govt of India, ISO, NABL' ),
+            
+            // Files & Validity
+            array( 'key' => 'field_cert_file', 'label' => 'Certificate File (PDF/Image)', 'name' => 'cert_file', 'type' => 'file', 'return_format' => 'url' ),
+            array( 'key' => 'field_valid_until', 'label' => 'Valid Until', 'name' => 'valid_until', 'type' => 'date_picker' ),
+            
+            // Classification
+            array( 
+                'key' => 'field_cert_type', 
+                'label' => 'Certificate Type', 
+                'name' => 'cert_type', 
+                'type' => 'select',
+                'choices' => array(
+                    'iso' => 'ISO Certification',
+                    'fco' => 'FCO License (Fertilizer)',
+                    'cib' => 'CIB Registration (Pesticide)',
+                    'lab' => 'Lab Analysis Report',
+                    'other' => 'Other / Award'
+                )
+            ),
+
+            // [NEW] Enhanced Details
+            array( 'key' => 'field_cert_std', 'label' => 'Standard / Grade', 'name' => 'cert_standard', 'type' => 'text', 'instructions' => 'e.g. ISO 9001:2015, Grade A' ),
+            array( 'key' => 'field_cert_scope', 'label' => 'Scope of Certification', 'name' => 'cert_scope', 'type' => 'textarea', 'rows' => 3, 'instructions' => 'Brief description of what is certified.' ),
+            
+            // [NEW] Lab Report Specific
+            array( 
+                'key' => 'field_rel_prod', 
+                'label' => 'Related Product (For Lab Reports)', 
+                'name' => 'related_product', 
+                'type' => 'relationship', 
+                'post_type' => array('product'),
+                'max' => 1,
+                'return_format' => 'object', 
+                'conditional_logic' => array( array( array( 'field' => 'field_cert_type', 'operator' => '==', 'value' => 'lab' ) ) )
+            ),
+        ),
+        'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'certification' ) ) ),
+        'show_in_rest' => true,
+    ));
+
 endif;
 ?>

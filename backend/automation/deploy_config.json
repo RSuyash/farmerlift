@@ -1,0 +1,12 @@
+{
+    "host": "91.108.107.13",
+    "port": 65002,
+    "username": "u146189558",
+    "password": "farmerLift@108",
+    "remotePath": "domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/",
+    "files": [
+        "../wordpress/farmerlift-core-cms.php",
+        "../wordpress/farmerlift-acf-fields.php",
+        "seeder.php"
+    ]
+}

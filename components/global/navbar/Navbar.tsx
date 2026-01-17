@@ -114,6 +114,7 @@ export default function Navbar() {
 
                         {[
                             { name: "Crop Guides", href: "/crop-guides" },
+                            { name: "Certifications", href: "/certifications" },
                             { name: "Blog", href: "/blog" },
                             { name: "Resources", href: "/resources" },
                             { name: "About", href: "/about" },
@@ -203,6 +204,8 @@ export default function Navbar() {
                             {[
                                 { name: "Home", href: "/" },
                                 { name: "Catalogue", href: "/catalogue" },
+                                { name: "Crop Guides", href: "/crop-guides" },
+                                { name: "Certifications", href: "/certifications" },
                                 { name: "Blog", href: "/blog" },
                                 { name: "Gallery", href: "/gallery" },
                                 { name: "About", href: "/about" },
