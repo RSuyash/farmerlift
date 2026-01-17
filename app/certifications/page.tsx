@@ -17,7 +17,7 @@ export default async function CertificationsPage() {
     const otherCerts = certifications.filter(c => c.details.type === 'other');
 
     return (
-        <main className="min-h-screen bg-white dark:bg-black pb-20">
+        <div className="min-h-screen bg-white dark:bg-black pb-20">
             {/* HERO SECTION */}
             <div className="relative bg-zinc-900 border-b border-white/10 overflow-hidden">
                 <div className="absolute inset-0 opacity-20">
@@ -288,6 +288,6 @@ export default async function CertificationsPage() {
                     </div>
                 )}
             </div>
-        </main>
+        </div>
     );
 }

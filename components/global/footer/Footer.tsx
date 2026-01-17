@@ -4,6 +4,7 @@ import Container from "@/components/global/ui/Container";
 import SocialMediaIcons from "./SocialMediaIcons";
 import { getSiteConfig } from "@/lib/cms";
 import { Mail, MapPin, Phone, ArrowRight, Leaf, ChevronRight } from "lucide-react";
+import RsuyashSignature from "../rsuyash-signature/RsuyashSignature";
 
 export default async function Footer() {
     // 1. Fetch Global Settings from CMS
@@ -154,8 +155,12 @@ export default async function Footer() {
 
                 </div>
 
-                <div className="border-t border-zinc-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500">
+                <div className="border-t border-zinc-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500">
                     <p>© {new Date().getFullYear()} FarmerLift. All rights reserved.</p>
+
+                    {/* Developer Credit */}
+                    <RsuyashSignature />
+
                     <div className="flex gap-6">
                         <Link href="/privacy" className="hover:text-emerald-600 dark:hover:text-white transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-emerald-600 dark:hover:text-white transition-colors">Terms of Service</Link>
