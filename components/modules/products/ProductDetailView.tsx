@@ -159,6 +159,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             {product.name}
                         </h1>
 
+                        {/* Price */}
                         {typeof product.price === 'number' && (
                             <div className="flex items-end gap-3 mb-6 border-b border-zinc-100 dark:border-zinc-800 pb-6">
                                 <span className="text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">₹{product.price}</span>
@@ -171,61 +172,18 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* Value Props */}
-                        <div className="grid grid-cols-2 gap-3 mb-6">
-                            <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
-                                <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
-                                <div>
-                                    <span className="block font-bold text-xs text-zinc-900 dark:text-white">Fast Delivery</span>
-                                    <span className="text-[10px] text-zinc-500">To your farm gate</span>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3 p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20">
-                                <ShieldCheck className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                                <div>
-                                    <span className="block font-bold text-xs text-zinc-900 dark:text-white">Verified Authentic</span>
-                                    <span className="text-[10px] text-zinc-500">Direct from manufacturer</span>
-                                </div>
-                            </div>
+                        {/* 1. Description (Moved Up) */}
+                        <div className="mb-8">
+                            <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-2">Description</h4>
+                            <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed text-base">
+                                {product.description}
+                            </p>
                         </div>
 
-                        {/* Recommended Crops Slider */}
-                        {product.recommendedCrops && product.recommendedCrops.length > 0 && (
-                            <div className="mb-6">
-                                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-                                    <Leaf className="h-4 w-4" /> Recommended Crops
-                                </h4>
-                                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
-                                    {product.recommendedCrops.map((crop, idx) => (
-                                        <div key={idx} className="flex flex-col items-center gap-2 flex-shrink-0 snap-start group cursor-default">
-                                            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100 dark:border-zinc-800 group-hover:border-emerald-500 transition-colors shadow-sm">
-                                                <Image
-                                                    src={crop.image || '/images/farmerlift_icon_transparent.png'}
-                                                    alt={crop.name}
-                                                    fill
-                                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                                />
-                                            </div>
-                                            <span className="text-[10px] font-medium text-zinc-700 dark:text-zinc-300 text-center max-w-[64px] leading-tight truncate">
-                                                {crop.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Description Short */}
-                        <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6 text-base">
-                            {product.description}
-                        </p>
-
-                        {/* Available Packs Chips */}
+                        {/* 2. Available Packs (Moved Up) */}
                         {product.availablePackSizes && product.availablePackSizes.length > 0 && (
                             <div className="mb-8">
-                                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-                                    <Package className="h-4 w-4" /> Available Packs
-                                </h4>
+                                <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">Available Packs</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {product.availablePackSizes.map((size, idx) => (
                                         <div
@@ -239,22 +197,70 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* Desktop CTA */}
+                        {/* 3. Delivery & Verified Badges (Moved Down) */}
+                        <div className="grid grid-cols-2 gap-3 mb-8">
+                            {(!product.badges || product.badges.delivery) && (
+                                <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
+                                    <Truck className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+                                    <div>
+                                        <span className="block font-bold text-xs text-zinc-900 dark:text-white">Fast Delivery</span>
+                                        <span className="text-[10px] text-zinc-500">To your farm gate</span>
+                                    </div>
+                                </div>
+                            )}
+                            {(!product.badges || product.badges.verified) && (
+                                <div className="flex items-center gap-3 p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20">
+                                    <ShieldCheck className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                                    <div>
+                                        <span className="block font-bold text-xs text-zinc-900 dark:text-white">Verified Authentic</span>
+                                        <span className="text-[10px] text-zinc-500">Direct from manufacturer</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* 4. Get Best Price Button */}
                         <div className="hidden lg:flex flex-col gap-3 mb-8">
                             <a
                                 href={waLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center justify-center gap-4 w-full p-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1"
+                                className="group flex items-center justify-center gap-4 w-full p-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1"
                             >
                                 <MessageCircle className="h-6 w-6" />
                                 <div className="flex flex-col items-start">
-                                    <span className="font-bold text-base leading-none mb-0.5">Get Best Price</span>
-                                    <span className="text-[10px] font-medium text-emerald-100 opacity-90">on WhatsApp</span>
+                                    <span className="font-bold text-lg leading-none mb-0.5">Get Best Price</span>
+                                    <span className="text-xs font-medium text-emerald-100 opacity-90">on WhatsApp</span>
                                 </div>
                                 <ChevronRight className="ml-auto h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                             </a>
                         </div>
+
+                        {/* 5. Recommended Crops (Crops with Slides) */}
+                        {product.recommendedCrops && product.recommendedCrops.length > 0 && (
+                            <div className="mb-6 pt-6 border-t border-zinc-100 dark:border-zinc-800">
+                                <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
+                                    Recommended Crops
+                                </h4>
+                                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
+                                    {product.recommendedCrops.map((crop, idx) => (
+                                        <div key={idx} className="flex flex-col items-center gap-2 flex-shrink-0 snap-start group cursor-default min-w-[70px]">
+                                            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-100 dark:border-zinc-800 group-hover:border-emerald-500 transition-colors shadow-sm">
+                                                <Image
+                                                    src={crop.image || '/images/farmerlift_icon_transparent.png'}
+                                                    alt={crop.name}
+                                                    fill
+                                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                                />
+                                            </div>
+                                            <span className="text-[10px] font-medium text-zinc-700 dark:text-zinc-300 text-center leading-tight truncate w-full">
+                                                {crop.name}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -301,43 +307,67 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
                                     <Info className="h-5 w-5 text-emerald-600" /> Technical Specifications
                                 </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
-                                    <SpecRow label="Brand Name" value={product.brand} />
-                                    <SpecRow label="Manufacturer" value={product.manufacturer} />
-                                    <SpecRow label="Country of Origin" value={product.countryOfOrigin} />
-                                    <SpecRow label="SKU Code" value={product.sku} />
 
-                                    {/* Category Specific Specs */}
-                                    {product.category === 'fertilizer' && (
-                                        <>
-                                            <SpecRow label="Type" value={(product.specifications as FertilizerSpecs).type} />
-                                            <SpecRow label="Form" value={(product.specifications as FertilizerSpecs).form} />
-                                            <SpecRow label="NPK Ratio" value={(product.specifications as FertilizerSpecs).npkRatio} />
-                                            <SpecRow label="Solubility" value={(product.specifications as FertilizerSpecs).solubility} />
-                                        </>
-                                    )}
-                                    {product.category === 'pesticide' && (
-                                        <>
-                                            <SpecRow label="Chemical Group" value={(product.specifications as PesticideSpecs).chemicalGroup} />
-                                            <SpecRow label="Active Ingredient" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.name} />
-                                            <SpecRow label="Formulation" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.formulation} />
-                                        </>
-                                    )}
-                                    {product.category === 'seed' && (
-                                        <>
-                                            <SpecRow label="Variety" value={(product.specifications as SeedSpecs).variety} />
-                                            <SpecRow label="Duration" value={(product.specifications as SeedSpecs).duration} />
-                                            <SpecRow label="Season" value={(product.specifications as SeedSpecs).season?.join(', ')} />
-                                        </>
-                                    )}
-                                    {product.category === 'machinery' && (
-                                        <>
-                                            <SpecRow label="Power Source" value={(product.specifications as MachinerySpecs).powerSource} />
-                                            <SpecRow label="Capacity" value={(product.specifications as MachinerySpecs).capacity} />
-                                            <SpecRow label="Warranty" value={(product.specifications as MachinerySpecs).warranty} />
-                                        </>
-                                    )}
-                                </div>
+                                {/* Regulatory Table Style (Priority) */}
+                                {product.detailedSpecs && product.detailedSpecs.length > 0 ? (
+                                    <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
+                                        <table className="w-full text-sm text-left">
+                                            <thead className="bg-zinc-50 dark:bg-zinc-800/50 text-zinc-700 dark:text-zinc-300 font-bold uppercase tracking-wider">
+                                                <tr>
+                                                    <th className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-700 w-2/3">Specifications</th>
+                                                    <th className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-700 w-1/3 text-right">Value / %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                                                {product.detailedSpecs.map((spec, i) => (
+                                                    <tr key={i} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors">
+                                                        <td className="px-6 py-4 font-medium text-zinc-600 dark:text-zinc-400 border-r border-zinc-100 dark:border-zinc-800">{spec.key}</td>
+                                                        <td className="px-6 py-4 font-bold text-zinc-900 dark:text-zinc-100 text-right text-emerald-600 dark:text-emerald-400">{spec.value}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    /* Fallback to Standard Specs */
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
+                                        <SpecRow label="Brand Name" value={product.brand} />
+                                        <SpecRow label="Manufacturer" value={product.manufacturer} />
+                                        <SpecRow label="Country of Origin" value={product.countryOfOrigin} />
+                                        <SpecRow label="SKU Code" value={product.sku} />
+
+                                        {/* Category Specific Specs */}
+                                        {product.category === 'fertilizer' && (
+                                            <>
+                                                <SpecRow label="Type" value={(product.specifications as FertilizerSpecs).type} />
+                                                <SpecRow label="Form" value={(product.specifications as FertilizerSpecs).form} />
+                                                <SpecRow label="NPK Ratio" value={(product.specifications as FertilizerSpecs).npkRatio} />
+                                                <SpecRow label="Solubility" value={(product.specifications as FertilizerSpecs).solubility} />
+                                            </>
+                                        )}
+                                        {product.category === 'pesticide' && (
+                                            <>
+                                                <SpecRow label="Chemical Group" value={(product.specifications as PesticideSpecs).chemicalGroup} />
+                                                <SpecRow label="Active Ingredient" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.name} />
+                                                <SpecRow label="Formulation" value={(product.specifications as PesticideSpecs).activeIngredients[0]?.formulation} />
+                                            </>
+                                        )}
+                                        {product.category === 'seed' && (
+                                            <>
+                                                <SpecRow label="Variety" value={(product.specifications as SeedSpecs).variety} />
+                                                <SpecRow label="Duration" value={(product.specifications as SeedSpecs).duration} />
+                                                <SpecRow label="Season" value={(product.specifications as SeedSpecs).season?.join(', ')} />
+                                            </>
+                                        )}
+                                        {product.category === 'machinery' && (
+                                            <>
+                                                <SpecRow label="Power Source" value={(product.specifications as MachinerySpecs).powerSource} />
+                                                <SpecRow label="Capacity" value={(product.specifications as MachinerySpecs).capacity} />
+                                                <SpecRow label="Warranty" value={(product.specifications as MachinerySpecs).warranty} />
+                                            </>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </TabsContent>
 

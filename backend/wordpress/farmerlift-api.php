@@ -25,7 +25,11 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $phone = sanitize_text_field( $params['phone'] ?? '' );
     $email = sanitize_email( $params['email'] ?? '' );
     $type = sanitize_text_field( $params['type'] ?? '' );
+    $dob = sanitize_text_field( $params['dob'] ?? '' );
+    $gst = sanitize_text_field( $params['gstNumber'] ?? '' );
+    $city = sanitize_text_field( $params['city'] ?? '' );
     $state = sanitize_text_field( $params['state'] ?? '' );
+    $address = sanitize_textarea_field( $params['address'] ?? '' );
     $message = sanitize_textarea_field( $params['message'] ?? '' );
 
     // Basic Validation
@@ -42,7 +46,7 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $user_message .= "We have received your details safely. Our team is currently reviewing your application and will contact you at $phone within 24-48 hours.\n\n";
     $user_message .= "Here is a summary of what you submitted:\n";
     $user_message .= "Name: $name\n";
-    $user_message .= "Region: $state\n";
+    $user_message .= "Location: $city, $state\n";
     $user_message .= "Role: $type\n\n";
     $user_message .= "Best Regards,\nTeam FarmerLift\nhttps://farmerlift.in";
 
@@ -61,7 +65,11 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $admin_message .= "Phone: $phone\n";
     $admin_message .= "Email: $email\n";
     $admin_message .= "Type: $type\n";
+    $admin_message .= "DOB: $dob\n";
+    $admin_message .= "GST: $gst\n";
+    $admin_message .= "City: $city\n";
     $admin_message .= "State: $state\n";
+    $admin_message .= "Address: $address\n";
     $admin_message .= "Message/Crops: $message\n";
     
     wp_mail( $admin_email, $admin_subject, $admin_message, $headers );

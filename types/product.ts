@@ -14,6 +14,10 @@ export interface BaseProduct {
     sku: string;
     images: string[];
     features: string[];
+    badges?: {
+        delivery: boolean;
+        verified: boolean;
+    };
 
     // Industrial Metadata
     manufacturer: string;
@@ -34,6 +38,9 @@ export interface BaseProduct {
 
     // Visual Crops
     recommendedCrops?: { name: string; image: string; }[];
+
+    // Detailed Regulatory Specs (Repeater)
+    detailedSpecs?: { key: string; value: string; }[];
 }
 
 export interface FertilizerSpecs {

@@ -118,7 +118,7 @@ export default function Navbar() {
                             { name: "Blog", href: "/blog" },
                             { name: "Gallery", href: "/gallery" },
                             { name: "About", href: "/about" },
-                            { name: "Contact", href: "/contact" },
+                            { name: "Partner with Us", href: "/register" },
                         ].map((link) => (
                             <Link
                                 key={link.name}
@@ -209,7 +209,7 @@ export default function Navbar() {
                                 { name: "Blog", href: "/blog" },
                                 { name: "Gallery", href: "/gallery" },
                                 { name: "About", href: "/about" },
-                                { name: "Contact", href: "/contact" },
+                                { name: "Partner with Us", href: "/register" },
                             ].map((link) => (
                                 <Link
                                     key={link.name}

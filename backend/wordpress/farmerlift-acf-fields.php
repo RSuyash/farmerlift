@@ -124,6 +124,20 @@ if( function_exists('acf_add_local_field_group') ):
                 'choices' => array('fertilizer'=>'Fertilizer', 'pesticide'=>'Pesticide', 'seed'=>'Seed', 'machinery'=>'Machinery', 'growth_promoter'=>'Growth Promoter'),
                 'default_value' => 'fertilizer',
             ),
+            
+            // DETAILED SPECS REPEATER (Govt / Regulatory Table)
+            array(
+                'key' => 'field_det_specs',
+                'label' => 'Detailed Specifications (Regulatory Table)',
+                'name' => 'detailed_specifications',
+                'type' => 'repeater',
+                'instructions' => 'Add rows for the technical specification table (e.g. "Ammonical Nitrogen", "19%").',
+                'layout' => 'table',
+                'sub_fields' => array(
+                    array( 'key' => 'field_spec_k', 'label' => 'Parameter', 'name' => 'spec_key', 'type' => 'text' ),
+                    array( 'key' => 'field_spec_v', 'label' => 'Value / %', 'name' => 'spec_value', 'type' => 'text' ),
+                ),
+            ),
         ),
         'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
         'show_in_rest' => true,
@@ -141,6 +155,10 @@ if( function_exists('acf_add_local_field_group') ):
             array( 'key' => 'field_stock', 'label' => 'Stock Qty', 'name' => 'stock_qty', 'type' => 'number' ),
             array( 'key' => 'field_is_organic', 'label' => 'Is Organic?', 'name' => 'is_organic', 'type' => 'true_false' ),
             array( 'key' => 'field_brand', 'label' => 'Brand / Manufacturer', 'name' => 'brand_manufacturer', 'type' => 'text' ),
+            
+            // BADGES
+            array( 'key' => 'field_badge_del', 'label' => 'Show "Fast Delivery" Badge', 'name' => 'show_delivery_badge', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1 ),
+            array( 'key' => 'field_badge_ver', 'label' => 'Show "Verified Authentic" Badge', 'name' => 'show_verified_badge', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1 ),
             
             // KEY BENEFITS TAB
             array( 'key' => 'field_features', 'label' => 'Key Benefits (Features List)', 'name' => 'features_list', 'type' => 'textarea', 'instructions' => 'Enter each benefit on a new line.' ),

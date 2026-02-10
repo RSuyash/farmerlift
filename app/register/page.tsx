@@ -15,7 +15,11 @@ export default function RegisterPage() {
     phone: "",
     email: "",
     type: "farmer",
+    dob: "",
+    gstNumber: "",
+    city: "",
     state: "",
+    address: "",
     message: ""
   });
 
@@ -25,7 +29,7 @@ export default function RegisterPage() {
 
     // Real API Call
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://farmerlift.in'}/wp-json/farmerlift/v1/submit-registration`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://admin.farmerlift.in'}/wp-json/farmerlift/v1/submit-registration`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -175,23 +179,35 @@ export default function RegisterPage() {
 
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">I am a... <span className="text-red-500">*</span></label>
-                  <div className="relative">
-                    <select
-                      name="type"
-                      className="flex h-11 w-full items-center justify-between rounded-md border border-input bg-gray-50 dark:bg-black/20 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
-                      onChange={handleChange}
-                      value={formData.type}
-                    >
-                      <option value="farmer">Farmer</option>
-                      <option value="retailer">Agri-Retailer</option>
-                      <option value="distributor">Distributor/Dealer</option>
-                    </select>
-                    {/* Custom Arrow */}
-                    <div className="absolute right-3 top-3.5 pointer-events-none text-gray-500">
-                      <ArrowRight className="h-4 w-4 rotate-90" />
-                    </div>
-                  </div>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Date of Birth</label>
+                  <Input
+                    name="dob"
+                    type="date"
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">GST Number (Optional)</label>
+                  <Input
+                    name="gstNumber"
+                    placeholder="27AAAAA0000A1Z5"
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">City / Village <span className="text-red-500">*</span></label>
+                  <Input
+                    name="city"
+                    required
+                    placeholder="Enter city or village"
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">State / Region <span className="text-red-500">*</span></label>
@@ -203,6 +219,17 @@ export default function RegisterPage() {
                     onChange={handleChange}
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Address <span className="text-red-500">*</span></label>
+                <Input
+                  name="address"
+                  required
+                  placeholder="Street, Landmark, Pincode"
+                  className="h-11 bg-gray-50 dark:bg-black/20"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="space-y-2">
