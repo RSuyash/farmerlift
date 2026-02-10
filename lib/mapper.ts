@@ -192,6 +192,14 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
             return dSpecs;
         })(),
 
+        qrTabDetails: {
+            gazetteNumber: acf.gazette_number || '',
+            title: acf.qr_title || '',
+            composition: acf.qr_composition || '',
+            crops: acf.qr_crops || '',
+            dosage: acf.qr_dosage || ''
+        },
+
         specifications: specs,
         brand: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
     } as Product;

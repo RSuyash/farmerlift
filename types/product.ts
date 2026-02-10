@@ -41,6 +41,15 @@ export interface BaseProduct {
 
     // Detailed Regulatory Specs (Repeater)
     detailedSpecs?: { key: string; value: string; }[];
+
+    // QR Tab Specifics
+    qrTabDetails?: {
+        gazetteNumber: string;
+        title: string;
+        composition: string;
+        crops: string;
+        dosage: string;
+    };
 }
 
 export interface FertilizerSpecs {

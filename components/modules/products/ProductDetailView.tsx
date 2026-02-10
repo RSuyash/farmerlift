@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product, FertilizerSpecs, PesticideSpecs, SeedSpecs, MachinerySpecs } from "@/types/product";
-import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package, ChevronLeft } from "lucide-react";
+import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package, ChevronLeft, Droplets, Beaker } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
@@ -70,6 +70,36 @@ export default function ProductDetailView({ product }: { product: Product }) {
             </div>
         ) : null
     );
+
+    // Helper to render description list items (Split by newline)
+    const DescriptionList = ({ text, icon: Icon, colorClass }: { text: string, icon: any, colorClass: string }) => {
+        const items = text.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+        return (
+            <div className="space-y-3">
+                {items.map((item, idx) => {
+                    const isHeader = item.endsWith(':');
+                    return (
+                        <div key={idx} className={cn(
+                            "flex items-start gap-3 p-3 rounded-lg transition-all",
+                            isHeader ? "bg-zinc-100/50 dark:bg-zinc-800/30 mt-4 first:mt-0" : "hover:translate-x-1"
+                        )}>
+                            {!isHeader && (
+                                <div className={cn("mt-1 h-5 w-5 rounded-full flex items-center justify-center flex-shrink-0", colorClass)}>
+                                    <Icon className="h-3 w-3" />
+                                </div>
+                            )}
+                            <span className={cn(
+                                "text-sm leading-relaxed",
+                                isHeader ? "font-bold text-zinc-900 dark:text-white uppercase tracking-wider text-xs" : "text-zinc-600 dark:text-zinc-300 font-medium"
+                            )}>
+                                {item}
+                            </span>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
 
     return (
         <div className="min-h-screen bg-white dark:bg-black pb-28 lg:pb-20">
@@ -378,49 +408,56 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                     <Leaf className="h-5 w-5 text-emerald-600" /> Method of Application
                                 </h3>
 
-                                {/* Visual Recommended Crops */}
-                                {product.recommendedCrops && product.recommendedCrops.length > 0 && (
-                                    <div className="mb-8 p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-zinc-100 dark:border-zinc-700/50">
-                                        <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-4 uppercase tracking-wider">Recommended for Crops</h4>
-                                        <div className="flex flex-wrap gap-6">
-                                            {product.recommendedCrops.map((crop, idx) => (
-                                                <div key={idx} className="flex flex-col items-center gap-2 group">
-                                                    <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-700 group-hover:border-emerald-500 transition-colors shadow-sm">
-                                                        <Image
-                                                            src={crop.image}
-                                                            alt={crop.name}
-                                                            fill
-                                                            className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                                        />
-                                                    </div>
-                                                    <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300 text-center max-w-[80px] leading-tight">
-                                                        {crop.name}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
                                 {(product.applicationDescription || product.dosageDescription || product.targetCropsDescription) ? (
-                                    <div className="space-y-4">
-                                        {/* Render as Paragraphs since it's description text now, not just rows */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {/* Application Method */}
                                         {product.applicationDescription && (
-                                            <div>
-                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Application Method</h4>
-                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.applicationDescription}</p>
+                                            <div className="p-6 rounded-2xl bg-blue-50/30 dark:bg-blue-900/5 border border-blue-100/50 dark:border-blue-900/10">
+                                                 <div className="flex items-center gap-3 mb-6">
+                                                     <div className="h-10 w-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm">
+                                                         <Droplets className="h-5 w-5" />
+                                                     </div>
+                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">How to Apply</h4>
+                                                 </div>
+                                                 <DescriptionList 
+                                                    text={product.applicationDescription} 
+                                                    icon={Check} 
+                                                    colorClass="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400" 
+                                                 />
                                             </div>
                                         )}
+                                        
+                                        {/* Dosage Info */}
                                         {product.dosageDescription && (
-                                            <div>
-                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Dosage</h4>
-                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.dosageDescription}</p>
+                                            <div className="p-6 rounded-2xl bg-amber-50/30 dark:bg-amber-900/5 border border-amber-100/50 dark:border-amber-900/10">
+                                                 <div className="flex items-center gap-3 mb-6">
+                                                     <div className="h-10 w-10 rounded-xl bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm">
+                                                         <Beaker className="h-5 w-5" />
+                                                     </div>
+                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">Dosage Guide</h4>
+                                                 </div>
+                                                 <DescriptionList 
+                                                    text={product.dosageDescription} 
+                                                    icon={Check} 
+                                                    colorClass="bg-amber-100 text-amber-600 dark:bg-amber-900 dark:text-amber-400" 
+                                                 />
                                             </div>
                                         )}
+
+                                        {/* Target Crops (if description exists) */}
                                         {product.targetCropsDescription && (
-                                            <div>
-                                                <h4 className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 mb-1">Target Crops</h4>
-                                                <p className="text-zinc-900 dark:text-zinc-100 whitespace-pre-line leading-relaxed">{product.targetCropsDescription}</p>
+                                            <div className="md:col-span-2 p-6 rounded-2xl bg-emerald-50/30 dark:bg-emerald-900/5 border border-emerald-100/50 dark:border-emerald-900/10">
+                                                 <div className="flex items-center gap-3 mb-6">
+                                                     <div className="h-10 w-10 rounded-xl bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm">
+                                                         <Leaf className="h-5 w-5" />
+                                                     </div>
+                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">Target Crops</h4>
+                                                 </div>
+                                                 <DescriptionList 
+                                                    text={product.targetCropsDescription} 
+                                                    icon={Check} 
+                                                    colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-400" 
+                                                 />
                                             </div>
                                         )}
                                     </div>

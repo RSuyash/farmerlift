@@ -322,6 +322,13 @@ if( function_exists('acf_add_local_field_group') ):
         'fields' => array(
             array( 'key' => 'field_qr_code', 'label' => 'QR Code Image', 'name' => 'qr_code_image', 'type' => 'image', 'return_format' => 'url' ),
             array( 'key' => 'field_batch_info', 'label' => 'Batch / Auth Details', 'name' => 'batch_details', 'type' => 'textarea' ),
+            
+            // SPECIFIC QR DATA FIELDS
+            array( 'key' => 'field_qr_gazette', 'label' => 'Gazette Number', 'name' => 'gazette_number', 'type' => 'text' ),
+            array( 'key' => 'field_qr_title', 'label' => 'QR Title / Heading', 'name' => 'qr_title', 'type' => 'text', 'placeholder' => 'e.g. CIB Registration Details' ),
+            array( 'key' => 'field_qr_comp', 'label' => 'QR Composition', 'name' => 'qr_composition', 'type' => 'textarea', 'rows' => 3 ),
+            array( 'key' => 'field_qr_crops', 'label' => 'QR Target Crops', 'name' => 'qr_crops', 'type' => 'textarea', 'rows' => 2 ),
+            array( 'key' => 'field_qr_dose', 'label' => 'QR Dosage Info', 'name' => 'qr_dosage', 'type' => 'textarea', 'rows' => 2 ),
         ),
         'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
         'show_in_rest' => true,
