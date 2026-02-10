@@ -86,5 +86,63 @@ function farmerlift_register_cms() {
         'supports' => array( 'title', 'thumbnail', 'editor' ), 
         'has_archive' => false
     ));
+
+    // 7. WEB LEADS (Internal CRM - Private)
+    register_post_type( 'web_lead', array(
+        'labels' => array( 'name' => 'Web Leads', 'singular_name' => 'Lead' ),
+        'public' => false,  // Internal only
+        'show_ui' => true,  // Show in Admin
+        'show_in_menu' => true,
+        'menu_icon' => 'dashicons-groups', // People icon
+        'supports' => array( 'title', 'editor', 'custom-fields' ), // Title=Name, Editor=Message
+        'capabilities' => array(
+            'create_posts' => false, // Ideally auto-generated, but admins can create if needed (default is OK)
+        ),
+        'map_meta_cap' => true,
+    ));
 }
+
+// --- CUSTOM ADMIN COLUMNS FOR LEADS ---
+
+// 1. Define Columns
+add_filter( 'manage_web_lead_posts_columns', function($columns) {
+    $new = array();
+    $new['cb'] = $columns['cb'];
+    $new['title'] = 'Name';
+    $new['lead_phone'] = 'Phone';
+    $new['lead_type'] = 'Role';
+    $new['lead_location'] = 'Location';
+    $new['date'] = 'Date';
+    return $new;
+});
+
+// 2. Populate Columns
+add_action( 'manage_web_lead_posts_custom_column', function($column, $post_id) {
+    switch ( $column ) {
+        case 'lead_phone':
+            $phone = get_post_meta( $post_id, 'lead_phone', true );
+            $email = get_post_meta( $post_id, 'lead_email', true );
+            echo '<strong>' . esc_html($phone) . '</strong>';
+            if($email) echo '<br><a href="mailto:'.$email.'">' . esc_html($email) . '</a>';
+            break;
+
+        case 'lead_type':
+            $type = get_post_meta( $post_id, 'lead_type', true );
+            echo '<span style="background:#e5e7eb; padding:2px 6px; border-radius:4px; font-weight:600; font-size:11px; text-transform:uppercase;">' . esc_html($type) . '</span>';
+            break;
+
+        case 'lead_location':
+            $city = get_post_meta( $post_id, 'lead_city', true );
+            $state = get_post_meta( $post_id, 'lead_state', true );
+            echo esc_html( $city );
+            if($state) echo ', ' . esc_html($state);
+            break;
+    }
+}, 10, 2 );
+
+// 3. Make Phone Sortable (Optional but nice)
+add_filter( 'manage_edit-web_lead_sortable_columns', function( $columns ) {
+    $columns['lead_type'] = 'lead_type';
+    return $columns;
+});
 ?>

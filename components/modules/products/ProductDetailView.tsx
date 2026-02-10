@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
+import { cn } from "@/lib/utils";
 
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');

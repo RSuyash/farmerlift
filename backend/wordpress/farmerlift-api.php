@@ -37,7 +37,26 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
         return new WP_Error( 'missing_fields', 'Name and Phone are required.', array( 'status' => 400 ) );
     }
 
-    // 2. Prepare Emails
+    // 2. SAVE TO DATABASE (Web Lead CPT)
+    $post_id = wp_insert_post( array(
+        'post_title'    => $name . ' (' . ucfirst($type) . ')',
+        'post_content'  => "Message:\n" . $message . "\n\nAddress:\n" . $address . "\n\nDOB: " . $dob . "\nGST: " . $gst,
+        'post_status'   => 'publish',
+        'post_type'     => 'web_lead',
+        'meta_input'    => array(
+            'lead_phone'    => $phone,
+            'lead_email'    => $email,
+            'lead_type'     => $type,
+            'lead_dob'      => $dob,
+            'lead_gst'      => $gst,
+            'lead_city'     => $city,
+            'lead_state'    => $state,
+            'lead_address'  => $address,
+            'lead_raw_msg'  => $message
+        )
+    ));
+
+    // 3. Prepare Emails
 
     // A. User Auto-Response
     $user_subject = "Welcome to FarmerLift - Registration Received";
@@ -59,7 +78,7 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
 
     // B. Admin Notification
     $admin_email = get_option( 'admin_email' );
-    $admin_subject = "[New Registration] $name - $type";
+    $admin_subject = "[New Lead] $name - $type - $city";
     $admin_message = "New Registration from Website:\n\n";
     $admin_message .= "Name: $name\n";
     $admin_message .= "Phone: $phone\n";
