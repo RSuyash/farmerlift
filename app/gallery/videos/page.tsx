@@ -2,6 +2,7 @@ import Container from '@/components/global/ui/Container';
 import { getVideoGallery } from '@/lib/cms';
 import { PlayCircle, Video, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
     title: 'Video Gallery | FarmerLift',
@@ -36,10 +37,12 @@ export default async function VideoGalleryPage() {
                                 className="group bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 block h-full flex flex-col"
                             >
                                 <div className="aspect-video relative bg-black">
-                                    <img
+                                    <Image
                                         src={video.thumbnail}
                                         alt={video.title}
-                                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                                        fill
+                                        className="object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="h-14 w-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

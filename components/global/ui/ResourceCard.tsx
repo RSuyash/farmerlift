@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, PlayCircle, ArrowRight } from 'lucide-react';
 import Button from './Button';
 
@@ -12,14 +13,16 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ type, item }) => {
   const isBlog = type === 'blog';
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+    <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full group">
       {/* Media Placeholder */}
       <div className={`aspect-video relative ${isBlog ? 'bg-gray-100' : 'bg-gray-900'} flex items-center justify-center overflow-hidden`}>
         {(item.image || item.thumbnail) ? (
-          <img
+          <Image
             src={item.image || item.thumbnail}
             alt={item.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
           isBlog ? (

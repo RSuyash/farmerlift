@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getAllPosts } from "@/lib/cms";
+import Image from "next/image";
 
 export default async function BlogPreviewSection() {
     const articles = await getAllPosts(3);
@@ -33,10 +34,12 @@ export default async function BlogPreviewSection() {
                         <Link key={article.id} href={`/blog/${article.id}`} className="group flex flex-col h-full bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 dark:hover:shadow-black/50 transition-all duration-300 hover:-translate-y-1">
                             {/* Image Container */}
                             <div className="aspect-[4/3] w-full bg-gray-200 dark:bg-white/10 relative overflow-hidden">
-                                <img
+                                <Image
                                     src={article.image}
                                     alt={article.title}
-                                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4">
