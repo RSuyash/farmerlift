@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getProductById, getAllProducts } from "@/lib/cms";
 import ProductDetailView from "@/components/modules/products/ProductDetailView";
 
+export const revalidate = 1; // Revalidate every second to ensure latest UI/Data
+
 export async function generateStaticParams() {
   const products = await getAllProducts();
   return products.map((product) => ({

@@ -11,6 +11,7 @@ import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
 
+// Build Timestamp: 2026-02-10 23:55
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);

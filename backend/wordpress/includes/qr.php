@@ -23,7 +23,7 @@ function farmerlift_register_qr_menu() {
         'edit_posts',           // Capability
         'farmerlift-qr',        // Menu Slug
         'farmerlift_render_qr_page', // Callback
-        'dashicons-qr',         // Icon
+        'dashicons-smartphone', // Icon
         25                      // Position (below Products)
     );
 }
@@ -107,6 +107,7 @@ function farmerlift_render_qr_page() {
             <thead>
                 <tr>
                     <th style="width: 50px;">ID</th>
+                    <th style="width: 90px;">SKU</th>
                     <th style="width: 60px;">Image</th>
                     <th>Product Details</th>
                     <th>Smart Link</th>
@@ -116,7 +117,7 @@ function farmerlift_render_qr_page() {
             </thead>
             <tbody>
                 <?php if ( empty($products) ): ?>
-                    <tr><td colspan="6" style="text-align:center; padding: 40px; color: #666;">No products found.</td></tr>
+                    <tr><td colspan="7" style="text-align:center; padding: 40px; color: #666;">No products found.</td></tr>
                 <?php else: ?>
                     <?php foreach ($products as $post): 
                         // Data Prep
@@ -127,9 +128,12 @@ function farmerlift_render_qr_page() {
                         $term_list = ($terms && !is_wp_error($terms)) ? join(', ', wp_list_pluck($terms, 'name')) : '';
                         
                         $safe_filename = sanitize_title($post->post_title) . '-qr.png';
+                        $sku = get_post_meta($post->ID, 'product_sku', true);
+                        $qr_id = !empty($sku) ? $sku : $post->ID;
                     ?>
-                        <tr class="product-row" data-id="<?php echo $post->ID; ?>">
+                        <tr class="product-row" data-wpid="<?php echo $post->ID; ?>" data-qrid="<?php echo esc_attr($qr_id); ?>">
                             <td><span class="pill-id">#<?php echo $post->ID; ?></span></td>
+                            <td><?php if(!empty($sku)): ?><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-family:monospace;font-size:11px;font-weight:600;"><?php echo esc_html($sku); ?></span><?php else: ?><span style="color:#9ca3af;font-size:11px;">—</span><?php endif; ?></td>
                             <td><img src="<?php echo $thumb; ?>" class="row-thumb"></td>
                             <td>
                                 <strong><?php echo esc_html($post->post_title); ?></strong><br>
@@ -142,7 +146,7 @@ function farmerlift_render_qr_page() {
                                 <div id="qr-<?php echo $post->ID; ?>" class="qr-box"></div>
                             </td>
                             <td>
-                                <button class="btn-dl" onclick="downloadHQ(<?php echo $post->ID; ?>, '<?php echo $safe_filename; ?>')">Download PNG</button>
+                                <button class="btn-dl" onclick="downloadHQ('<?php echo esc_js($qr_id); ?>', '<?php echo $safe_filename; ?>')">Download PNG</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -199,22 +203,23 @@ function farmerlift_render_qr_page() {
             renderAllQRs();
         }
 
-        // 3. Render Loop
+        // 3. Render Loop — uses data-wpid for element IDs, data-qrid for QR URLs
         function renderAllQRs() {
             const rows = document.querySelectorAll('.product-row');
             rows.forEach(row => {
-                const id = row.getAttribute('data-id');
-                const fullUrl = currentBaseUrl + id;
+                const wpid = row.getAttribute('data-wpid');
+                const qrid = row.getAttribute('data-qrid');
+                const fullUrl = currentBaseUrl + qrid;
                 
                 // Update Link Text
-                const linkEl = document.getElementById('link-' + id);
+                const linkEl = document.getElementById('link-' + wpid);
                 if(linkEl) {
                     linkEl.href = fullUrl;
                     linkEl.textContent = fullUrl;
                 }
 
                 // Update QR
-                const box = document.getElementById('qr-' + id);
+                const box = document.getElementById('qr-' + wpid);
                 if(box) {
                     box.innerHTML = ''; // Clear old
                     new QRCode(box, {
@@ -229,9 +234,9 @@ function farmerlift_render_qr_page() {
             });
         }
 
-        // 4. Download Handler
-        function downloadHQ(id, filename) {
-            const fullUrl = currentBaseUrl + id;
+        // 4. Download Handler — uses SKU-based URL
+        function downloadHQ(qrid, filename) {
+            const fullUrl = currentBaseUrl + qrid;
             
             // Create temp container
             const div = document.createElement('div');

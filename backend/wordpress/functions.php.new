@@ -83,7 +83,8 @@ $fl_includes = [
     '/includes/admin.php', // Administrative Tweaks
     '/includes/qr.php',    // QR Code Generator
     '/includes/api.php',   // Custom API Endpoints
-    '/includes/crm/farmerlift-crm.php', // CRM Module (New)
+    '/includes/crm/farmerlift-crm.php', // CRM Module
+    '/includes/products/farmerlift-products.php', // Product Manager + SKU System
 ];
 
 foreach ($fl_includes as $file) {

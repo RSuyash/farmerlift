@@ -3,35 +3,38 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const id = params.id;
-    const WP_API = 'https://admin.farmerlift.in/wp-json/wp/v2';
+    const WP_API = 'https://admin.farmerlift.in/wp-json';
+    const SITE_URL = 'https://farmerlift.in';
 
-    // 1. Fetch the PRODUCT by ID to find its current slug
-    // We only need the 'slug' field to perform the redirect
     try {
-        const res = await fetch(`${WP_API}/product/${id}?_fields=slug`, {
-            next: { revalidate: 0 } // Never cache this lookup, always get latest slug
+        // 1. Try SKU lookup first (handles both current SKU and SKU history)
+        const skuRes = await fetch(`${WP_API}/farmerlift/v1/product-by-sku/${id}`, {
+            next: { revalidate: 0 }
         });
 
-        if (!res.ok) {
-            // If ID not found (404), redirect to main catalog
-            console.error(`QR Redirect Error: Product ID ${id} not found.`);
-            return NextResponse.redirect(new URL('/products', request.url));
+        if (skuRes.ok) {
+            const skuData = await skuRes.json();
+            if (skuData.found && skuData.slug) {
+                return NextResponse.redirect(`${SITE_URL}/products/${skuData.slug}`, 307);
+            }
         }
 
-        const data = await res.json();
-        const slug = data.slug;
+        // 2. Fallback: Try WordPress post ID lookup (backward compatibility)
+        const idRes = await fetch(`${WP_API}/wp/v2/product/${id}?_fields=slug`, {
+            next: { revalidate: 0 }
+        });
 
-        if (slug) {
-            // 2. SUCCESS: Redirect to the actual product page
-            // FORCE the domain to be farmerlift.in to avoid Netlify internal URLs
-            const destination = `https://farmerlift.in/products/${slug}`;
-            return NextResponse.redirect(destination, 307);
+        if (idRes.ok) {
+            const data = await idRes.json();
+            if (data.slug) {
+                return NextResponse.redirect(`${SITE_URL}/products/${data.slug}`, 307);
+            }
         }
 
     } catch (error) {
-        console.error("QR Redirect Network Error:", error);
+        console.error("QR Redirect Error:", error);
     }
 
-    // Fallback for any other errors -> Go to Catalog
-    return NextResponse.redirect('https://farmerlift.in/products', 307);
+    // 3. Fallback: Redirect to catalogue
+    return NextResponse.redirect(`${SITE_URL}/products`, 307);
 }
