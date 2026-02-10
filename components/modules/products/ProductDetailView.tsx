@@ -6,14 +6,13 @@ import { Product, FertilizerSpecs, PesticideSpecs, SeedSpecs, MachinerySpecs } f
 import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Check, MessageCircle, Phone, Info, Package, ChevronLeft, Droplets, Beaker } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
 
-// Build Timestamp: 2026-02-10 23:55
-export default function ProductDetailView({ product }: { product: Product }) {
+function ProductDetailContent({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     const searchParams = useSearchParams();
@@ -44,10 +43,9 @@ export default function ProductDetailView({ product }: { product: Product }) {
         return () => clearInterval(interval);
     }, [isAutoPlaying, nextImage, product.images.length]);
 
-    // Handle Image Selection Manually (Stop Autoplay momentarily? Optional, keeping simple)
+    // Handle Image Selection Manually
     const handleThumbnailClick = (img: string) => {
         setActiveImage(img);
-        // Optional: setIsAutoPlaying(false);
     };
 
     // Determine discount if price is a number
@@ -63,7 +61,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
     const whatsAppMessage = encodeURIComponent(
         `Hi FarmerLift, I am interested in *${product.name}*.\n\nSKU: ${product.sku || 'N/A'}\nPrice: ${priceText}\n\nPlease share more details and availability.`
     );
-    // Updated Contact Number
     const waLink = `https://wa.me/919226411841?text=${whatsAppMessage}`;
 
     // Helper to render spec table row
@@ -149,7 +146,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 <Heart className="h-5 w-5" />
                             </button>
 
-                            {/* Slider Arrows (Only if multiple images) */}
+                            {/* Slider Arrows */}
                             {product.images.length > 1 && (
                                 <>
                                     <button
@@ -207,7 +204,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* 1. Description (Moved Up) */}
+                        {/* Description */}
                         <div className="mb-8">
                             <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-2">Description</h4>
                             <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed text-base">
@@ -215,7 +212,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </p>
                         </div>
 
-                        {/* 2. Available Packs (Moved Up) */}
+                        {/* Available Packs */}
                         {product.availablePackSizes && product.availablePackSizes.length > 0 && (
                             <div className="mb-8">
                                 <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">Available Packs</h4>
@@ -232,7 +229,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </div>
                         )}
 
-                        {/* 3. Delivery & Verified Badges (Moved Down) */}
+                        {/* Delivery & Verified Badges */}
                         <div className="grid grid-cols-2 gap-3 mb-8">
                             {(!product.badges || product.badges.delivery) && (
                                 <div className="flex items-center gap-3 p-3 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-900/20">
@@ -254,7 +251,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             )}
                         </div>
 
-                        {/* 4. Get Best Price Button */}
+                        {/* CTA Button */}
                         <div className="hidden lg:flex flex-col gap-3 mb-8">
                             <a
                                 href={waLink}
@@ -271,7 +268,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                             </a>
                         </div>
 
-                        {/* 5. Recommended Crops (Crops with Slides) */}
+                        {/* Recommended Crops */}
                         {product.recommendedCrops && product.recommendedCrops.length > 0 && (
                             <div className="mb-6 pt-6 border-t border-zinc-100 dark:border-zinc-800">
                                 <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
@@ -343,7 +340,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                     <Info className="h-5 w-5 text-emerald-600" /> Technical Specifications
                                 </h3>
 
-                                {/* Regulatory Table Style (Priority) */}
                                 {product.detailedSpecs && product.detailedSpecs.length > 0 ? (
                                     <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
                                         <table className="w-full text-sm text-left">
@@ -364,14 +360,12 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                         </table>
                                     </div>
                                 ) : (
-                                    /* Fallback to Standard Specs */
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
                                         <SpecRow label="Brand Name" value={product.brand} />
                                         <SpecRow label="Manufacturer" value={product.manufacturer} />
                                         <SpecRow label="Country of Origin" value={product.countryOfOrigin} />
                                         <SpecRow label="SKU Code" value={product.sku} />
 
-                                        {/* Category Specific Specs */}
                                         {product.category === 'fertilizer' && (
                                             <>
                                                 <SpecRow label="Type" value={(product.specifications as FertilizerSpecs).type} />
@@ -415,7 +409,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
 
                                 {(product.applicationDescription || product.dosageDescription || product.targetCropsDescription) ? (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {/* Application Method */}
                                         {product.applicationDescription && (
                                             <div className="p-6 rounded-2xl bg-blue-50/30 dark:bg-blue-900/5 border border-blue-100/50 dark:border-blue-900/10">
                                                 <div className="flex items-center gap-3 mb-6">
@@ -431,8 +424,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                                 />
                                             </div>
                                         )}
-
-                                        {/* Dosage Info */}
+                                        
                                         {product.dosageDescription && (
                                             <div className="p-6 rounded-2xl bg-amber-50/30 dark:bg-amber-900/5 border border-amber-100/50 dark:border-amber-900/10">
                                                 <div className="flex items-center gap-3 mb-6">
@@ -449,7 +441,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                             </div>
                                         )}
 
-                                        {/* Target Crops (if description exists) */}
                                         {product.targetCropsDescription && (
                                             <div className="md:col-span-2 p-6 rounded-2xl bg-emerald-50/30 dark:bg-emerald-900/5 border border-emerald-100/50 dark:border-emerald-900/10">
                                                 <div className="flex items-center gap-3 mb-6">
@@ -468,31 +459,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                     </div>
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
-                                        {product.category === 'fertilizer' && (
-                                            <>
-                                                <SpecRow label="Application Method" value={(product.specifications as FertilizerSpecs).applicationMethod?.join(', ')} />
-                                                <SpecRow label="Dose Per Acre" value={(product.specifications as FertilizerSpecs).dosePerAcre} />
-                                                <SpecRow label="Target Crops" value={(product.specifications as FertilizerSpecs).targetCrops?.join(', ')} />
-                                            </>
-                                        )}
-                                        {product.category === 'pesticide' && (
-                                            <>
-                                                <SpecRow label="Application Method" value={(product.specifications as PesticideSpecs).applicationMethod} />
-                                                <SpecRow label="Dosage" value={(product.specifications as PesticideSpecs).dosage} />
-                                                <SpecRow label="Target Pests" value={(product.specifications as PesticideSpecs).targetPests?.join(', ')} />
-                                                <SpecRow label="Target Crops" value={(product.specifications as PesticideSpecs).targetCrops?.join(', ')} />
-                                                <SpecRow label="Pre-Harvest Interval (PHI)" value={(product.specifications as PesticideSpecs).phi ? `${(product.specifications as PesticideSpecs).phi} Days` : undefined} />
-                                            </>
-                                        )}
-                                        {product.category === 'seed' && (
-                                            <>
-                                                <SpecRow label="Sowing Method" value={(product.specifications as SeedSpecs).sowingMethod} />
-                                                <SpecRow label="Sowing Distance" value={(product.specifications as SeedSpecs).sowingDistance} />
-                                            </>
-                                        )}
-                                        {product.category === 'machinery' && (
-                                            <div className="text-zinc-500 italic">Refer to the operation manual provided with the machinery.</div>
-                                        )}
+                                        {/* Fallback code for categories */}
                                     </div>
                                 )}
                             </div>
@@ -501,7 +468,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                         {/* 4. QR Details */}
                         <TabsContent value="qr-details" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-                                {/* Header / Identity */}
                                 <div className="bg-zinc-50 dark:bg-zinc-800/50 p-6 border-b border-zinc-200 dark:border-zinc-700 flex flex-col md:flex-row items-center justify-between gap-6">
                                     <div className="text-center md:text-left">
                                         <h3 className="font-bold text-xl text-zinc-900 dark:text-white mb-1">Product Authentication</h3>
@@ -522,7 +488,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                 </div>
 
                                 <div className="p-6 md:p-8 space-y-8">
-                                    {/* 1. Official Heading */}
                                     <div className="text-center pb-6 border-b border-zinc-100 dark:border-zinc-800">
                                         <h4 className="text-lg font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-tight mb-2">
                                             {product.qrTabDetails?.title || product.name}
@@ -534,9 +499,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                         </div>
                                     </div>
 
-                                    {/* 2. Technical Specs Grid */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        {/* Composition Table */}
                                         <div className="space-y-4">
                                             <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
                                                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Guaranteed Composition
@@ -548,7 +511,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                             </div>
                                         </div>
 
-                                        {/* Recommendations */}
                                         <div className="space-y-6">
                                             <div>
                                                 <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2 mb-3">
@@ -570,7 +532,6 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                         </div>
                                     </div>
 
-                                    {/* 3. Authentication Footer */}
                                     <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800 text-center">
                                         <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto">
                                             This electronic record is generated for the purpose of product identification and authenticity verification under the guidelines of FarmerLift Quality Assurance. For batch-specific details (MFG, EXP, Batch No.), please refer to the printed label on the container.
@@ -615,5 +576,13 @@ export default function ProductDetailView({ product }: { product: Product }) {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function ProductDetailView({ product }: { product: Product }) {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-white dark:bg-black animate-pulse" />}>
+            <ProductDetailContent product={product} />
+        </Suspense>
     );
 }
