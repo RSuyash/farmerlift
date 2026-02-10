@@ -171,6 +171,27 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
             return crops;
         })(),
 
+        // NEW: Detailed Specs Mapping (Supports Repeater OR Fixed Slots)
+        detailedSpecs: (() => {
+            const dSpecs = [];
+            // 1. Try Repeater (if Pro exists)
+            if (Array.isArray(acf.detailed_specifications)) {
+                return acf.detailed_specifications.map((row: any) => ({
+                    key: row.spec_key,
+                    value: row.spec_value
+                }));
+            }
+            // 2. Fallback to Fixed Slots 1-10 (for ACF Free)
+            for (let i = 1; i <= 10; i++) {
+                const k = acf[`spec_${i}_key`];
+                const v = acf[`spec_${i}_val`];
+                if (k && typeof k === 'string' && k.trim() !== '') {
+                    dSpecs.push({ key: k, value: v || '' });
+                }
+            }
+            return dSpecs;
+        })(),
+
         specifications: specs,
         brand: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
     } as Product;

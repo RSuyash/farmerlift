@@ -125,19 +125,38 @@ if( function_exists('acf_add_local_field_group') ):
                 'default_value' => 'fertilizer',
             ),
             
-            // DETAILED SPECS REPEATER (Govt / Regulatory Table)
-            array(
-                'key' => 'field_det_specs',
-                'label' => 'Detailed Specifications (Regulatory Table)',
-                'name' => 'detailed_specifications',
-                'type' => 'repeater',
-                'instructions' => 'Add rows for the technical specification table (e.g. "Ammonical Nitrogen", "19%").',
-                'layout' => 'table',
-                'sub_fields' => array(
-                    array( 'key' => 'field_spec_k', 'label' => 'Parameter', 'name' => 'spec_key', 'type' => 'text' ),
-                    array( 'key' => 'field_spec_v', 'label' => 'Value / %', 'name' => 'spec_value', 'type' => 'text' ),
-                ),
-            ),
+            
+            // DETAILED SPECS (Fixed Fields for ACF Free - 10 Slots)
+            array( 'key' => 'field_spec_tab', 'label' => 'Detailed Specifications (Table)', 'type' => 'tab' ),
+            array( 'key' => 'field_sk_1', 'label' => 'Spec 1: Parameter', 'name' => 'spec_1_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_1', 'label' => 'Spec 1: Value', 'name' => 'spec_1_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            
+            array( 'key' => 'field_sk_2', 'label' => 'Spec 2: Parameter', 'name' => 'spec_2_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_2', 'label' => 'Spec 2: Value', 'name' => 'spec_2_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_3', 'label' => 'Spec 3: Parameter', 'name' => 'spec_3_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_3', 'label' => 'Spec 3: Value', 'name' => 'spec_3_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_4', 'label' => 'Spec 4: Parameter', 'name' => 'spec_4_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_4', 'label' => 'Spec 4: Value', 'name' => 'spec_4_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_5', 'label' => 'Spec 5: Parameter', 'name' => 'spec_5_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_5', 'label' => 'Spec 5: Value', 'name' => 'spec_5_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_6', 'label' => 'Spec 6: Parameter', 'name' => 'spec_6_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_6', 'label' => 'Spec 6: Value', 'name' => 'spec_6_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_7', 'label' => 'Spec 7: Parameter', 'name' => 'spec_7_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_7', 'label' => 'Spec 7: Value', 'name' => 'spec_7_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_8', 'label' => 'Spec 8: Parameter', 'name' => 'spec_8_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_8', 'label' => 'Spec 8: Value', 'name' => 'spec_8_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_9', 'label' => 'Spec 9: Parameter', 'name' => 'spec_9_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_9', 'label' => 'Spec 9: Value', 'name' => 'spec_9_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+
+            array( 'key' => 'field_sk_10', 'label' => 'Spec 10: Parameter', 'name' => 'spec_10_key', 'type' => 'text', 'wrapper' => array('width' => '50') ),
+            array( 'key' => 'field_sv_10', 'label' => 'Spec 10: Value', 'name' => 'spec_10_val', 'type' => 'text', 'wrapper' => array('width' => '50') ),
         ),
         'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => 'product' ) ) ),
         'show_in_rest' => true,
