@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/global/navbar/Navbar";
 import Footer from "@/components/global/footer/Footer";
 import FloatingContact from "@/components/global/FloatingContact";
+import GoogleAnalytics from "@/components/global/GoogleAnalytics";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/global/theme-provider";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(inter.variable, outfit.variable)} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col font-sans bg-background text-foreground" suppressHydrationWarning>
+        <GoogleAnalytics />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
