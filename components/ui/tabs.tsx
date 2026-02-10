@@ -8,7 +8,9 @@ import { cn } from "@/lib/utils"
 // I'll stick to a pure React implementation that mimics the Radix API for future substitutability.
 
 interface TabsProps {
-    defaultValue: string
+    defaultValue?: string
+    value?: string
+    onValueChange?: (value: string) => void
     className?: string
     children: React.ReactNode
 }
@@ -18,8 +20,13 @@ const TabsContext = React.createContext<{
     setActiveTab: (value: string) => void
 } | null>(null);
 
-export function Tabs({ defaultValue, className, children }: TabsProps) {
-    const [activeTab, setActiveTab] = React.useState(defaultValue);
+export function Tabs({ defaultValue, value, onValueChange, className, children }: TabsProps) {
+    const [internalTab, setInternalTab] = React.useState(defaultValue || '');
+    const activeTab = value !== undefined ? value : internalTab;
+    const setActiveTab = (v: string) => {
+        if (onValueChange) onValueChange(v);
+        else setInternalTab(v);
+    };
     return (
         <TabsContext.Provider value={{ activeTab, setActiveTab }}>
             <div className={cn("", className)}>{children}</div>

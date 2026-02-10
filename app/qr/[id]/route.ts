@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, props: { params: Promise<{ id: s
         if (skuRes.ok) {
             const skuData = await skuRes.json();
             if (skuData.found && skuData.slug) {
-                return NextResponse.redirect(`${SITE_URL}/products/${skuData.slug}`, 307);
+                return NextResponse.redirect(`${SITE_URL}/products/${skuData.slug}?tab=qr-details`, 307);
             }
         }
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, props: { params: Promise<{ id: s
         if (idRes.ok) {
             const data = await idRes.json();
             if (data.slug) {
-                return NextResponse.redirect(`${SITE_URL}/products/${data.slug}`, 307);
+                return NextResponse.redirect(`${SITE_URL}/products/${data.slug}?tab=qr-details`, 307);
             }
         }
 

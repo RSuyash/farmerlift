@@ -7,6 +7,7 @@ import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Ch
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,8 @@ import { cn } from "@/lib/utils";
 export default function ProductDetailView({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const searchParams = useSearchParams();
+    const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'key-benefits');
 
     // Auto-Slider Logic
     const nextImage = useCallback(() => {
@@ -298,7 +301,7 @@ export default function ProductDetailView({ product }: { product: Product }) {
 
                 {/* Detailed Tabs */}
                 <div className="mt-12 lg:mt-16">
-                    <Tabs defaultValue="key-benefits" className="w-full max-w-5xl mx-auto">
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-5xl mx-auto">
                         <TabsList className="w-full flex flex-wrap justify-center sm:justify-between bg-transparent border-b border-zinc-200 dark:border-zinc-800 rounded-none h-auto p-0 mb-8">
                             {['Key Benefits', 'Specifications', 'Method of Application', 'QR Details'].map((tab) => {
                                 const val = tab.toLowerCase().replace(/ /g, '-');
@@ -415,51 +418,51 @@ export default function ProductDetailView({ product }: { product: Product }) {
                                         {/* Application Method */}
                                         {product.applicationDescription && (
                                             <div className="p-6 rounded-2xl bg-blue-50/30 dark:bg-blue-900/5 border border-blue-100/50 dark:border-blue-900/10">
-                                                 <div className="flex items-center gap-3 mb-6">
-                                                     <div className="h-10 w-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm">
-                                                         <Droplets className="h-5 w-5" />
-                                                     </div>
-                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">How to Apply</h4>
-                                                 </div>
-                                                 <DescriptionList 
-                                                    text={product.applicationDescription} 
-                                                    icon={Check} 
-                                                    colorClass="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400" 
-                                                 />
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="h-10 w-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm">
+                                                        <Droplets className="h-5 w-5" />
+                                                    </div>
+                                                    <h4 className="font-bold text-zinc-900 dark:text-white text-base">How to Apply</h4>
+                                                </div>
+                                                <DescriptionList
+                                                    text={product.applicationDescription}
+                                                    icon={Check}
+                                                    colorClass="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400"
+                                                />
                                             </div>
                                         )}
-                                        
+
                                         {/* Dosage Info */}
                                         {product.dosageDescription && (
                                             <div className="p-6 rounded-2xl bg-amber-50/30 dark:bg-amber-900/5 border border-amber-100/50 dark:border-amber-900/10">
-                                                 <div className="flex items-center gap-3 mb-6">
-                                                     <div className="h-10 w-10 rounded-xl bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm">
-                                                         <Beaker className="h-5 w-5" />
-                                                     </div>
-                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">Dosage Guide</h4>
-                                                 </div>
-                                                 <DescriptionList 
-                                                    text={product.dosageDescription} 
-                                                    icon={Check} 
-                                                    colorClass="bg-amber-100 text-amber-600 dark:bg-amber-900 dark:text-amber-400" 
-                                                 />
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="h-10 w-10 rounded-xl bg-amber-100 dark:bg-amber-900 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm">
+                                                        <Beaker className="h-5 w-5" />
+                                                    </div>
+                                                    <h4 className="font-bold text-zinc-900 dark:text-white text-base">Dosage Guide</h4>
+                                                </div>
+                                                <DescriptionList
+                                                    text={product.dosageDescription}
+                                                    icon={Check}
+                                                    colorClass="bg-amber-100 text-amber-600 dark:bg-amber-900 dark:text-amber-400"
+                                                />
                                             </div>
                                         )}
 
                                         {/* Target Crops (if description exists) */}
                                         {product.targetCropsDescription && (
                                             <div className="md:col-span-2 p-6 rounded-2xl bg-emerald-50/30 dark:bg-emerald-900/5 border border-emerald-100/50 dark:border-emerald-900/10">
-                                                 <div className="flex items-center gap-3 mb-6">
-                                                     <div className="h-10 w-10 rounded-xl bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm">
-                                                         <Leaf className="h-5 w-5" />
-                                                     </div>
-                                                     <h4 className="font-bold text-zinc-900 dark:text-white text-base">Target Crops</h4>
-                                                 </div>
-                                                 <DescriptionList 
-                                                    text={product.targetCropsDescription} 
-                                                    icon={Check} 
-                                                    colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-400" 
-                                                 />
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="h-10 w-10 rounded-xl bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm">
+                                                        <Leaf className="h-5 w-5" />
+                                                    </div>
+                                                    <h4 className="font-bold text-zinc-900 dark:text-white text-base">Target Crops</h4>
+                                                </div>
+                                                <DescriptionList
+                                                    text={product.targetCropsDescription}
+                                                    icon={Check}
+                                                    colorClass="bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-400"
+                                                />
                                             </div>
                                         )}
                                     </div>
