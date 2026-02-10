@@ -70,8 +70,8 @@ export default async function Footer() {
                             <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-4">Subscribe for the latest farming tips and updates.</p>
                             <div className="flex gap-2">
                                 <input
-                                    type="email"
-                                    placeholder="Enter your email"
+                                    type="text"
+                                    placeholder="Enter email or mobile number"
                                     className="bg-zinc-50 dark:bg-black/30 border border-zinc-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500 w-full transition-colors"
                                 />
                                 <button className="bg-emerald-600 hover:bg-emerald-500 text-white p-2 rounded-lg transition-colors shadow-md shadow-emerald-600/20">

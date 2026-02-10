@@ -116,7 +116,7 @@ export default function Navbar() {
                             { name: "Crop Guides", href: "/crop-guides" },
                             { name: "Certifications", href: "/certifications" },
                             { name: "Blog", href: "/blog" },
-                            { name: "Resources", href: "/resources" },
+                            { name: "Gallery", href: "/gallery" },
                             { name: "About", href: "/about" },
                             { name: "Contact", href: "/contact" },
                         ].map((link) => (
@@ -144,9 +144,9 @@ export default function Navbar() {
                             <ThemeToggle />
                         </div>
 
-                        <Link href="/contact" className="hidden md:block">
+                        <Link href="/register" className="hidden md:block">
                             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-md hover:shadow-lg transition-all rounded-full px-6">
-                                Contact Us
+                                Partner with Us
                             </Button>
                         </Link>
 

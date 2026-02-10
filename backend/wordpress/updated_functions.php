@@ -112,4 +112,13 @@ $qr_system_path = dirname(__FILE__) . '/qr-code-system.php';
 if ( file_exists( $qr_system_path ) ) {
     require_once $qr_system_path;
 }
+
+// =================================================================
+// 6. CUSTOM API ENDPOINTS (Registration, Email)
+// =================================================================
+// Safe include: Only load if the file exists in the same directory
+$api_path = dirname(__FILE__) . '/farmerlift-api.php';
+if ( file_exists( $api_path ) ) {
+    require_once $api_path;
+}
 ?>

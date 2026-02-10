@@ -13,6 +13,7 @@ import {
     Layers,
     Package
 } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const iconMap: any = {
     Droplets,
@@ -41,20 +42,52 @@ export default function CatalogueHeader({ categories }: CatalogueHeaderProps) {
     // Filter out 'Other Products' to keep the list focused
     const displayCategories = categories.filter(c => c.name !== "Other Products");
 
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-        e.preventDefault();
-        const element = document.getElementById(id);
-        if (element) {
-            // Offset for sticky header
-            const headerOffset = 100;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
+
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [isPaused, setIsPaused] = useState(false);
+
+    // Duplicate categories for infinite scroll effect
+    const carouselItems = [...displayCategories, ...displayCategories];
+
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+        if (!scrollContainer) return;
+
+        let animationFrameId: number;
+
+        const scrollStep = () => {
+            if (!isPaused && scrollContainer) {
+                // If we've scrolled past the first set of items, reset to start
+                // We use a tolerance (5px) to ensure smooth reset
+                if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+                    scrollContainer.scrollLeft = 0;
+                } else {
+                    scrollContainer.scrollLeft += 1; // Adjust speed here (1 is gentle but visible)
+                }
+            }
+            animationFrameId = requestAnimationFrame(scrollStep);
+        };
+
+        animationFrameId = requestAnimationFrame(scrollStep);
+
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [isPaused]);
+
+    const scroll = (direction: 'left' | 'right') => {
+        setIsPaused(true);
+        if (scrollContainerRef.current) {
+            const { current } = scrollContainerRef;
+            const scrollAmount = 320; // Card width + gap
+
+            if (direction === 'left') {
+                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
         }
+        // Resume auto-scroll after interaction
+        setTimeout(() => setIsPaused(false), 2000);
     };
 
     return (
@@ -84,10 +117,10 @@ export default function CatalogueHeader({ categories }: CatalogueHeaderProps) {
                 </div>
             </div>
 
-            {/* Category Infinite Marquee Section */}
-            <div className="bg-zinc-50 dark:bg-zinc-950 py-16 border-b border-gray-100 dark:border-white/5 relative overflow-hidden">
-                <div className="container-width mb-12 relative z-10 px-4">
-                    {/* Overhauled Header Section: Left Aligned & Clean */}
+            {/* Category Carousel Section */}
+            <div className="bg-zinc-50 dark:bg-zinc-950 py-12 border-b border-gray-100 dark:border-white/5 relative overflow-hidden">
+                <div className="container-width mb-8 relative z-10 px-4">
+                    {/* Header */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div className="max-w-2xl">
                             <span className="text-emerald-600 dark:text-emerald-400 font-bold tracking-widest text-xs uppercase mb-2 block">
@@ -101,32 +134,31 @@ export default function CatalogueHeader({ categories }: CatalogueHeaderProps) {
                             </p>
                         </div>
 
-                        {/* Visual Hint */}
-                        <div className="hidden md:block pb-2">
-                            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-                                Scroll to Explore <span className="animate-bounce">→</span>
-                            </span>
-                        </div>
+
                     </div>
                 </div>
 
-                {/* Marquee Container */}
-                <div className="relative w-full overflow-hidden group/marquee" style={{ maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }} suppressHydrationWarning>
+                {/* Carousel Container */}
+                <div
+                    className="container-width px-4"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                >
                     <div
-                        className="flex gap-4 w-max animate-marquee hover:[animation-play-state:paused] py-4 pl-4"
-                        style={{ width: "max-content" }}
+                        ref={scrollContainerRef}
+                        className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
-                        {[...displayCategories, ...displayCategories].map((category, index) => {
+                        {carouselItems.map((category, index) => {
                             const Icon = iconMap[category.icon] || Package;
 
+                            // Using index as key suffix because items are duplicated
                             return (
-                                <a
+                                <Link
                                     key={`${category.id}-${index}`}
-                                    href={`#${category.id}`}
-                                    onClick={(e) => scrollToSection(e, category.id)}
-                                    // Compact Card Design: h-[180px], clean white bg, emerald accents on hover
+                                    href={`/catalogue/${category.id}`}
+                                    // Card
                                     className="relative w-[280px] h-[160px] flex-shrink-0 bg-white dark:bg-zinc-900 rounded-xl p-5 flex items-center gap-5 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-lg hover:border-emerald-500/50 hover:-translate-y-1 transition-all duration-300 group/card cursor-pointer"
-                                    suppressHydrationWarning
                                 >
                                     {/* Icon Container */}
                                     <div className="h-14 w-14 flex-shrink-0 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover/card:scale-110 group-hover/card:bg-emerald-100 dark:group-hover/card:bg-emerald-800/30 transition-all duration-300">
@@ -134,8 +166,8 @@ export default function CatalogueHeader({ categories }: CatalogueHeaderProps) {
                                     </div>
 
                                     {/* Text Content */}
-                                    <div className="flex flex-col items-start">
-                                        <h3 className="text-base font-bold text-zinc-900 dark:text-white mb-1 group-hover/card:text-emerald-700 dark:group-hover/card:text-emerald-400 transition-colors">
+                                    <div className="flex flex-col items-start max-w-[160px]">
+                                        <h3 className="text-base font-bold text-zinc-900 dark:text-white mb-1 group-hover/card:text-emerald-700 dark:group-hover/card:text-emerald-400 transition-colors line-clamp-2">
                                             {category.name}
                                         </h3>
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 group-hover/card:text-emerald-600 dark:group-hover/card:text-emerald-400 transition-colors">
@@ -144,25 +176,35 @@ export default function CatalogueHeader({ categories }: CatalogueHeaderProps) {
                                     </div>
 
                                     {/* Arrow Icon */}
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transform -translate-x-2 group-hover/card:translate-x-0 transition-all duration-300 text-emerald-500">
-                                        →
+                                    <div className="absolute right-4 top-4 opacity-0 group-hover/card:opacity-100 transform translate-x-2 group-hover/card:translate-x-0 transition-all duration-300 text-emerald-500">
+                                        <span className="text-xl">↗</span>
                                     </div>
-                                </a>
+                                </Link>
                             );
                         })}
                     </div>
                 </div>
 
-                {/* CSS Animation for Marquee */}
-                <style jsx>{`
-                    @keyframes marquee {
-                        0% { transform: translateX(0); }
-                        100% { transform: translateX(-50%); }
-                    }
-                    .animate-marquee {
-                        animation: marquee 60s linear infinite;
-                    }
-                `}</style>
+                {/* Minimal Controls Under the Grid */}
+                <div className="container-width px-4 mt-4 flex justify-center">
+                    <div className="flex items-center gap-4 bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-full p-1.5 shadow-sm">
+                        <button
+                            onClick={() => scroll('left')}
+                            className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-emerald-900/30 text-zinc-500 hover:text-emerald-600 transition-colors"
+                            aria-label="Scroll Left"
+                        >
+                            ←
+                        </button>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Scroll</span>
+                        <button
+                            onClick={() => scroll('right')}
+                            className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-emerald-50 dark:hover:bg-emerald-900/30 text-zinc-500 hover:text-emerald-600 transition-colors"
+                            aria-label="Scroll Right"
+                        >
+                            →
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

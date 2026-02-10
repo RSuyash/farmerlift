@@ -23,12 +23,30 @@ export default function RegisterPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Real API Call
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://farmerlift.in'}/wp-json/farmerlift/v1/submit-registration`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    console.log("Registration Submission:", formData);
-    setIsLoading(false);
-    setIsSubmitted(true);
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const result = await response.json();
+      console.log("Registration Success:", result);
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Registration Error:", error);
+      alert("Something went wrong. Please call us directly or try again later.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
