@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import ProductPlaceholder from "./ProductPlaceholder";
+import { cn } from "@/lib/utils";
 
 interface ProductImageProps {
     src: string;
@@ -31,10 +32,12 @@ export default function ProductImage({
 }: ProductImageProps) {
     const [error, setError] = useState(false);
     const [imageSrc, setImageSrc] = useState(src);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setImageSrc(src);
         setError(false);
+        setIsLoading(true);
     }, [src]);
 
     if (!imageSrc || error) {
@@ -48,18 +51,30 @@ export default function ProductImage({
     }
 
     return (
-        <Image
-            src={imageSrc}
-            alt={alt}
-            fill={fill}
-            width={!fill ? width : undefined}
-            height={!fill ? height : undefined}
-            className={className}
-            sizes={sizes}
-            priority={priority}
-            onError={() => setError(true)}
-            // Prevent server crash if local image file is missing by disabling optimization for local paths
-            unoptimized={imageSrc.startsWith('/')}
-        />
+        <div className={cn("relative overflow-hidden", fill && "w-full h-full")}>
+             {isLoading && (
+                <div className={cn(
+                    "absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse z-10",
+                    className // Pass classes to match rounded corners etc
+                )} />
+            )}
+            <Image
+                src={imageSrc}
+                alt={alt}
+                fill={fill}
+                width={!fill ? width : undefined}
+                height={!fill ? height : undefined}
+                className={cn(
+                    className,
+                    "duration-700 ease-in-out",
+                    isLoading ? "scale-110 blur-lg grayscale" : "scale-100 blur-0 grayscale-0"
+                )}
+                sizes={sizes}
+                priority={priority}
+                onLoad={() => setIsLoading(false)}
+                onError={() => setError(true)}
+                unoptimized={imageSrc.startsWith('/')}
+            />
+        </div>
     );
 }

@@ -25,64 +25,75 @@ export default function HeroSection({ slides = [] }: HeroSectionProps) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    // Default / Fallback Slides
+    const defaultSlides = [
+        {
+            id: 1,
+            image: "/images/banner1.jpg", // Placeholder - User to provide
+            heading: "FarmerLift",
+            subtext: "by the farmer, for the farmers",
+            buttonText: "About Us",
+            buttonUrl: "/about"
+        },
+        {
+            id: 2,
+            image: "/images/banner2.jpg",
+            heading: "Quality Inputs...",
+            subtext: "Better Harvests. Connect directly with top-tier suppliers.",
+            buttonText: "View Products",
+            buttonUrl: "/products"
+        },
+        {
+            id: 3,
+            image: "/images/banner3.jpg",
+            heading: "Your Partner in Agriculture",
+            subtext: "Empowering farmers with the right knowledge and inputs.",
+            buttonText: "Partner with Us",
+            buttonUrl: "/register"
+        }
+    ];
+
+    const finalSlides = slides.length > 0 ? slides : defaultSlides;
+
     // Auto-play carousel
     useEffect(() => {
         setIsLoaded(true);
-        if (slides.length <= 1) return;
+        if (finalSlides.length <= 1) return;
         const interval = setInterval(() => {
-            setCurrentSlide(prev => (prev + 1) % slides.length);
+            setCurrentSlide(prev => (prev + 1) % finalSlides.length);
         }, 6000); // 6s per slide
         return () => clearInterval(interval);
-    }, [slides.length]);
+    }, [finalSlides.length]);
 
-    const nextSlide = () => setCurrentSlide(prev => (prev + 1) % slides.length);
-    const prevSlide = () => setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length);
+    const nextSlide = () => setCurrentSlide(prev => (prev + 1) % finalSlides.length);
+    const prevSlide = () => setCurrentSlide(prev => (prev - 1 + finalSlides.length) % finalSlides.length);
 
-    // Initial Default Fallback if no slides
-    const activeSlide = slides.length > 0 ? slides[currentSlide] : {
-        image: "/images/home-hero.png",
-        heading: "Quality Inputs for Better Harvests",
-        subtext: "Connect directly with top-tier suppliers for verified seeds, fertilizers, and equipment.",
-        buttonText: "Explore Catalogue",
-        buttonUrl: "/products"
-    };
+    const activeSlide = finalSlides[currentSlide];
 
     return (
         <section className="relative w-full h-[95vh] min-h-[700px] flex flex-col items-center justify-center overflow-hidden group/hero">
             {/* Background Image Carousel */}
             <div className="absolute inset-0 z-0 select-none bg-zinc-900">
-                {slides.length > 0 ? (
-                    slides.map((slide, index) => (
-                        <div
-                            key={slide.id || index}
-                            className={cn(
-                                "absolute inset-0 transition-opacity duration-1000 ease-in-out",
-                                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-                            )}
-                        >
-                            <Image
-                                src={slide.image || '/images/home-hero.png'}
-                                alt={slide.heading}
-                                fill
-                                className={cn(
-                                    "object-cover transition-transform duration-[10000ms] ease-linear",
-                                    index === currentSlide ? "scale-110" : "scale-100"
-                                )}
-                                priority={index === 0}
-                            />
-                        </div>
-                    ))
-                ) : (
-                    <div className="absolute inset-0 opacity-100 z-10">
+                {finalSlides.map((slide, index) => (
+                    <div
+                        key={slide.id || index}
+                        className={cn(
+                            "absolute inset-0 transition-opacity duration-1000 ease-in-out",
+                            index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+                        )}
+                    >
                         <Image
-                            src="/images/home-hero.png"
-                            alt="Hero Background"
+                            src={slide.image || '/images/home-hero.png'}
+                            alt={slide.heading}
                             fill
-                            className="object-cover scale-105"
-                            priority
+                            className={cn(
+                                "object-cover transition-transform duration-[10000ms] ease-linear",
+                                index === currentSlide ? "scale-110" : "scale-100"
+                            )}
+                            priority={index === 0}
                         />
                     </div>
-                )}
+                ))}
 
                 {/* Cinematic Overlays */}
                 <div className="absolute inset-0 bg-black/30 z-10" /> {/* General Dim */}
@@ -137,7 +148,7 @@ export default function HeroSection({ slides = [] }: HeroSectionProps) {
             </div>
 
             {/* Premium Controls */}
-            {slides.length > 1 && (
+            {finalSlides.length > 1 && (
                 <>
                     {/* Left/Right Navigation */}
                     <div className="hidden md:flex absolute inset-x-8 lg:inset-x-16 top-1/2 -translate-y-1/2 justify-between pointer-events-none z-30">
@@ -157,7 +168,7 @@ export default function HeroSection({ slides = [] }: HeroSectionProps) {
 
                     {/* Pagination Lines */}
                     <div className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-30">
-                        {slides.map((_, idx) => (
+                        {finalSlides.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => setCurrentSlide(idx)}

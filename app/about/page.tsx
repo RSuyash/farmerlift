@@ -1,6 +1,7 @@
 import Container from "@/components/global/ui/Container";
 import { getPageBanner } from "@/lib/cms";
 import Image from "next/image";
+import { Linkedin, Mail } from "lucide-react";
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -82,42 +83,86 @@ export default async function AboutPage() {
         </div>
 
         {/* MEET THE MINDS SECTION */}
-        <div className="mt-24 mb-12">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-emerald-600 font-bold tracking-widest text-xs uppercase mb-2 block">Our Leadership</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-outfit text-zinc-900 dark:text-white mb-4">Meet the Minds</h2>
-            <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              A diverse team of agricultural experts and technologists united by a single mission.
+        <div className="mt-32 mb-20 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-50/50 to-transparent dark:via-emerald-900/10 -z-10 blur-3xl" />
+
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <span className="inline-block py-1 px-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-widest uppercase mb-4">
+              Our Leadership
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black font-outfit text-zinc-900 dark:text-white mb-6">
+              Meet the Minds
+            </h2>
+            <p className="text-xl text-zinc-600 dark:text-zinc-300 font-light leading-relaxed">
+              Merging deep agricultural heritage with cutting-edge technology.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Founder 1 */}
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/30 rounded-full mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-                MM
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            {/* Dr. Mahesh Mahajan */}
+            <div className="group relative bg-white dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-2 border border-zinc-100 dark:border-zinc-800 hover:border-emerald-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-900/10">
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                <Image
+                  src="/images/team/mahesh-mahajan.jpg"
+                  alt="Dr. Mahesh Mahajan"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+
+                <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="flex gap-2 justify-center">
+                    <button className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-emerald-500 transition-colors">
+                      <Linkedin className="h-5 w-5" />
+                    </button>
+                    <button className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-emerald-500 transition-colors">
+                      <Mail className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold font-outfit text-zinc-900 dark:text-white mb-1">
-                Dr. Mahesh Mahajan
-              </h3>
-              <p className="text-emerald-600 dark:text-emerald-400 font-medium mb-3">Co-Founder</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                Phd Molecular Biology and Biotechnology
-              </p>
+
+              <div className="p-8 text-center relative">
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">Dr. Mahesh Mahajan</h3>
+                <p className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider text-sm mb-4">Co-Founder & Agri-Scientist</p>
+                <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  Ph.D. in Molecular Biology & Biotechnology. <br />
+                  Leading the research on sustainable crop nutrition and precision dosage models.
+                </p>
+              </div>
             </div>
 
-            {/* Founder 2 */}
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <div className="w-24 h-24 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                GM
+            {/* Er. Gaurav Mahajan */}
+            <div className="group relative bg-white dark:bg-zinc-900/80 backdrop-blur-sm rounded-3xl p-2 border border-zinc-100 dark:border-zinc-800 hover:border-blue-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-900/10">
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                <Image
+                  src="/images/team/gaurav-mahajan.jpg"
+                  alt="Er. Gaurav Mahajan"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+
+                <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="flex gap-2 justify-center">
+                    <button className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-blue-500 transition-colors">
+                      <Linkedin className="h-5 w-5" />
+                    </button>
+                    <button className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-blue-500 transition-colors">
+                      <Mail className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold font-outfit text-zinc-900 dark:text-white mb-1">
-                Er. Gaurav Mahajan
-              </h3>
-              <p className="text-indigo-600 dark:text-indigo-400 font-medium mb-3">Co-Founder</p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                Mtech. Computer Science
-              </p>
+
+              <div className="p-8 text-center">
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">Er. Gaurav Mahajan</h3>
+                <p className="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider text-sm mb-4">Co-Founder & Tech Lead</p>
+                <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  M.Tech in Computer Science. <br />
+                  Architecting the digital infrastructure to connect millions of farmers with quality inputs.
+                </p>
+              </div>
             </div>
           </div>
         </div>

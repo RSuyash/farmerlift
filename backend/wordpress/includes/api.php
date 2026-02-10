@@ -26,7 +26,7 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $email = sanitize_email( $params['email'] ?? '' );
     $type = sanitize_text_field( $params['type'] ?? '' );
     $dob = sanitize_text_field( $params['dob'] ?? '' );
-    $gst = sanitize_text_field( $params['gstNumber'] ?? '' );
+    $gst = sanitize_text_field( $params['gstNumber'] ?? $params['gst'] ?? '' );
     $city = sanitize_text_field( $params['city'] ?? '' );
     $state = sanitize_text_field( $params['state'] ?? '' );
     $address = sanitize_textarea_field( $params['address'] ?? '' );

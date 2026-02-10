@@ -9,7 +9,8 @@ import {
     Microscope,
     Atom,
     Layers,
-    ArrowUpRight
+    ArrowUpRight,
+    Globe
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -62,7 +63,7 @@ const categories = [
     },
     {
         id: "biostimulants-pgrs",
-        title: "Biostimulants",
+        title: "Biostimulants & PGRs",
         subtitle: "Growth Activators",
         icon: Zap,
         color: "text-amber-500",
@@ -86,6 +87,15 @@ const categories = [
         color: "text-lime-600",
         gradient: "from-lime-500/20 to-green-500/20",
         border: "group-hover:border-lime-500/50"
+    },
+    {
+        id: "imported-fertilizers",
+        title: "Imported Fertilizers",
+        subtitle: "Global Standards",
+        icon: Globe,
+        color: "text-rose-500",
+        gradient: "from-rose-500/20 to-red-500/20",
+        border: "group-hover:border-rose-500/50"
     }
 ];
 
@@ -104,22 +114,22 @@ export default function ProductRange() {
                             Our Ecosystem
                         </span>
                         <h2 className="text-4xl md:text-5xl font-black font-outfit text-zinc-900 dark:text-white leading-tight">
-                            Advanced Crop <br />
+                            Product <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
-                                Nutrition Solutions
+                                Range
                             </span>
                         </h2>
                     </div>
                     <div className="text-right hidden md:block">
                         <p className="text-lg font-medium text-zinc-500 dark:text-zinc-400">
-                            Every Field. Every Crop. <br />
+                            Every Field, Every Crop <br />
                             <span className="text-zinc-900 dark:text-white font-bold">One Solution.</span>
                         </p>
                     </div>
                 </div>
 
                 {/* Premium Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {categories.map((cat, idx) => (
                         <Link
                             key={cat.id}

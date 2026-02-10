@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/global/ThemeToggle";
+import GoogleTranslate from "@/components/global/GoogleTranslate";
 import categories from "@/data/categories.json";
 
 export default function Navbar() {
@@ -42,6 +43,7 @@ export default function Navbar() {
                         </a>
                     </div>
                     <div className="flex items-center gap-4">
+                        <GoogleTranslate className="scale-90" />
                         <Link href="/help" className="hover:text-emerald-300 transition-colors opacity-90">Help Center</Link>
                     </div>
                 </div>

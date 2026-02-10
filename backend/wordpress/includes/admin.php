@@ -142,4 +142,5 @@ function farmerlift_sortable_products($columns) {
     $columns['product_id'] = 'ID';
     return $columns;
 }
+
 ?>
