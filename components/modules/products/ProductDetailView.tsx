@@ -496,35 +496,91 @@ export default function ProductDetailView({ product }: { product: Product }) {
 
                         {/* 4. QR Details */}
                         <TabsContent value="qr-details" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 md:p-8 flex flex-col items-center justify-center text-center">
-                                <div className="bg-white p-4 rounded-xl border border-zinc-100 shadow-sm mb-4">
-                                    {product.wordpressId ? (
-                                        <div className="relative w-48 h-48 flex items-center justify-center">
+                            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+                                {/* Header / Identity */}
+                                <div className="bg-zinc-50 dark:bg-zinc-800/50 p-6 border-b border-zinc-200 dark:border-zinc-700 flex flex-col md:flex-row items-center justify-between gap-6">
+                                    <div className="text-center md:text-left">
+                                        <h3 className="font-bold text-xl text-zinc-900 dark:text-white mb-1">Product Authentication</h3>
+                                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Official technical specifications & regulatory compliance</p>
+                                    </div>
+                                    <div className="bg-white p-2 rounded-lg border border-zinc-100 shadow-sm shrink-0">
+                                        {product.wordpressId ? (
                                             <QRCodeSVG
                                                 value={`https://farmerlift.in/qr/${product.wordpressId}`}
-                                                size={192}
+                                                size={80}
                                                 level="H"
                                                 includeMargin={true}
                                             />
-                                        </div>
-                                    ) : (
-                                        <div className="w-48 h-48 bg-zinc-100 flex items-center justify-center rounded-lg">
-                                            <span className="text-zinc-400 text-sm font-mono">NO ID FOUND</span>
-                                        </div>
-                                    )}
+                                        ) : (
+                                            <div className="w-20 h-20 bg-zinc-100 flex items-center justify-center rounded text-[10px] text-zinc-400">NO ID</div>
+                                        )}
+                                    </div>
                                 </div>
-                                <h3 className="font-bold text-lg mb-2">Scan to Verify Authenticity</h3>
-                                <div className="text-zinc-500 text-sm max-w-md space-y-1">
-                                    <p>Scan the code above or on the packaging.</p>
-                                    <p className="text-xs font-mono bg-zinc-100 dark:bg-zinc-800 inline-block px-2 py-1 rounded">
-                                        ID: {product.wordpressId}
-                                    </p>
+
+                                <div className="p-6 md:p-8 space-y-8">
+                                    {/* 1. Official Heading */}
+                                    <div className="text-center pb-6 border-b border-zinc-100 dark:border-zinc-800">
+                                        <h4 className="text-lg font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-tight mb-2">
+                                            {product.qrTabDetails?.title || product.name}
+                                        </h4>
+                                        <div className="inline-block px-4 py-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full border border-zinc-200 dark:border-zinc-700">
+                                            <span className="text-[10px] font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest">
+                                                Order: {product.qrTabDetails?.gazetteNumber || "Standard Regulatory Compliance"}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* 2. Technical Specs Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {/* Composition Table */}
+                                        <div className="space-y-4">
+                                            <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
+                                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Guaranteed Composition
+                                            </h5>
+                                            <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-xl p-4 border border-zinc-100 dark:border-zinc-800">
+                                                <div className="text-sm text-zinc-600 dark:text-zinc-300 whitespace-pre-line leading-relaxed italic">
+                                                    {product.qrTabDetails?.composition || "Composition details are mentioned on the physical packaging."}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Recommendations */}
+                                        <div className="space-y-6">
+                                            <div>
+                                                <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2 mb-3">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-blue-500" /> Approved Target Crops
+                                                </h5>
+                                                <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                                                    {product.qrTabDetails?.crops || "All major field, fruit, and vegetable crops."}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2 mb-3">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Prescribed Dosage
+                                                </h5>
+                                                <div className="text-sm text-zinc-600 dark:text-zinc-300 whitespace-pre-line leading-relaxed">
+                                                    {product.qrTabDetails?.dosage || "Refer to the method of application tab or packaging."}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* 3. Authentication Footer */}
+                                    <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800 text-center">
+                                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+                                            This electronic record is generated for the purpose of product identification and authenticity verification under the guidelines of FarmerLift Quality Assurance. For batch-specific details (MFG, EXP, Batch No.), please refer to the printed label on the container.
+                                        </p>
+                                        <div className="mt-4 flex items-center justify-center gap-4">
+                                            <div className="flex items-center gap-1.5">
+                                                <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                                                <span className="text-[10px] font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">Verified Authentic</span>
+                                            </div>
+                                            <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+                                            <span className="text-[10px] font-mono text-zinc-400 uppercase">ID: {product.wordpressId}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                {product.batchDetails && (
-                                    <p className="mt-4 text-zinc-600 dark:text-zinc-300 text-sm border-t border-zinc-100 dark:border-zinc-800 pt-4 w-full">
-                                        {product.batchDetails}
-                                    </p>
-                                )}
                             </div>
                         </TabsContent>
                     </Tabs>
