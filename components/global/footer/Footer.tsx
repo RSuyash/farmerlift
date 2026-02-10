@@ -74,7 +74,7 @@ export default async function Footer() {
                                     placeholder="Enter email or mobile number"
                                     className="bg-zinc-50 dark:bg-black/30 border border-zinc-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500 w-full transition-colors"
                                 />
-                                <button className="bg-emerald-600 hover:bg-emerald-500 text-white p-2 rounded-lg transition-colors shadow-md shadow-emerald-600/20">
+                                <button className="bg-emerald-600 hover:bg-emerald-500 text-white p-2 rounded-lg transition-colors shadow-md shadow-emerald-600/20" aria-label="Subscribe">
                                     <ArrowRight className="h-4 w-4" />
                                 </button>
                             </div>

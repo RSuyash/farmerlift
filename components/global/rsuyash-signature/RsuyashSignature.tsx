@@ -86,17 +86,20 @@ export default function RsuyashSignature() {
                 )}>
 
                     <a href="https://www.linkedin.com/in/rsuyash/" target="_blank" rel="noopener noreferrer"
-                        className="p-1 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 text-zinc-400 hover:text-blue-600 transition-colors" title="LinkedIn">
+                        className="p-1 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30 text-zinc-400 hover:text-blue-600 transition-colors"
+                        aria-label="LinkedIn Profile">
                         <Linkedin className="h-3 w-3" />
                     </a>
 
                     <a href="https://www.instagram.com/r_suyash1/" target="_blank" rel="noopener noreferrer"
-                        className="p-1 rounded-full hover:bg-pink-100 dark:hover:bg-pink-900/30 text-zinc-400 hover:text-pink-600 transition-colors" title="Instagram">
+                        className="p-1 rounded-full hover:bg-pink-100 dark:hover:bg-pink-900/30 text-zinc-400 hover:text-pink-600 transition-colors"
+                        aria-label="Instagram Profile">
                         <Instagram className="h-3 w-3" />
                     </a>
 
                     <a href="https://rsuyash.me" target="_blank" rel="noopener noreferrer"
-                        className="p-1 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/30 text-zinc-400 hover:text-purple-600 transition-colors" title="Portfolio">
+                        className="p-1 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/30 text-zinc-400 hover:text-purple-600 transition-colors"
+                        aria-label="Personal Portfolio">
                         <Globe className="h-3 w-3" />
                     </a>
                 </div>

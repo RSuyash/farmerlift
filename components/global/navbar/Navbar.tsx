@@ -138,7 +138,7 @@ export default function Navbar() {
                             {/* Search Removed for Cleaner Look */}
                         </div>
 
-                        <Button variant="ghost" size="icon" className="lg:hidden">
+                        <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Search">
                             <Search className="h-5 w-5" />
                         </Button>
 
@@ -157,6 +157,7 @@ export default function Navbar() {
                             size="icon"
                             className="md:hidden relative z-[60]"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label="Toggle Menu"
                         >
                             <Menu className="h-6 w-6" />
                         </Button>
@@ -189,13 +190,12 @@ export default function Navbar() {
                                 </div>
                                 <span className="font-bold font-outfit text-xl">Menu</span>
                             </div>
-                            {/* Close Button is handled by the toggle in the main nav which stays visible or we duplicate here. 
-                                Actually, the main nav toggle is z-60 (below drawer 100). We need a close button inside.
-                            */}
+                            {/* Close Button */}
                             <Button
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsMobileMenuOpen(false)}
+                                aria-label="Close Menu"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </Button>

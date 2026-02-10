@@ -77,7 +77,7 @@ export default function TrustSection() {
                                 {feature.description}
                             </p>
 
-                            <div className="flex items-center text-xs font-semibold text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors uppercase tracking-wider">
+                            <div className="flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-800 dark:group-hover:text-emerald-300 transition-colors uppercase tracking-wider">
                                 Learn More <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
                             </div>
                         </div>
