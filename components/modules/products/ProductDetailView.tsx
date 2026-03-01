@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
 import QRAuthPopup from "./QRAuthPopup";
