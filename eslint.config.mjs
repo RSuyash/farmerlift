@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Backend Node.js scripts (not part of the Next.js app)
+    "backend/**",
+    "migrate*.js",
   ]),
 ]);
 
