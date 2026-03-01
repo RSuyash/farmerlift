@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# deploy credentials (never commit)
+backend/automation/deploy_config.json
+
 # vercel
 .vercel
 

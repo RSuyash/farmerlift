@@ -1,5 +1,7 @@
 <?php
 /**
+ * CI/CD Deploy Test — 2026-03-01T11:57 — If you see this on the server, the pipeline works!
+ *
  * Twenty Twenty-Five functions and definitions.
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/

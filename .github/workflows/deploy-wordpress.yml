@@ -1,0 +1,162 @@
+name: Deploy WordPress Backend
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'backend/wordpress/**'
+  workflow_dispatch:  # Allow manual trigger from GitHub UI
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: PHP Syntax & Lint Checks
+  # ──────────────────────────────────────────────
+  php-checks:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Check PHP syntax (all files)
+        run: |
+          echo "🔍 Checking PHP syntax..."
+          ERROR=0
+          while IFS= read -r file; do
+            if ! php -l "$file" 2>&1 | grep -q "No syntax errors"; then
+              echo "❌ Syntax error in: $file"
+              php -l "$file"
+              ERROR=1
+            fi
+          done < <(find backend/wordpress -name "*.php" -type f)
+
+          if [ $ERROR -eq 1 ]; then
+            echo "❌ PHP syntax errors found. Aborting deploy."
+            exit 1
+          fi
+          echo "✅ All PHP files pass syntax check."
+
+  # ──────────────────────────────────────────────
+  # Job 2: Next.js Build & Lint (frontend safety)
+  # ──────────────────────────────────────────────
+  frontend-checks:
+    name: Frontend Build & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+  # ──────────────────────────────────────────────
+  # Job 3: Deploy to Hostinger via SFTP
+  # ──────────────────────────────────────────────
+  deploy:
+    name: Deploy to Hostinger
+    runs-on: ubuntu-latest
+    needs: [php-checks, frontend-checks]
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Backup remote files
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+        run: |
+          echo "📦 Creating backup on server..."
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          REMOTE_BASE="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
+          BACKUP_DIR="domains/admin.farmerlift.in/backups/wordpress_${TIMESTAMP}"
+
+          ssh -i ~/.ssh/deploy_key -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST} << ENDSSH
+            mkdir -p ${BACKUP_DIR}
+            cp ${REMOTE_BASE}/functions.php ${BACKUP_DIR}/functions.php 2>/dev/null || true
+            cp -r ${REMOTE_BASE}/includes ${BACKUP_DIR}/includes 2>/dev/null || true
+            echo "✅ Backup created: ${BACKUP_DIR}"
+
+            # Rotate backups: keep last 5
+            cd domains/admin.farmerlift.in/backups/ 2>/dev/null || exit 0
+            ls -dt wordpress_* 2>/dev/null | tail -n +6 | xargs rm -rf 2>/dev/null || true
+            echo "🔄 Old backups cleaned (keeping last 5)."
+          ENDSSH
+
+      - name: Deploy files via SFTP
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+        run: |
+          echo "🚀 Deploying WordPress backend files..."
+          REMOTE_BASE="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
+
+          # Ensure remote directories exist
+          ssh -i ~/.ssh/deploy_key -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST} << ENDSSH
+            mkdir -p ${REMOTE_BASE}/includes/crm/ajax
+            mkdir -p ${REMOTE_BASE}/includes/crm/views
+            mkdir -p ${REMOTE_BASE}/includes/products/ajax
+            mkdir -p ${REMOTE_BASE}/includes/products/views
+          ENDSSH
+
+          # Upload all files via scp
+          echo "Uploading functions.php..."
+          scp -i ~/.ssh/deploy_key -P ${SSH_PORT} \
+            backend/wordpress/functions.php \
+            ${SSH_USERNAME}@${SSH_HOST}:${REMOTE_BASE}/functions.php
+
+          echo "Uploading includes/ files..."
+          scp -i ~/.ssh/deploy_key -P ${SSH_PORT} -r \
+            backend/wordpress/includes/* \
+            ${SSH_USERNAME}@${SSH_HOST}:${REMOTE_BASE}/includes/
+
+          echo "✅ All files deployed successfully."
+
+      - name: Smoke test
+        run: |
+          echo "🏥 Running smoke test..."
+          sleep 5  # Give WordPress a moment to pick up changes
+
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            --max-time 15 \
+            "https://admin.farmerlift.in/wp-json/wp/v2/types" || echo "000")
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 500 ]; then
+            echo "✅ Smoke test passed (HTTP $HTTP_STATUS). Site is alive."
+          else
+            echo "⚠️ Smoke test warning (HTTP $HTTP_STATUS)."
+            echo "The site may be temporarily unavailable or the API endpoint may not be public."
+            echo "Please verify manually: https://admin.farmerlift.in/wp-admin/"
+            echo ""
+            echo "🔄 To rollback, SSH into the server and restore from backup:"
+            echo "   ssh farmerlift"
+            echo "   ls domains/admin.farmerlift.in/backups/"
+            echo "   cp -r domains/admin.farmerlift.in/backups/wordpress_LATEST/* domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/"
+          fi

@@ -156,7 +156,7 @@ export default async function Footer() {
                 </div>
 
                 <div className="border-t border-zinc-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500">
-                    <p>© {new Date().getFullYear()} FarmerLift. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} FarmerLift. All rights reserved. <span className="text-zinc-400 dark:text-zinc-600">v0.1.1-ci</span></p>
 
                     {/* Developer Credit */}
                     <RsuyashSignature />

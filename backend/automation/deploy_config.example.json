@@ -1,0 +1,10 @@
+{
+    "_comment": "Copy this to .env.deploy in the project root and fill in your values",
+    "env_vars": {
+        "SSH_HOST": "91.108.107.13",
+        "SSH_PORT": "65002",
+        "SSH_USERNAME": "u146189558",
+        "SSH_PRIVATE_KEY": "~/.ssh/id_farmerlift",
+        "REMOTE_PATH": "domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/"
+    }
+}
