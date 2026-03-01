@@ -7,16 +7,28 @@ import { ChevronRight, Heart, Share2, ShoppingCart, Truck, ShieldCheck, Leaf, Ch
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
+import QRAuthPopup from "./QRAuthPopup";
 
 function ProductDetailContent({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     const searchParams = useSearchParams();
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'key-benefits');
+    const [showQRPopup, setShowQRPopup] = useState(searchParams.get('qr') === '1');
+
+    // Close QR popup and clean the URL
+    const handleCloseQRPopup = useCallback(() => {
+        setShowQRPopup(false);
+        // Remove ?qr=1 from URL without full page reload
+        const url = new URL(window.location.href);
+        url.searchParams.delete('qr');
+        router.replace(url.pathname + url.search, { scroll: false });
+    }, [router]);
 
     // Auto-Slider Logic
     const nextImage = useCallback(() => {
@@ -105,6 +117,8 @@ function ProductDetailContent({ product }: { product: Product }) {
 
     return (
         <div className="min-h-screen bg-white dark:bg-black pb-28 lg:pb-20">
+            {/* QR Authentication Popup (shown when arriving via QR scan) */}
+            {showQRPopup && <QRAuthPopup product={product} onClose={handleCloseQRPopup} />}
             {/* Breadcrumb */}
             <div className="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
                 <div className="container-width py-4 flex items-center gap-2 text-xs md:text-sm text-zinc-500 flex-wrap">
@@ -424,7 +438,7 @@ function ProductDetailContent({ product }: { product: Product }) {
                                                 />
                                             </div>
                                         )}
-                                        
+
                                         {product.dosageDescription && (
                                             <div className="p-6 rounded-2xl bg-amber-50/30 dark:bg-amber-900/5 border border-amber-100/50 dark:border-amber-900/10">
                                                 <div className="flex items-center gap-3 mb-6">
