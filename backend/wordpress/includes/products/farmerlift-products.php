@@ -48,6 +48,7 @@ function farmerlift_render_products_page() {
 
 // 3. INCLUDE AJAX HANDLERS
 require_once __DIR__ . '/ajax/actions.php';
+require_once __DIR__ . '/ajax/history.php';
 
 // 4. SKU LOOKUP API ENDPOINT
 add_action('rest_api_init', function() {

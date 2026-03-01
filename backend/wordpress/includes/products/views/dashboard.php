@@ -188,8 +188,12 @@ foreach ($products as $p) {
                             <div class="pm-history" id="history-<?php echo $post->ID; ?>">
                                 <?php if (!empty($history)): ?>
                                     <?php foreach ($history as $old_sku): ?>
-                                        <span class="pm-history-pill"><?php echo esc_html($old_sku); ?></span>
+                                        <span class="pm-history-pill" style="display:inline-flex; align-items:center;">
+                                            <?php echo esc_html($old_sku); ?>
+                                            <button onclick="removeHistorySku(<?php echo $post->ID; ?>, '<?php echo esc_js($old_sku); ?>')" title="Remove this SKU from history" style="margin-left: 4px; font-size: 8px; border:none; background:transparent; cursor:pointer; color:#d63638; padding: 0;">❌</button>
+                                        </span>
                                     <?php endforeach; ?>
+                                    <button class="pm-btn-edit" onclick="clearHistory(<?php echo $post->ID; ?>)" title="Clear History" style="margin-left: 5px; font-size: 10px; border:none; background:transparent; cursor:pointer;">❌</button>
                                 <?php else: ?>
                                     <span class="pm-no-history">—</span>
                                 <?php endif; ?>
@@ -458,6 +462,66 @@ foreach ($products as $p) {
         toast.textContent = message;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3500);
+    }
+
+    // ─── REMOVE SINGLE HISTORY SKU ───────────────────
+    function removeHistorySku(postId, skuToRemove) {
+        if (!confirm(`Are you sure you want to remove ${skuToRemove} from history? Any printed QR codes with this SKU will break!`)) return;
+
+        const fd = new FormData();
+        fd.append('action', 'farmerlift_remove_history_sku');
+        fd.append('post_id', postId);
+        fd.append('sku_to_remove', skuToRemove);
+        fd.append('_ajax_nonce', nonce);
+
+        fetch(ajaxUrl, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(resp => {
+                if (resp.success) {
+                    const histDiv = document.getElementById('history-' + postId);
+                    if (resp.data.history && resp.data.history.length > 0) {
+                        histDiv.innerHTML = resp.data.history.map(h =>
+                            `<span class="pm-history-pill" style="display:inline-flex; align-items:center;">
+                                ${h}
+                                <button onclick="removeHistorySku(${postId}, '${h}')" title="Remove this SKU from history" style="margin-left: 4px; font-size: 8px; border:none; background:transparent; cursor:pointer; color:#d63638; padding: 0;">❌</button>
+                            </span>`
+                        ).join('') + ` <button class="pm-btn-edit" onclick="clearHistory(${postId})" title="Clear History" style="margin-left: 5px; font-size: 10px; border:none; background:transparent; cursor:pointer;">❌</button>`;
+                    } else {
+                        histDiv.innerHTML = '<span class="pm-no-history">—</span>';
+                    }
+                    showToast(resp.data.message, 'success');
+                } else {
+                    showToast(resp.data || 'Failed to remove SKU from history', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('Network error', 'error');
+            });
+    }
+
+    // ─── CLEAR HISTORY ───────────────────────────────
+    function clearHistory(postId) {
+        if (!confirm('Are you sure you want to clear the SKU history for this product? Old printed packaging with those SKUs will break and point nowhere!')) return;
+
+        const fd = new FormData();
+        fd.append('action', 'farmerlift_clear_history');
+        fd.append('post_id', postId);
+        fd.append('_ajax_nonce', nonce);
+
+        fetch(ajaxUrl, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(resp => {
+                if (resp.success) {
+                    const histDiv = document.getElementById('history-' + postId);
+                    histDiv.innerHTML = '<span class="pm-no-history">—</span>';
+                    showToast('SKU history cleared successfully', 'success');
+                } else {
+                    showToast(resp.data || 'Failed to clear history', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('Network error', 'error');
+            });
     }
 
     // ─── KEYBOARD SUPPORT ────────────────────────────
