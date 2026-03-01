@@ -51,7 +51,7 @@ require_once __DIR__ . '/ajax/actions.php';
 
 // 4. SKU LOOKUP API ENDPOINT
 add_action('rest_api_init', function() {
-    register_rest_route('farmerlift/v1', '/product-by-sku/(?P<sku>[a-zA-Z0-9\-]+)', array(
+    register_rest_route('farmerlift/v1', '/product-by-sku/(?P<sku>[a-zA-Z0-9\-_]+)', array(
         'methods'  => 'GET',
         'callback' => 'farmerlift_product_by_sku',
         'permission_callback' => '__return_true',
