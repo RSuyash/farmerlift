@@ -85,9 +85,12 @@ function farmerlift_ajax_update_sku() {
     
     // Return updated data
     $history = get_post_meta($post_id, 'product_sku_history', true);
+    
+    // Purge LiteSpeed REST API cache so redirects update instantly
+    do_action('litespeed_purge_all');
+    
     wp_send_json_success(array(
         'sku'     => $new_sku,
-        'old_sku' => $old_sku,
         'history' => is_array($history) ? $history : array(),
     ));
 }
@@ -177,6 +180,9 @@ function farmerlift_ajax_bulk_generate() {
         update_post_meta($product->ID, 'product_sku', $new_sku);
         $updated++;
     }
+
+    // Purge LiteSpeed REST API cache so bulk updates reflect instantly
+    do_action('litespeed_purge_all');
     
     wp_send_json_success(array(
         'updated' => $updated,

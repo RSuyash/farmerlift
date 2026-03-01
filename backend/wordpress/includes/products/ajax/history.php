@@ -36,6 +36,9 @@ function farmerlift_ajax_remove_history_sku() {
             update_post_meta($post_id, 'product_sku_history', $history);
         }
         
+        // Purge LiteSpeed REST API cache so redirects update instantly
+        do_action('litespeed_purge_all');
+        
         wp_send_json_success(array(
             'history' => $history,
             'message' => 'SKU removed from history.'
@@ -43,4 +46,27 @@ function farmerlift_ajax_remove_history_sku() {
     } else {
         wp_send_json_error('SKU not found in history.');
     }
+}
+
+// ─── CLEAR ALL HISTORY FOR A PRODUCT ─────────────────────────────
+add_action('wp_ajax_farmerlift_clear_history', 'farmerlift_ajax_clear_history');
+function farmerlift_ajax_clear_history() {
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Unauthorized');
+    }
+    
+    $post_id = intval($_POST['post_id'] ?? 0);
+    
+    if (!$post_id) {
+        wp_send_json_error('Product ID is required.');
+    }
+
+    delete_post_meta($post_id, 'product_sku_history');
+    
+    // Purge LiteSpeed REST API cache so redirects update instantly
+    do_action('litespeed_purge_all');
+
+    wp_send_json_success(array(
+        'message' => 'History cleared successfully.'
+    ));
 }
