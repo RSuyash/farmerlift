@@ -121,12 +121,12 @@ jobs:
           REMOTE_BASE="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
 
           # Ensure remote directories exist
-          ssh -i ~/.ssh/deploy_key -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST} << ENDSSH
-            mkdir -p ${REMOTE_BASE}/includes/crm/ajax
-            mkdir -p ${REMOTE_BASE}/includes/crm/views
-            mkdir -p ${REMOTE_BASE}/includes/products/ajax
-            mkdir -p ${REMOTE_BASE}/includes/products/views
-          ENDSSH
+          ssh -i ~/.ssh/deploy_key -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST} << 'EOF'
+            mkdir -p domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/includes/crm/ajax
+            mkdir -p domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/includes/crm/views
+            mkdir -p domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/includes/products/ajax
+            mkdir -p domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive/includes/products/views
+          EOF
 
           # Upload all files via scp
           echo "Uploading functions.php..."
