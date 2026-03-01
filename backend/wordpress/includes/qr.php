@@ -129,18 +129,45 @@ function farmerlift_render_qr_page() {
                         
                         $safe_filename = sanitize_title($post->post_title) . '-qr.png';
                         $sku = get_post_meta($post->ID, 'product_sku', true);
-                        $qr_id = !empty($sku) ? $sku : $post->ID;
+                        
+                        $token = get_post_meta($post->ID, 'qr_permanent_token', true);
+                        if (empty($token)) {
+                            $token = 'fl_' . substr(md5(uniqid(rand(), true)), 0, 8);
+                            update_post_meta($post->ID, 'qr_permanent_token', $token);
+                        }
+                        // Default QR code downloads now point to the Permanent Token
+                        $qr_id = $token;
                     ?>
                         <tr class="product-row" data-wpid="<?php echo $post->ID; ?>" data-qrid="<?php echo esc_attr($qr_id); ?>">
                             <td><span class="pill-id">#<?php echo $post->ID; ?></span></td>
                             <td><?php if(!empty($sku)): ?><span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:3px;font-family:monospace;font-size:11px;font-weight:600;"><?php echo esc_html($sku); ?></span><?php else: ?><span style="color:#9ca3af;font-size:11px;">—</span><?php endif; ?></td>
                             <td><img src="<?php echo $thumb; ?>" class="row-thumb"></td>
                             <td>
-                                <strong><?php echo esc_html($post->post_title); ?></strong><br>
+                                <strong style="font-size: 14px;"><?php echo esc_html($post->post_title); ?></strong><br>
                                 <span class="term-pill"><?php echo $term_list; ?></span>
+                                <?php if(empty($sku)): ?>
+                                    <div style="margin-top: 8px; color: #856404; background: #fff3cd; padding: 6px 10px; border-radius: 4px; font-size: 11px; border: 1px solid #ffeeba; display: inline-block;">
+                                        ⚠️ <strong>Warning:</strong> No SKU assigned. Assign one in Product Manager.
+                                    </div>
+                                <?php endif; ?>
                             </td>
                             <td>
-                                <a href="#" target="_blank" class="magic-link" id="link-<?php echo $post->ID; ?>">...</a>
+                                <a href="#" target="_blank" class="magic-link" id="link-<?php echo $post->ID; ?>" style="font-weight: 600; font-size: 13px;">...</a>
+                                <div style="margin-top: 8px; font-size: 11px; color: #555; background: #f8f9fa; padding: 8px; border-radius: 4px; border: 1px solid #eee;">
+                                    <strong style="color:#444;">All Resolving URLs:</strong><br>
+                                    • Prim. (Token): <a href="#" class="url-text magic-link" data-suffix="<?php echo esc_attr($token); ?>"></a><br>
+                                    <?php if(!empty($sku)): ?>
+                                        • Current SKU: <a href="#" class="url-text magic-link" data-suffix="<?php echo esc_attr($sku); ?>"></a><br>
+                                    <?php endif; ?>
+                                    • Fallback ID: <a href="#" class="url-text magic-link" data-suffix="<?php echo $post->ID; ?>"></a>
+                                    <?php 
+                                        $history = get_post_meta($post->ID, 'product_sku_history', true);
+                                        if (is_array($history) && count($history) > 0) {
+                                            $h_links = array_map(function($h) { return '<a href="#" class="url-text magic-link" data-suffix="'.esc_attr($h).'"></a>'; }, $history);
+                                            echo '<br>• SKU History: ' . implode(', ', $h_links);
+                                        }
+                                    ?>
+                                </div>
                             </td>
                             <td>
                                 <div id="qr-<?php echo $post->ID; ?>" class="qr-box"></div>
@@ -217,6 +244,15 @@ function farmerlift_render_qr_page() {
                     linkEl.href = fullUrl;
                     linkEl.textContent = fullUrl;
                 }
+
+                // Update all sub-links
+                const urlTexts = row.querySelectorAll('.url-text');
+                urlTexts.forEach(el => {
+                    const suffix = el.getAttribute('data-suffix');
+                    const u = currentBaseUrl + suffix;
+                    el.href = u;
+                    el.textContent = u;
+                });
 
                 // Update QR
                 const box = document.getElementById('qr-' + wpid);

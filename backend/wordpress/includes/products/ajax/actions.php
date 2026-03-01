@@ -23,6 +23,12 @@ function farmerlift_ajax_update_sku() {
         wp_send_json_error('Product ID and SKU are required.');
     }
     
+    // Check if locked
+    $is_locked = get_post_meta($post_id, 'product_sku_locked', true);
+    if ($is_locked == '1' || $is_locked === 'true') {
+        wp_send_json_error('This SKU is locked for printing. You must unlock it first.');
+    }
+    
     // Validate SKU format (LETTERS-DIGITS, e.g., WSN-001)
     if (!preg_match('/^[A-Z]{2,4}-\d{3,4}$/', $new_sku)) {
         wp_send_json_error('Invalid SKU format. Use format like WSN-001 or OBF-0012.');
@@ -124,6 +130,13 @@ function farmerlift_ajax_bulk_generate() {
     foreach ($products as $product) {
         $existing_sku = get_post_meta($product->ID, 'product_sku', true);
         
+        // Skip if locked
+        $is_locked = get_post_meta($product->ID, 'product_sku_locked', true);
+        if ($is_locked == '1' || $is_locked === 'true') {
+            $skipped++;
+            continue;
+        }
+
         // Skip if already has SKU and skip_existing is true
         if ($skip_existing && !empty($existing_sku)) {
             $skipped++;
@@ -170,5 +183,26 @@ function farmerlift_ajax_bulk_generate() {
         'skipped' => $skipped,
         'total'   => count($products),
     ));
+}
+
+// ─── TOGGLE SKU LOCK ───────────────────────────────────────────
+add_action('wp_ajax_farmerlift_toggle_sku_lock', 'farmerlift_ajax_toggle_sku_lock');
+function farmerlift_ajax_toggle_sku_lock() {
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Unauthorized');
+    }
+    
+    $post_id = intval($_POST['post_id'] ?? 0);
+    $do_lock = isset($_POST['lock']) && $_POST['lock'] === 'true';
+    
+    if (!$post_id) wp_send_json_error('Post ID required');
+    
+    if ($do_lock) {
+        update_post_meta($post_id, 'product_sku_locked', '1');
+    } else {
+        delete_post_meta($post_id, 'product_sku_locked');
+    }
+    
+    wp_send_json_success(array('locked' => $do_lock));
 }
 ?>

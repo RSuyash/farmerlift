@@ -93,13 +93,20 @@ foreach ($products as $p) {
         </form>
 
         <!-- Bulk Actions -->
-        <div class="pm-bulk-actions">
-            <button id="btn-bulk-generate" class="button button-primary" onclick="bulkGenerateSKUs(false)">
-                ⚡ Auto-Generate All SKUs
+        <!-- Bulk Actions -->
+        <div class="pm-bulk-actions" style="position: relative;">
+            <button id="btn-bulk-missing" class="button button-primary" onclick="bulkGenerateSKUs(true)">
+                ⚡ Auto-Fill Missing SKUs
             </button>
-            <button id="btn-bulk-missing" class="button" onclick="bulkGenerateSKUs(true)">
-                Fill Missing Only
-            </button>
+            <details style="margin-left: 10px; display: inline-block; position: relative;">
+                <summary style="cursor: pointer; color: #d63638; font-weight: 600; padding-top: 5px;">⚠️ Advanced Options</summary>
+                <div style="position: absolute; right: 0; background: #fffcfc; border: 1px solid #d63638; padding: 12px; margin-top: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 4px; z-index: 99; min-width: 280px;">
+                    <p style="margin: 0 0 10px 0; font-size: 12px; color: #666;">This will reassign EVERY unlocked product with a brand new SKU and push existing ones to history. Use with caution.</p>
+                    <button id="btn-bulk-generate" class="button" onclick="bulkGenerateSKUs(false)" style="color: #d63638; border-color: #d63638;">
+                        Overwrite All Unlocked SKUs
+                    </button>
+                </div>
+            </details>
         </div>
     </div>
 
@@ -112,6 +119,7 @@ foreach ($products as $p) {
                 <th>Product Name</th>
                 <th>Category</th>
                 <th style="width:160px">Current SKU</th>
+                <th style="width:110px; text-align:center;">Print Lock</th>
                 <th style="width:200px">SKU History</th>
                 <th style="width:100px">Actions</th>
             </tr>
@@ -131,6 +139,7 @@ foreach ($products as $p) {
                     
                     $sku = get_post_meta($post->ID, 'product_sku', true);
                     $history = get_post_meta($post->ID, 'product_sku_history', true);
+                    $is_locked = get_post_meta($post->ID, 'product_sku_locked', true) == '1';
                     if (!is_array($history)) $history = array();
                 ?>
                     <tr class="pm-row" data-id="<?php echo $post->ID; ?>" data-prefix="<?php echo $prefix; ?>">
@@ -146,8 +155,10 @@ foreach ($products as $p) {
                         <td>
                             <div class="pm-sku-cell" id="sku-cell-<?php echo $post->ID; ?>">
                                 <?php if (!empty($sku)): ?>
-                                    <span class="pm-sku-value" id="sku-val-<?php echo $post->ID; ?>"><?php echo esc_html($sku); ?></span>
-                                    <button class="pm-btn-edit" onclick="editSKU(<?php echo $post->ID; ?>, '<?php echo esc_js($sku); ?>')" title="Edit SKU">✏️</button>
+                                    <span class="pm-sku-value <?php echo $is_locked ? 'pm-sku-locked' : ''; ?>" id="sku-val-<?php echo $post->ID; ?>"><?php echo esc_html($sku); ?></span>
+                                    <?php if (!$is_locked): ?>
+                                        <button class="pm-btn-edit" onclick="editSKU(<?php echo $post->ID; ?>, '<?php echo esc_js($sku); ?>')" title="Edit SKU">✏️</button>
+                                    <?php endif; ?>
                                 <?php else: ?>
                                     <span class="pm-sku-empty">No SKU</span>
                                     <button class="pm-btn-edit pm-btn-assign" onclick="editSKU(<?php echo $post->ID; ?>, '')" title="Assign SKU">+ Assign</button>
@@ -161,6 +172,16 @@ foreach ($products as $p) {
                                        maxlength="10" />
                                 <button class="button button-small button-primary" onclick="saveSKU(<?php echo $post->ID; ?>)">Save</button>
                                 <button class="button button-small" onclick="cancelEdit(<?php echo $post->ID; ?>)">✕</button>
+                        </td>
+                        <td style="text-align:center;">
+                            <div class="pm-lock-cell" id="lock-cell-<?php echo $post->ID; ?>">
+                                <?php if (empty($sku)): ?>
+                                    —
+                                <?php elseif ($is_locked): ?>
+                                    <button class="button button-small" onclick="togglePrintLock(<?php echo $post->ID; ?>, false)" title="Unlock for editing" style="color: #d63638; border-color: #d63638;">🔒 Locked</button>
+                                <?php else: ?>
+                                    <button class="button button-small" onclick="togglePrintLock(<?php echo $post->ID; ?>, true)" title="Protect printed SKU">🔓 Protect</button>
+                                <?php endif; ?>
                             </div>
                         </td>
                         <td>
@@ -255,6 +276,9 @@ foreach ($products as $p) {
     .pm-sku-empty {
         color: #9ca3af; font-style: italic; font-size: 12px;
     }
+    .pm-sku-locked {
+        background: #f1f5f9; color: #475569; border: 1px dashed #cbd5e1;
+    }
     .pm-btn-edit {
         background: none; border: 1px solid #ddd; border-radius: 3px; cursor: pointer;
         font-size: 12px; padding: 2px 6px; transition: all 0.2s;
@@ -299,6 +323,31 @@ foreach ($products as $p) {
 <script>
     const ajaxUrl = '<?php echo admin_url("admin-ajax.php"); ?>';
     const nonce = '<?php echo wp_create_nonce("farmerlift_products_nonce"); ?>';
+
+    // ─── TOGGLE LOCK ─────────────────────────────────
+    function togglePrintLock(postId, lock) {
+        if (!lock && !confirm("WARNING: Unlocking this SKU allows it to be changed. If this SKU is already printed on physical bags, broken links may occur if you change it. Are you absolutely sure?")) {
+            return;
+        }
+
+        const fd = new FormData();
+        fd.append('action', 'farmerlift_toggle_sku_lock');
+        fd.append('post_id', postId);
+        fd.append('lock', lock ? 'true' : 'false');
+        fd.append('_ajax_nonce', nonce);
+
+        fetch(ajaxUrl, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(resp => {
+                if (resp.success) {
+                    showToast(lock ? 'SKU is now locked' : 'SKU is unlocked', 'success');
+                    // Easiest UI update is a quick transparent reload, but we can do it inline
+                    setTimeout(() => location.reload(), 800);
+                } else {
+                    showToast(resp.data || 'Error updating lock', 'error');
+                }
+            });
+    }
 
     // ─── INLINE EDIT ─────────────────────────────────
     function editSKU(postId, currentSku) {

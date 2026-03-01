@@ -59,8 +59,27 @@ add_action('rest_api_init', function() {
 });
 
 function farmerlift_product_by_sku( WP_REST_Request $request ) {
+    global $wpdb;
     $sku = sanitize_text_field( $request->get_param('sku') );
     
+    // 0. Search by Permanent Token
+    $token_product = $wpdb->get_var($wpdb->prepare(
+        "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = 'qr_permanent_token' AND meta_value = %s",
+        $sku
+    ));
+    if ($token_product) {
+        $p = get_post($token_product);
+        if ($p && $p->post_status === 'publish') {
+            return new WP_REST_Response(array(
+                'found'    => true,
+                'match'    => 'permanent_token',
+                'slug'     => $p->post_name,
+                'id'       => $p->ID,
+                'title'    => $p->post_title,
+            ), 200);
+        }
+    }
+
     // 1. Search by current SKU
     $args = array(
         'post_type'      => 'product',
@@ -85,22 +104,22 @@ function farmerlift_product_by_sku( WP_REST_Request $request ) {
         ), 200);
     }
     
-    // 2. Search in SKU history across all products
-    $all_products = get_posts(array(
-        'post_type'      => 'product',
-        'posts_per_page' => -1,
-        'post_status'    => 'publish',
+    // 2. Optimized O(1) Search in SKU history
+    $like_sku = '%' . $wpdb->esc_like( '"' . $sku . '"' ) . '%';
+    $history_post_id = $wpdb->get_var($wpdb->prepare(
+        "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = 'product_sku_history' AND meta_value LIKE %s LIMIT 1",
+        $like_sku
     ));
     
-    foreach ($all_products as $product) {
-        $history = get_post_meta($product->ID, 'product_sku_history', true);
-        if (is_array($history) && in_array($sku, $history)) {
+    if ($history_post_id) {
+        $p = get_post($history_post_id);
+        if ($p && $p->post_status === 'publish') {
             return new WP_REST_Response(array(
                 'found'    => true,
                 'match'    => 'sku_history',
-                'slug'     => $product->post_name,
-                'id'       => $product->ID,
-                'title'    => $product->post_title,
+                'slug'     => $p->post_name,
+                'id'       => $p->ID,
+                'title'    => $p->post_title,
             ), 200);
         }
     }
