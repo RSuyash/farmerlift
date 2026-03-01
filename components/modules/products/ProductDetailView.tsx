@@ -8,10 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import ProductImage from "@/components/ui/ProductImage";
 import { QRCodeSVG } from "qrcode.react";
 import { cn } from "@/lib/utils";
 import QRAuthPopup from "./QRAuthPopup";
+import FormattedText from "@/components/ui/FormattedText";
 
 function ProductDetailContent({ product }: { product: Product }) {
     const [activeImage, setActiveImage] = useState(product.images[0] || '');
@@ -518,10 +518,11 @@ function ProductDetailContent({ product }: { product: Product }) {
                                             <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
                                                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Guaranteed Composition
                                             </h5>
-                                            <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-xl p-4 border border-zinc-100 dark:border-zinc-800">
-                                                <div className="text-sm text-zinc-600 dark:text-zinc-300 whitespace-pre-line leading-relaxed italic">
-                                                    {product.qrTabDetails?.composition || "Composition details are mentioned on the physical packaging."}
-                                                </div>
+                                            <div className="bg-zinc-50 dark:bg-zinc-800/30 rounded-xl p-4 sm:p-5 border border-zinc-100 dark:border-zinc-800">
+                                                <FormattedText
+                                                    text={product.qrTabDetails?.composition || "Composition details are mentioned on the physical packaging."}
+                                                    className="text-sm text-zinc-600 dark:text-zinc-300 italic"
+                                                />
                                             </div>
                                         </div>
 
@@ -539,9 +540,10 @@ function ProductDetailContent({ product }: { product: Product }) {
                                                 <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2 mb-3">
                                                     <div className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Prescribed Dosage
                                                 </h5>
-                                                <div className="text-sm text-zinc-600 dark:text-zinc-300 whitespace-pre-line leading-relaxed">
-                                                    {product.qrTabDetails?.dosage || "Refer to the method of application tab or packaging."}
-                                                </div>
+                                                <FormattedText
+                                                    text={product.qrTabDetails?.dosage || "Refer to the method of application tab or packaging."}
+                                                    className="text-sm text-zinc-600 dark:text-zinc-300"
+                                                />
                                             </div>
                                         </div>
                                     </div>
