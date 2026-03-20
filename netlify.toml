@@ -3,17 +3,11 @@
 
 [build]
   command = "npm run build"
-  publish = ".next"
+  # publish folder removed; let Netlify Next.js Runtime auto-detect
 
 [build.environment]
   NODE_VERSION = "20"
   NEXT_TELEMETRY_DISABLED = "1"
-
-# Redirect SPA fallback (Next.js handles its own routing)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
 
 # Security headers
 [[headers]]
