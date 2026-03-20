@@ -514,6 +514,18 @@ function ProductDetailContent({ product }: { product: Product }) {
                                         </div>
                                     </div>
 
+                                    {product.batchDetails && (
+                                        <div className="mb-8 p-6 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-2xl border border-indigo-100 dark:border-indigo-900/30">
+                                            <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2 mb-3">
+                                                <div className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> Batch & Authentication Details
+                                            </h5>
+                                            <FormattedText
+                                                text={product.batchDetails}
+                                                className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed"
+                                            />
+                                        </div>
+                                    )}
+
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-4">
                                             <h5 className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">

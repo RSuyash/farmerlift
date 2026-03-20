@@ -119,6 +119,26 @@ export default function QRAuthPopup({ product, onClose }: QRAuthPopupProps) {
                 {/* === Info Cards === */}
                 <div className="px-5 sm:px-10 py-6 sm:py-8 space-y-4 sm:space-y-6">
 
+                    {/* Batch / Auth Details Card (if exists) */}
+                    {product.batchDetails && (
+                        <div className="rounded-2xl border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-900/10 p-5 sm:p-6 shadow-sm">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="h-10 w-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 flex items-center justify-center shadow-inner">
+                                    <FileText className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                                </div>
+                                <h4 className="font-bold text-base text-zinc-900 dark:text-white">
+                                    Batch & Authentication Details
+                                </h4>
+                            </div>
+                            <div className="pl-[52px]">
+                                <FormattedText
+                                    text={product.batchDetails}
+                                    className="text-[15px] text-zinc-600 dark:text-zinc-300"
+                                />
+                            </div>
+                        </div>
+                    )}
+
                     {/* Composition Card */}
                     <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/40 dark:bg-emerald-900/10 p-5 sm:p-6 shadow-sm">
                         <div className="flex items-center gap-3 mb-4">

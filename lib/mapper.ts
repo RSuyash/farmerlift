@@ -85,9 +85,6 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
     // 1. Featured Image
     if (wpPost._embedded && wpPost._embedded['wp:featuredmedia'] && wpPost._embedded['wp:featuredmedia'][0]) {
         images.push(wpPost._embedded['wp:featuredmedia'][0].source_url);
-    } else {
-        // Fallback if no featured image
-        images.push('/images/placeholder.png');
     }
 
     // 2. Extra Gallery Images (1-8)
@@ -108,9 +105,9 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
         }
     }
 
-    // If completely empty (shouldn't happen due to fallback above, but safety)
+    // If completely empty 
     if (images.length === 0) {
-        images.push('/images/placeholder.png');
+        images.push('/images/farmerlift_icon_transparent.png');
     }
 
     return {
@@ -123,7 +120,7 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
         stock: Number(acf.stock_qty) || 0,      // MATCHES "Stock Qty" field
         isOrganic: acf.is_organic || false,
         description: cleanDescription, // Clean text without p tags
-        sku: acf.sku || 'N/A',
+        sku: acf.product_sku || acf.sku || 'N/A',
         images: images,
         features: acf.features_list ? acf.features_list.split('\n') : [],
         manufacturer: acf.brand_manufacturer || 'FarmerLift', // Default to FarmerLift
@@ -161,9 +158,9 @@ export function mapWpProductToApp(wpPost: any, mediaMap: Record<number, string> 
                     }
                 }
 
-                if (name) {
+                if (name || (finalImg && finalImg !== '/images/farmerlift_icon_transparent.png')) {
                     crops.push({
-                        name: name,
+                        name: name || 'Crop',
                         image: finalImg
                     });
                 }

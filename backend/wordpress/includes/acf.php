@@ -167,7 +167,7 @@ if( function_exists('acf_add_local_field_group') ):
         'key' => 'group_commercial',
         'title' => '01. Details & Benefits',
         'fields' => array(
-            array( 'key' => 'field_sku', 'label' => 'SKU', 'name' => 'sku', 'type' => 'text' ),
+            array( 'key' => 'field_sku', 'label' => 'SKU', 'name' => 'product_sku', 'type' => 'text' ),
             array( 'key' => 'field_hsn', 'label' => 'HSN Code', 'name' => 'hsn_code', 'type' => 'text' ),
             array( 'key' => 'field_mrp', 'label' => 'MRP', 'name' => 'mrp', 'type' => 'number' ),
             array( 'key' => 'field_price', 'label' => 'Selling Price', 'name' => 'selling_price', 'type' => 'number' ),
