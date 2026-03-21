@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  farmerlift-web:
+    build: .
+    container_name: farmerlift-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_GA_MEASUREMENT_ID=G-CHSLVN2HYR
+      - NEXT_PUBLIC_WP_API_URL=https://admin.farmerlift.in/wp-json
+    networks:
+      - proxy_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy_net"
+      # Route traffic matching farmerlift.in or www.farmerlift.in
+      - "traefik.http.routers.farmerlift.rule=Host(`farmerlift.in`) || Host(`www.farmerlift.in`)"
+      - "traefik.http.routers.farmerlift.entrypoints=websecure"
+      - "traefik.http.routers.farmerlift.tls.certresolver=letsencrypt"
+      - "traefik.http.services.farmerlift.loadbalancer.server.port=3000"
+
+networks:
+  proxy_net:
+    external: true
