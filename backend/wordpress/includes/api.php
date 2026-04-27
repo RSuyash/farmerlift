@@ -28,7 +28,10 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $dob = sanitize_text_field( $params['dob'] ?? '' );
     $gst = sanitize_text_field( $params['gstNumber'] ?? $params['gst'] ?? '' );
     $city = sanitize_text_field( $params['city'] ?? '' );
+    $district = sanitize_text_field( $params['district'] ?? '' );
+    $taluka = sanitize_text_field( $params['taluka'] ?? '' );
     $state = sanitize_text_field( $params['state'] ?? '' );
+    $pincode = sanitize_text_field( $params['pincode'] ?? '' );
     $address = sanitize_textarea_field( $params['address'] ?? '' );
     $message = sanitize_textarea_field( $params['message'] ?? '' );
 
@@ -40,7 +43,7 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     // 2. SAVE TO DATABASE (Web Lead CPT)
     $post_id = wp_insert_post( array(
         'post_title'    => $name . ' (' . ucfirst($type) . ')',
-        'post_content'  => "Message:\n" . $message . "\n\nAddress:\n" . $address . "\n\nDOB: " . $dob . "\nGST: " . $gst,
+        'post_content'  => "Message:\n" . $message . "\n\nAddress:\n" . $address . "\n\nDistrict: " . $district . "\nTaluka: " . $taluka . "\nPincode: " . $pincode . "\nDOB: " . $dob . "\nGST: " . $gst,
         'post_status'   => 'publish',
         'post_type'     => 'web_lead',
         'meta_input'    => array(
@@ -50,7 +53,10 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
             'lead_dob'      => $dob,
             'lead_gst'      => $gst,
             'lead_city'     => $city,
+            'lead_district' => $district,
+            'lead_taluka'   => $taluka,
             'lead_state'    => $state,
+            'lead_pincode'  => $pincode,
             'lead_address'  => $address,
             'lead_raw_msg'  => $message
         )
@@ -65,7 +71,7 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $user_message .= "We have received your details safely. Our team is currently reviewing your application and will contact you at $phone within 24-48 hours.\n\n";
     $user_message .= "Here is a summary of what you submitted:\n";
     $user_message .= "Name: $name\n";
-    $user_message .= "Location: $city, $state\n";
+    $user_message .= "Location: $city, $taluka, $district, $state\n";
     $user_message .= "Role: $type\n\n";
     $user_message .= "Best Regards,\nTeam FarmerLift\nhttps://farmerlift.in";
 
@@ -87,7 +93,10 @@ function farmerlift_handle_registration( WP_REST_Request $request ) {
     $admin_message .= "DOB: $dob\n";
     $admin_message .= "GST: $gst\n";
     $admin_message .= "City: $city\n";
+    $admin_message .= "District: $district\n";
+    $admin_message .= "Taluka: $taluka\n";
     $admin_message .= "State: $state\n";
+    $admin_message .= "Pincode: $pincode\n";
     $admin_message .= "Address: $address\n";
     $admin_message .= "Message/Crops: $message\n";
     

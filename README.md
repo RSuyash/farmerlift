@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FarmerLift Web
+
+Next.js frontend for farmerlift.in with a headless WordPress CMS and GrowthOS lead-intake wiring.
 
 ## Getting Started
 
@@ -16,9 +18,41 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## GrowthOS Lead Intake
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Website forms post to the server route:
+
+```text
+POST /api/naya-lead
+```
+
+That route mirrors submissions into GrowthOS without exposing the connector secret in browser JavaScript.
+
+Required production env vars:
+
+```env
+NAYA_GROWTH_INTAKE_URL=https://api.nayagrowth.com/api/landing/intake/src_8_R_3Dx_OHsWZg
+NAYA_GROWTH_INTAKE_SECRET=<store-on-server-only>
+NAYA_GROWTH_SOURCE_LABEL=farmerlift.in
+```
+
+The route currently supports:
+
+- Contact enquiries from `/contact`
+- Partner/dealer/farmer registrations from `/register`
+- Future dealership or order forms that post the same shape with `formType`, `sourceCta`, and `businessData`
+
+Registration submissions are still mirrored to WordPress at:
+
+```text
+https://admin.farmerlift.in/wp-json/farmerlift/v1/submit-registration
+```
+
+## Deployment Notes
+
+The Docker compose service passes the GrowthOS env vars through to the Next.js server. Set them in the VPS environment or compose `.env` before rebuilding/restarting the container.
+
+Never commit connector secrets, WhatsApp tokens, app secrets, or WordPress deploy keys.
 
 ## Learn More
 

@@ -121,6 +121,7 @@ export default function Navbar() {
                             { name: "Gallery", href: "/gallery" },
                             { name: "About", href: "/about" },
                             { name: "Partner with Us", href: "/register" },
+                            { name: "Dealer Enquiry", href: "/dealer-enquiry" },
                         ].map((link) => (
                             <Link
                                 key={link.name}
@@ -212,6 +213,7 @@ export default function Navbar() {
                                 { name: "Gallery", href: "/gallery" },
                                 { name: "About", href: "/about" },
                                 { name: "Partner with Us", href: "/register" },
+                                { name: "Dealer Enquiry", href: "/dealer-enquiry" },
                             ].map((link) => (
                                 <Link
                                     key={link.name}

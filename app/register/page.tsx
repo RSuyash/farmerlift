@@ -4,8 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CheckCircle2, Sprout, Store, Truck, ArrowRight, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { CheckCircle2, Sprout, Store, Truck, Loader2 } from "lucide-react";
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,43 +17,78 @@ export default function RegisterPage() {
     dob: "",
     gstNumber: "",
     city: "",
+    district: "",
+    taluka: "",
     state: "",
+    pincode: "",
     address: "",
-    message: ""
+    message: "",
+    consent: true
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
 
-    // Real API Call
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://admin.farmerlift.in'}/wp-json/farmerlift/v1/submit-registration`, {
+      const response = await fetch("/api/naya-lead", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          fullName: formData.name,
+          formType: "registration",
+          sourceCta: "FarmerLift Partner Registration",
+          sourcePage: window.location.href,
+          utmSource: "farmerlift.in",
+          utmMedium: "website",
+          utmCampaign: "farmerlift_partner_registration",
+          businessData: {
+            role: formData.type,
+            district: formData.district,
+            taluka: formData.taluka,
+            village: formData.city,
+            state: formData.state,
+            pincode: formData.pincode,
+            gstNumber: formData.gstNumber,
+            cropInterest: formData.message,
+          },
+        }),
       });
 
+      const result = await response.json().catch(() => ({}));
       if (!response.ok) {
-        throw new Error('Registration failed');
+        throw new Error(result.message || 'Registration failed');
       }
 
-      const result = await response.json();
       console.log("Registration Success:", result);
 
       setIsSubmitted(true);
     } catch (error) {
       console.error("Registration Error:", error);
-      alert("Something went wrong. Please call us directly or try again later.");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please call us directly or try again later.",
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const target = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [target.name]:
+        target instanceof HTMLInputElement && target.type === "checkbox"
+          ? target.checked
+          : target.value,
+    }));
   };
 
   if (isSubmitted) {
@@ -88,7 +122,7 @@ export default function RegisterPage() {
         <div className="container-width relative z-10 text-center">
           <h1 className="text-3xl md:text-5xl font-bold font-outfit mb-4">Partner With Us</h1>
           <p className="text-emerald-100/70 max-w-2xl mx-auto text-lg font-light">
-            Join India's fastest growing digital agricultural network. reliable access to authentic inputs for Farmers, Dealers, and Distributors.
+            Join India&apos;s fastest growing digital agricultural network with reliable access to authentic inputs for Farmers, Dealers, and Distributors.
           </p>
         </div>
       </section>
@@ -132,7 +166,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="mt-12 text-sm text-emerald-800 dark:text-emerald-500 bg-emerald-100/50 dark:bg-emerald-900/30 p-4 rounded-xl">
-              "FarmerLift has transformed how I source seeds. The quality guarantee is real."
+              &ldquo;FarmerLift has transformed how I source seeds. The quality guarantee is real.&rdquo;
               <div className="mt-2 font-bold">— Rajesh Patel, Gujarat</div>
             </div>
           </div>
@@ -159,6 +193,7 @@ export default function RegisterPage() {
                     name="phone"
                     required
                     type="tel"
+                    inputMode="tel"
                     placeholder="+91 98765 43210"
                     className="h-11 bg-gray-50 dark:bg-black/20"
                     onChange={handleChange}
@@ -198,23 +233,68 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              <label className="flex items-start gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4 text-sm text-emerald-950 dark:border-emerald-900/40 dark:bg-emerald-950/20 dark:text-emerald-100">
+                <input
+                  name="consent"
+                  type="checkbox"
+                  checked={formData.consent}
+                  onChange={handleChange}
+                  className="mt-1 h-4 w-4 rounded border-emerald-300 text-emerald-700"
+                />
+                <span>
+                  Send me FarmerLift updates, pricing, order follow-ups, and partner support on WhatsApp.
+                </span>
+              </label>
+
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">City / Village <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Village / City <span className="text-red-500">*</span></label>
                   <Input
                     name="city"
                     required
-                    placeholder="Enter city or village"
+                    placeholder="Village or city"
                     className="h-11 bg-gray-50 dark:bg-black/20"
                     onChange={handleChange}
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">State / Region <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">District <span className="text-red-500">*</span></label>
+                  <Input
+                    name="district"
+                    required
+                    placeholder="Nanded, Jalgaon, Nashik..."
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Taluka</label>
+                  <Input
+                    name="taluka"
+                    placeholder="e.g. Kandhar"
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">State <span className="text-red-500">*</span></label>
                   <Input
                     name="state"
                     required
-                    placeholder="e.g. Maharashtra"
+                    placeholder="Maharashtra"
+                    className="h-11 bg-gray-50 dark:bg-black/20"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Pincode</label>
+                  <Input
+                    name="pincode"
+                    inputMode="numeric"
+                    placeholder="431714"
                     className="h-11 bg-gray-50 dark:bg-black/20"
                     onChange={handleChange}
                   />
@@ -243,6 +323,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="pt-2">
+                {errorMessage ? (
+                  <p className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {errorMessage}
+                  </p>
+                ) : null}
                 <Button
                   type="submit"
                   className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold tracking-wide rounded-xl shadow-lg shadow-emerald-700/20"

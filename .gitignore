@@ -42,3 +42,6 @@ backend/automation/deploy_config.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+node_modules/
+.next/

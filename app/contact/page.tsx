@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Mail, MapPin, Phone, MessageSquare, Clock } from "lucide-react";
+import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { getPageBanner, getSiteConfig } from "@/lib/cms";
+import { GrowthOsContactForm } from "@/components/pages/contact/GrowthOsContactForm";
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -102,35 +101,7 @@ export default async function ContactPage() {
               <p className="text-gray-500 dark:text-gray-400">Fill out the form below and our team will get back to you within 24 hours.</p>
             </div>
 
-            <form className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name</label>
-                  <Input placeholder="Amit Kumar" className="bg-gray-50 dark:bg-black/20 border-gray-200 dark:border-white/10 h-12" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Phone Number</label>
-                  <Input placeholder="+91 90000 00000" className="bg-gray-50 dark:bg-black/20 border-gray-200 dark:border-white/10 h-12" />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
-                <Input type="email" placeholder="amit@example.com" className="bg-gray-50 dark:bg-black/20 border-gray-200 dark:border-white/10 h-12" />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Your Requirements</label>
-                <textarea
-                  className="flex min-h-[160px] w-full rounded-md border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/20 px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:cursor-not-allowed disabled:opacity-50 resize-y"
-                  placeholder="Tell us about the products you need or any questions you have..."
-                />
-              </div>
-
-              <Button className="w-full md:w-auto h-12 px-8 bg-emerald-700 hover:bg-emerald-800 text-white rounded-full font-semibold shadow-lg shadow-emerald-900/10">
-                Send Message <MessageSquare className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
+            <GrowthOsContactForm />
           </div>
         </div>
       </div>
