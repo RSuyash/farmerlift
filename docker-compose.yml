@@ -9,6 +9,9 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_GA_MEASUREMENT_ID=G-CHSLVN2HYR
       - NEXT_PUBLIC_WP_API_URL=https://admin.farmerlift.in/wp-json
+      - NAYA_GROWTH_INTAKE_URL=${NAYA_GROWTH_INTAKE_URL:-}
+      - NAYA_GROWTH_INTAKE_SECRET=${NAYA_GROWTH_INTAKE_SECRET:-}
+      - NAYA_GROWTH_SOURCE_LABEL=${NAYA_GROWTH_SOURCE_LABEL:-farmerlift.in}
     networks:
       - proxy_net
     labels:
