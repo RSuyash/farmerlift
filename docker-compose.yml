@@ -1,17 +1,23 @@
-version: '3.8'
-
 services:
   farmerlift-web:
-    build: .
+    image: node:20-alpine
     container_name: farmerlift-frontend
     restart: unless-stopped
+    cpus: "0.25"
+    user: node
+    working_dir: /app
+    command: ["node", "server.js"]
     environment:
       - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
       - NEXT_PUBLIC_GA_MEASUREMENT_ID=G-CHSLVN2HYR
       - NEXT_PUBLIC_WP_API_URL=https://admin.farmerlift.in/wp-json
       - NAYA_GROWTH_INTAKE_URL=${NAYA_GROWTH_INTAKE_URL:-}
       - NAYA_GROWTH_INTAKE_SECRET=${NAYA_GROWTH_INTAKE_SECRET:-}
       - NAYA_GROWTH_SOURCE_LABEL=${NAYA_GROWTH_SOURCE_LABEL:-farmerlift.in}
+    volumes:
+      - ./current:/app
     networks:
       - proxy_net
     labels:
