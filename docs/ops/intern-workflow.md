@@ -25,6 +25,8 @@ Backend PHP:
 Get-ChildItem backend\wordpress -Recurse -Filter *.php | ForEach-Object { php -l $_.FullName }
 ```
 
+If PHP is not installed locally, still push the branch and let GitHub Actions run the PHP syntax check before deploy.
+
 Review:
 
 ```bash
@@ -75,4 +77,11 @@ Manual frontend deploy is allowed only after:
 - local `master` matches `origin/master`
 - CTO approves production deploy
 
-Then use either `Deploy Frontend` in GitHub Actions or `npm run deploy:webdev`.
+Then use one of these:
+
+```bash
+npm run deploy:webdev
+npm run deploy:wordpress:webdev
+```
+
+The first command is frontend only. The second command is WordPress backend only.

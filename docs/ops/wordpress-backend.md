@@ -21,19 +21,22 @@ Normal backend workflow:
 1. Intern edits `backend/wordpress/**`.
 2. Intern commits and pushes a branch.
 3. CTO reviews/merges to `master`.
-4. GitHub Actions `Deploy WordPress Backend` deploys to Hostinger using repo secrets.
+4. GitHub Actions `Deploy WordPress Backend` sends the approved backend bundle to the restricted `webdev` deploy proxy.
+5. The Naya VPS deploy proxy uploads only the WordPress theme PHP files to Hostinger.
 
 This gives version control, audit history, backup, and rollback without giving broad Hostinger shell access.
 
 Required GitHub secrets for backend deploy:
 
 ```text
-SSH_HOST
-SSH_PORT
-SSH_USERNAME
-SSH_PRIVATE_KEY
-SSH_KNOWN_HOSTS
+WEBDEV_HOST
+WEBDEV_USER
+WEBDEV_SSH_PORT
+WEBDEV_SSH_KEY
+WEBDEV_KNOWN_HOSTS
 ```
+
+The Hostinger private key is installed on the Naya VPS as a root-owned deploy key for the restricted proxy. It is not shared with interns.
 
 ## Hostinger SSH
 
@@ -56,6 +59,18 @@ ssh farmerlift 'hostname; whoami; test -f ~/domains/admin.farmerlift.in/public_h
 ```
 
 Expected: Hostinger hostname, user `u146189558`, and `admin WordPress OK`.
+
+Intern webdev proxy check:
+
+```bash
+ssh -T webdev farmerlift-wordpress
+```
+
+Expected: it must not open a shell. This is acceptable:
+
+```text
+No deploy archive received. Run npm run deploy:wordpress:webdev from the Farmerlift repo.
+```
 
 ## Important Paths
 
@@ -88,12 +103,28 @@ It runs when `backend/wordpress/**` changes on `master`, or manually from GitHub
 It does:
 
 1. PHP syntax check
-2. remote backup
-3. upload `functions.php` and `includes/*`
-4. WP cache flush if available
-5. API smoke test
+2. package `backend/wordpress/functions.php` and `backend/wordpress/includes`
+3. deploy through restricted `webdev` proxy
+4. Hostinger-side PHP lint before replacing live files
+5. remote backup
+6. upload `functions.php` and `includes/*`
+7. WP cache flush if available
+8. API smoke test
 
-The workflow retries Hostinger SSH connections because Hostinger can sometimes time out from GitHub-hosted runners.
+The workflow does not connect directly from GitHub to Hostinger because Hostinger SSH can time out from GitHub-hosted runners.
+
+## Manual Webdev Backend Deploy
+
+Use only after the approved backend change is on `master`.
+
+```bash
+cd D:\Projects\farmerlift
+git switch master
+git pull --ff-only
+npm run deploy:wordpress:webdev
+```
+
+The script refuses deploy if the branch is not `master`, files are uncommitted, or local `master` is not synced with `origin/master`. The deploy proxy creates a Hostinger backup and runs PHP lint before replacing live files.
 
 ## Manual Backend Deploy
 

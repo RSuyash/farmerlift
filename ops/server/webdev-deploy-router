@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "${SSH_ORIGINAL_COMMAND:-}" in
+  ""|"serefy"|"serefy-static")
+    exec /usr/bin/sudo -n /usr/local/sbin/serefy-static-deploy
+    ;;
+  "farmerlift"|"farmerlift-standalone")
+    exec /usr/bin/sudo -n /usr/local/sbin/farmerlift-standalone-deploy
+    ;;
+  "farmerlift-wordpress"|"farmerlift-wp")
+    exec /usr/bin/sudo -n /usr/local/sbin/farmerlift-wordpress-deploy
+    ;;
+  *)
+    echo "Unknown webdev deploy target: ${SSH_ORIGINAL_COMMAND:-}" >&2
+    echo "Allowed targets: serefy, farmerlift, farmerlift-wordpress" >&2
+    exit 64
+    ;;
+esac

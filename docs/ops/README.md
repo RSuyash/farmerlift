@@ -26,10 +26,11 @@ Branch rule:
 | --- | --- | --- |
 | GitHub Actions: `Deploy Frontend` | Versioned frontend deploy from `master` | CTO or approved intern |
 | `npm run deploy:webdev` | Fallback frontend deploy from a clean synced local `master` | Approved intern with `webdev` key |
-| GitHub Actions: `Deploy WordPress Backend` | Backend PHP/theme code under `backend/wordpress/**` | CTO or trusted intern |
+| GitHub Actions: `Deploy WordPress Backend` | Backend PHP/theme code under `backend/wordpress/**` through restricted `webdev` proxy | CTO or trusted intern |
+| `npm run deploy:wordpress:webdev` | Fallback backend deploy from a clean synced local `master` | CTO-approved intern with `webdev` key |
 | Hostinger SSH `farmerlift` | Emergency backend inspection/rollback | CTO/operator only unless explicitly approved |
 
-Frontend GitHub Actions must use the restricted `webdev` deploy key through `WEBDEV_*` repo secrets. Do not store full `nivi` SSH access in this repo.
+Frontend and backend GitHub Actions must use the restricted `webdev` deploy key through `WEBDEV_*` repo secrets. Do not store full `nivi` SSH access in this repo. Do not give broad Hostinger SSH to interns unless the CTO explicitly approves it.
 
 ## SOP Files
 

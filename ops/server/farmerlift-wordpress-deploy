@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REMOTE_USER="u146189558"
+REMOTE_HOST="91.108.107.13"
+REMOTE_PORT="65002"
+REMOTE_BASE="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
+REMOTE_BACKUP_ROOT="domains/admin.farmerlift.in/backups"
+REMOTE="${REMOTE_USER}@${REMOTE_HOST}"
+HOSTINGER_KEY="/root/.ssh/farmerlift_hostinger_ed25519"
+MAX_ARCHIVE_BYTES=$((25 * 1024 * 1024))
+TMP_ROOT="/var/tmp/farmerlift-wordpress-deploy"
+
+mkdir -p "$TMP_ROOT"
+TMP_DIR=$(mktemp -d "$TMP_ROOT/webdev-farmerlift-wordpress.XXXXXX")
+ARCHIVE="$TMP_DIR/payload.tar.gz"
+UPLOAD_ARCHIVE="$TMP_DIR/wordpress.tar.gz"
+
+cleanup() {
+  rm -rf "$TMP_DIR"
+}
+
+trap cleanup EXIT
+
+if [ ! -f "$HOSTINGER_KEY" ]; then
+  echo "Hostinger deploy key is not installed on the VPS." >&2
+  exit 75
+fi
+
+if ! timeout 8s dd bs=1 count=1 of="$ARCHIVE" status=none; then
+  echo "No deploy archive received. Run npm run deploy:wordpress:webdev from the Farmerlift repo." >&2
+  exit 64
+fi
+cat >> "$ARCHIVE"
+
+BYTES=$(stat -c '%s' "$ARCHIVE")
+if [ "$BYTES" -le 0 ]; then
+  echo "No deploy archive received. Run npm run deploy:wordpress:webdev from the Farmerlift repo." >&2
+  exit 64
+fi
+if [ "$BYTES" -gt "$MAX_ARCHIVE_BYTES" ]; then
+  echo "Deploy archive is too large: $BYTES bytes." >&2
+  exit 65
+fi
+
+mkdir -p "$TMP_DIR/extract"
+if ! tar -tzf "$ARCHIVE" > "$TMP_DIR/tar-list.txt"; then
+  echo "Deploy archive is not a valid .tar.gz file." >&2
+  exit 66
+fi
+if grep -Eq '(^/|(^|/)\.\.(/|$))' "$TMP_DIR/tar-list.txt"; then
+  echo "Deploy archive contains unsafe paths." >&2
+  exit 67
+fi
+if grep -Evq '^(wordpress/?|wordpress/functions\.php|wordpress/includes/?|wordpress/includes/.*)$' "$TMP_DIR/tar-list.txt"; then
+  echo "Deploy archive may contain only wordpress/functions.php and wordpress/includes/." >&2
+  exit 68
+fi
+
+tar -xzf "$ARCHIVE" -C "$TMP_DIR/extract"
+WP_SRC="$TMP_DIR/extract/wordpress"
+
+if find "$WP_SRC" -type l -print -quit | grep -q .; then
+  echo "Deploy archive contains symlinks; refusing." >&2
+  exit 69
+fi
+
+test -f "$WP_SRC/functions.php"
+test -d "$WP_SRC/includes"
+
+tar -czf "$UPLOAD_ARCHIVE" -C "$WP_SRC" functions.php includes
+
+ssh_opts=(-i "$HOSTINGER_KEY" -p "$REMOTE_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+scp_opts=(-i "$HOSTINGER_KEY" -P "$REMOTE_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+
+retry_ssh() {
+  local attempt
+  for attempt in 1 2 3; do
+    if ssh "${ssh_opts[@]}" "$REMOTE" "$1"; then
+      return 0
+    fi
+    if [ "$attempt" = "3" ]; then
+      return 1
+    fi
+    sleep $((attempt * 10))
+  done
+}
+
+retry_scp() {
+  local attempt
+  for attempt in 1 2 3; do
+    if scp "${scp_opts[@]}" "$@"; then
+      return 0
+    fi
+    if [ "$attempt" = "3" ]; then
+      return 1
+    fi
+    sleep $((attempt * 10))
+  done
+}
+
+TIMESTAMP=$(date -u +%Y%m%dT%H%M%SZ)
+REMOTE_ARCHIVE="${REMOTE_BACKUP_ROOT}/staging_${TIMESTAMP}.tar.gz"
+REMOTE_STAGE="${REMOTE_BACKUP_ROOT}/staging_${TIMESTAMP}"
+REMOTE_BACKUP="${REMOTE_BACKUP_ROOT}/wordpress_${TIMESTAMP}"
+
+retry_ssh "mkdir -p '$REMOTE_BACKUP_ROOT'"
+retry_scp "$UPLOAD_ARCHIVE" "$REMOTE:$REMOTE_ARCHIVE"
+
+remote_script="
+set -e
+remote_base='$REMOTE_BASE'
+backup_root='$REMOTE_BACKUP_ROOT'
+archive='$REMOTE_ARCHIVE'
+stage='$REMOTE_STAGE'
+backup='$REMOTE_BACKUP'
+
+rm -rf \"\$stage\" \"\$remote_base/includes.next\"
+mkdir -p \"\$stage\" \"\$backup\"
+tar -xzf \"\$archive\" -C \"\$stage\"
+test -f \"\$stage/functions.php\"
+test -d \"\$stage/includes\"
+find \"\$stage\" -name '*.php' -type f -exec php -l {} \; >/tmp/farmerlift_wordpress_php_lint.log
+
+cp \"\$remote_base/functions.php\" \"\$backup/functions.php\" 2>/dev/null || true
+cp -r \"\$remote_base/includes\" \"\$backup/includes\" 2>/dev/null || true
+
+mkdir -p \"\$remote_base\"
+cp \"\$stage/functions.php\" \"\$remote_base/functions.php\"
+cp -R \"\$stage/includes\" \"\$remote_base/includes.next\"
+rm -rf \"\$remote_base/includes\"
+mv \"\$remote_base/includes.next\" \"\$remote_base/includes\"
+
+cd domains/admin.farmerlift.in/public_html
+php ~/wp-cli.phar cache flush || true
+php ~/wp-cli.phar core version >/dev/null
+php ~/wp-cli.phar theme list --status=active --field=name | grep -Fxq twentytwentyfive
+
+rm -rf \"\$stage\" \"\$archive\"
+cd \"\$backup_root\" 2>/dev/null || exit 0
+ls -dt wordpress_* 2>/dev/null | tail -n +11 | xargs rm -rf 2>/dev/null || true
+echo \"\$backup\"
+"
+
+retry_ssh "$remote_script"
+
+curl --fail --silent --show-error --location --retry 5 --retry-delay 3 \
+  https://admin.farmerlift.in/wp-json/ >/dev/null
+curl --fail --silent --show-error --location --retry 5 --retry-delay 3 \
+  https://admin.farmerlift.in/wp-json/wp/v2/types >/dev/null
+
+printf 'Farmerlift WordPress deploy complete.\n'
+printf 'Backup created: %s\n' "$REMOTE_BACKUP"
+printf 'Smoke URLs:\n'
+printf '  https://admin.farmerlift.in/wp-json/\n'
+printf '  https://admin.farmerlift.in/wp-json/wp/v2/types\n'

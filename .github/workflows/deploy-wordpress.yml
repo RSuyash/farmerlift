@@ -31,7 +31,7 @@ jobs:
             xargs -0 -n1 php -l
 
   deploy:
-    name: Deploy to Hostinger
+    name: Deploy via Webdev Proxy
     runs-on: ubuntu-latest
     needs: [php-checks]
     if: github.ref == 'refs/heads/master'
@@ -40,132 +40,67 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up SSH
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Package backend files
         run: |
           set -euo pipefail
+          package_root="$RUNNER_TEMP/farmerlift-wordpress"
+          wordpress_dir="$package_root/wordpress"
+          rm -rf "$package_root"
+          mkdir -p "$wordpress_dir"
+
+          cp backend/wordpress/functions.php "$wordpress_dir/functions.php"
+          cp -a backend/wordpress/includes "$wordpress_dir/includes"
+
+          test -f "$wordpress_dir/functions.php"
+          test -d "$wordpress_dir/includes"
+          tar -czf "$RUNNER_TEMP/farmerlift-wordpress.tar.gz" -C "$package_root" wordpress
+
+          bytes=$(stat -c '%s' "$RUNNER_TEMP/farmerlift-wordpress.tar.gz")
+          max=$((25 * 1024 * 1024))
+          if [ "$bytes" -gt "$max" ]; then
+            echo "::error::WordPress deploy archive is too large: $bytes bytes"
+            exit 1
+          fi
+          echo "WordPress archive bytes: $bytes"
+
+      - name: Deploy over restricted webdev SSH
+        env:
+          WEBDEV_HOST: ${{ secrets.WEBDEV_HOST }}
+          WEBDEV_USER: ${{ secrets.WEBDEV_USER }}
+          WEBDEV_SSH_KEY: ${{ secrets.WEBDEV_SSH_KEY }}
+          WEBDEV_SSH_PORT: ${{ secrets.WEBDEV_SSH_PORT || '22' }}
+          WEBDEV_KNOWN_HOSTS: ${{ secrets.WEBDEV_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          remote="$WEBDEV_USER@$WEBDEV_HOST"
+          key="$RUNNER_TEMP/farmerlift-webdev-key"
+          ssh_opts=(-i "$key" -p "$WEBDEV_SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+
           install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          if [ -n "${SSH_KNOWN_HOSTS:-}" ]; then
-            printf '%s\n' "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+          printf '%s\n' "$WEBDEV_SSH_KEY" | tr -d '\r' > "$key"
+          chmod 600 "$key"
+          if [ -n "${WEBDEV_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$WEBDEV_KNOWN_HOSTS" >> ~/.ssh/known_hosts
           else
             for attempt in 1 2 3; do
-              if ssh-keyscan -T 20 -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts; then
+              if ssh-keyscan -T 20 -p "$WEBDEV_SSH_PORT" -H "$WEBDEV_HOST" >> ~/.ssh/known_hosts; then
                 break
               fi
               if [ "$attempt" = "3" ]; then
-                echo "::error::Could not scan SSH_HOST key"
+                echo "::error::Could not scan WEBDEV_HOST SSH key"
                 exit 1
               fi
               sleep 5
             done
           fi
 
-      - name: Backup remote files
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-        run: |
-          set -euo pipefail
-          timestamp="$(date +%Y%m%d_%H%M%S)"
-          remote_base="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
-          backup_dir="domains/admin.farmerlift.in/backups/wordpress_${timestamp}"
-          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
-
           for attempt in 1 2 3; do
-            if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" "
-              set -e
-              mkdir -p '$backup_dir'
-              cp '$remote_base/functions.php' '$backup_dir/functions.php' 2>/dev/null || true
-              cp -r '$remote_base/includes' '$backup_dir/includes' 2>/dev/null || true
-              cd domains/admin.farmerlift.in/backups/ 2>/dev/null || exit 0
-              ls -dt wordpress_* 2>/dev/null | tail -n +11 | xargs rm -rf 2>/dev/null || true
-              echo '$backup_dir'
-            "; then
+            if cat "$RUNNER_TEMP/farmerlift-wordpress.tar.gz" | ssh "${ssh_opts[@]}" "$remote" farmerlift-wordpress; then
               exit 0
             fi
             if [ "$attempt" = "3" ]; then
-              echo "::error::Could not create Hostinger backup over SSH"
+              echo "::error::Could not deploy WordPress backend through restricted webdev SSH"
               exit 1
-            fi
-            sleep $((attempt * 10))
-          done
-
-      - name: Upload backend files
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-        run: |
-          set -euo pipefail
-          remote_base="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
-          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
-          scp_opts=(-i ~/.ssh/deploy_key -P "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
-
-          retry_ssh() {
-            local attempt
-            for attempt in 1 2 3; do
-              if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" "$1"; then
-                return 0
-              fi
-              if [ "$attempt" = "3" ]; then
-                return 1
-              fi
-              sleep $((attempt * 10))
-            done
-          }
-
-          retry_scp() {
-            local attempt
-            for attempt in 1 2 3; do
-              if scp "${scp_opts[@]}" "$@"; then
-                return 0
-              fi
-              if [ "$attempt" = "3" ]; then
-                return 1
-              fi
-              sleep $((attempt * 10))
-            done
-          }
-
-          retry_ssh "
-            set -e
-            mkdir -p '$remote_base/includes/crm/ajax'
-            mkdir -p '$remote_base/includes/crm/views'
-            mkdir -p '$remote_base/includes/products/ajax'
-            mkdir -p '$remote_base/includes/products/views'
-          "
-
-          retry_scp \
-            backend/wordpress/functions.php \
-            "$SSH_USERNAME@$SSH_HOST:$remote_base/functions.php"
-
-          retry_scp -r \
-            backend/wordpress/includes/. \
-            "$SSH_USERNAME@$SSH_HOST:$remote_base/includes/"
-
-      - name: Flush cache
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-        run: |
-          set -euo pipefail
-          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
-          for attempt in 1 2 3; do
-            if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" \
-              "cd domains/admin.farmerlift.in/public_html && php ~/wp-cli.phar cache flush || true"; then
-              exit 0
-            fi
-            if [ "$attempt" = "3" ]; then
-              echo "::warning::Could not flush WordPress cache over SSH after retries"
-              exit 0
             fi
             sleep $((attempt * 10))
           done

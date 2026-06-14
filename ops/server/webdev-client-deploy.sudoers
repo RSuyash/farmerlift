@@ -1,0 +1,2 @@
+Defaults:webdev !requiretty
+webdev ALL=(root) NOPASSWD: /usr/local/sbin/serefy-static-deploy, /usr/local/sbin/farmerlift-standalone-deploy, /usr/local/sbin/farmerlift-wordpress-deploy

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "audit:seo-smoke": "node scripts/audit-seo-smoke.mjs",
-    "deploy:webdev": "node scripts/deploy-webdev.mjs"
+    "deploy:webdev": "node scripts/deploy-webdev.mjs",
+    "deploy:wordpress:webdev": "node scripts/deploy-wordpress-webdev.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
