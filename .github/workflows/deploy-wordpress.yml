@@ -50,7 +50,16 @@ jobs:
           install -m 700 -d ~/.ssh
           printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          for attempt in 1 2 3; do
+            if ssh-keyscan -T 20 -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts; then
+              break
+            fi
+            if [ "$attempt" = "3" ]; then
+              echo "::error::Could not scan SSH_HOST key"
+              exit 1
+            fi
+            sleep 5
+          done
 
       - name: Backup remote files
         env:
