@@ -1,35 +1,139 @@
-name: Deploy to Production
+name: Deploy Frontend
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 concurrency:
-  group: deploy-main
+  group: farmerlift-frontend-production
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Capture deploy ref
+        run: |
+          set -euo pipefail
+          echo "DEPLOY_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "DEPLOY_SHORT_SHA=$(git rev-parse --short=12 HEAD)" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_SSH_PORT || '22' }}
-          timeout: 90s
-          command_timeout: 10m
-          script: |
-            set -euo pipefail
-            
-            # Navigate to the app directory
-            cd ~/apps/farmer-lift-client
-            
-            # Pull the latest code
-            git pull origin main
-            
-            # Build and restart the Docker container
-            docker compose up -d --build
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline
+
+      - name: Build frontend
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: npm run build
+
+      - name: Package standalone release
+        run: |
+          set -euo pipefail
+          release_root="$RUNNER_TEMP/farmerlift-release"
+          release_dir="$release_root/release"
+          rm -rf "$release_root"
+          mkdir -p "$release_dir"
+
+          test -f .next/standalone/server.js
+          cp -a .next/standalone/. "$release_dir/"
+          mkdir -p "$release_dir/.next"
+          cp -a .next/static "$release_dir/.next/static"
+          cp -a public "$release_dir/public"
+          mkdir -p "$release_dir/.next/cache"
+
+          node --input-type=module <<'NODE'
+          import { mkdirSync, writeFileSync } from 'node:fs';
+          const out = `${process.env.RUNNER_TEMP}/farmerlift-release/release/public/farmerlift-deploy.json`;
+          mkdirSync(out.replace(/\/[^/]+$/, ''), { recursive: true });
+          writeFileSync(out, `${JSON.stringify({
+            source: 'github-actions',
+            repository: process.env.GITHUB_REPOSITORY,
+            sha: process.env.DEPLOY_SHA,
+            runId: process.env.GITHUB_RUN_ID,
+            runAttempt: process.env.GITHUB_RUN_ATTEMPT,
+            createdAt: new Date().toISOString(),
+          })}\n`);
+          NODE
+
+          test -f "$release_dir/server.js"
+          test -f "$release_dir/package.json"
+          test -d "$release_dir/.next/static"
+          test -d "$release_dir/public"
+          test ! -e "$release_dir/.env"
+
+          tar -czf "$RUNNER_TEMP/farmerlift-release.tar.gz" -C "$release_root" release
+          bytes=$(stat -c '%s' "$RUNNER_TEMP/farmerlift-release.tar.gz")
+          max=$((250 * 1024 * 1024))
+          if [ "$bytes" -gt "$max" ]; then
+            echo "::error::Release archive is too large: $bytes bytes"
+            exit 1
+          fi
+          echo "Release archive bytes: $bytes"
+
+      - name: Deploy over SSH stream
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT || '22' }}
+        run: |
+          set -euo pipefail
+          remote="$VPS_USER@$VPS_HOST"
+          key="$RUNNER_TEMP/farmerlift-actions-key"
+          ssh_opts=(-i "$key" -p "$VPS_SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes)
+
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" | tr -d '\r' > "$key"
+          chmod 600 "$key"
+          ssh-keyscan -p "$VPS_SSH_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+          ssh "${ssh_opts[@]}" "$remote" 'set -euo pipefail
+            load1=$(awk "{print \$1}" /proc/loadavg)
+            cpus=$(nproc)
+            steal=$(LC_ALL=C top -bn1 | awk -F, "/Cpu/ {for (i=1; i<=NF; i++) if (\$i ~ /st/) {gsub(/[^0-9.]/, \"\", \$i); print \$i; exit}}")
+            mem_available_kb=$(awk "/MemAvailable/ {print \$2}" /proc/meminfo)
+            echo "VPS load1=$load1 cpus=$cpus steal=${steal:-0}% mem_available_kb=$mem_available_kb"
+            awk -v load="$load1" -v cpus="$cpus" "BEGIN { exit(load > cpus * 2) }"
+            awk -v steal="${steal:-0}" "BEGIN { exit(steal > 25) }"
+            test "$mem_available_kb" -gt 524288
+            sudo -n test -x /usr/local/sbin/farmerlift-standalone-deploy
+          '
+
+          cat "$RUNNER_TEMP/farmerlift-release.tar.gz" | ssh "${ssh_opts[@]}" "$remote" \
+            "sudo -n /usr/local/sbin/farmerlift-standalone-deploy"
+
+      - name: Verify public release
+        run: |
+          set -euo pipefail
+          for url in \
+            "https://farmerlift.in" \
+            "https://www.farmerlift.in"
+          do
+            curl --fail --silent --show-error --location \
+              --retry 8 --retry-delay 3 --retry-all-errors \
+              -H 'Cache-Control: no-cache' \
+              "$url/" >/dev/null
+            curl --fail --silent --show-error --location \
+              --retry 8 --retry-delay 3 --retry-all-errors \
+              -H 'Cache-Control: no-cache' \
+              "$url/products" >/dev/null
+            marker="$(curl --fail --silent --show-error --location \
+              --retry 8 --retry-delay 3 --retry-all-errors \
+              -H 'Cache-Control: no-cache' \
+              "$url/farmerlift-deploy.json")"
+            echo "$marker" | grep -Fq "\"sha\":\"$DEPLOY_SHA\""
+            echo "$url serves $DEPLOY_SHORT_SHA"
+          done
+
+          curl --fail --silent --show-error --head \
+            --retry 5 --retry-delay 2 --retry-all-errors \
+            https://admin.farmerlift.in/wp-json/ >/dev/null
