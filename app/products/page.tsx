@@ -3,6 +3,8 @@ import { getAllProducts } from "@/lib/cms";
 import ProductBrowser from "@/components/modules/products/ProductBrowser";
 import CatalogueHeader from "@/components/modules/catalogue/CatalogueHeader";
 
+export const revalidate = 300;
+
 export default async function ProductsPage() {
   const products = await getAllProducts(); // Fetch dynamically from WP
   const categories = await getAllCategories();

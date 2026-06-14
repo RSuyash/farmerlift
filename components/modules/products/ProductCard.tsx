@@ -1,8 +1,6 @@
 import { Product } from "@/types/product";
-import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ProductImage from "@/components/ui/ProductImage";
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -55,7 +53,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 {/* Content */}
                 <div className="flex flex-col flex-grow">
                     <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-sm">
+                        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-sm">
                             {product.category}
                         </span>
                         <div className="flex gap-0.5" suppressHydrationWarning>
@@ -85,13 +83,12 @@ export default function ProductCard({ product }: { product: Product }) {
                             </div>
                         </div>
 
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300"
+                        <span
+                            aria-hidden="true"
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 transition-all duration-300 group-hover:bg-emerald-700 group-hover:text-white dark:bg-emerald-900/20 dark:text-emerald-300"
                         >
                             <ArrowRight className="h-5 w-5" />
-                        </Button>
+                        </span>
                     </div>
                 </div>
             </div>

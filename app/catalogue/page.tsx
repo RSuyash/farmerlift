@@ -3,7 +3,8 @@ import { getAllProducts } from "@/lib/cms";
 import CatalogueNavigation from "@/components/modules/catalogue/CatalogueNavigation";
 import CatalogueSection from "@/components/modules/catalogue/CatalogueSection";
 import CatalogueHeader from "@/components/modules/catalogue/CatalogueHeader";
-import { Product } from "@/types/product";
+
+export const revalidate = 300;
 
 export default async function CataloguePage() {
     const categories = await getAllCategories();

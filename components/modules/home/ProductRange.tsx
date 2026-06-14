@@ -1,5 +1,3 @@
-"use client";
-
 import {
     Droplets,
     Leaf,
@@ -10,7 +8,7 @@ import {
     Atom,
     Layers,
     ArrowUpRight,
-    Globe
+    Package
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -53,7 +51,7 @@ const categories = [
         border: "group-hover:border-purple-500/50"
     },
     {
-        id: "micronutrient-mixtures",
+        id: "micronutrients-mixtures",
         title: "Micro Mixtures",
         subtitle: "Balanced Formulas",
         icon: Layers,
@@ -75,7 +73,7 @@ const categories = [
         title: "Chelated Micros",
         subtitle: "High Absorption",
         icon: Microscope,
-        color: "text-emerald-500",
+        color: "text-emerald-700",
         gradient: "from-emerald-500/20 to-teal-500/20",
         border: "group-hover:border-emerald-500/50"
     },
@@ -89,10 +87,10 @@ const categories = [
         border: "group-hover:border-lime-500/50"
     },
     {
-        id: "imported-fertilizers",
-        title: "Imported Fertilizers",
-        subtitle: "Global Standards",
-        icon: Globe,
+        id: "other-products",
+        title: "Other Products",
+        subtitle: "Additional Solutions",
+        icon: Package,
         color: "text-rose-500",
         gradient: "from-rose-500/20 to-red-500/20",
         border: "group-hover:border-rose-500/50"
@@ -110,7 +108,7 @@ export default function ProductRange() {
                 {/* Brand Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b border-zinc-200 dark:border-zinc-800 pb-8">
                     <div className="max-w-xl">
-                        <span className="text-emerald-600 dark:text-emerald-500 font-bold tracking-wider uppercase text-xs mb-2 block">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-bold tracking-wider uppercase text-xs mb-2 block">
                             Our Ecosystem
                         </span>
                         <h2 className="text-4xl md:text-5xl font-black font-outfit text-zinc-900 dark:text-white leading-tight">
@@ -121,7 +119,7 @@ export default function ProductRange() {
                         </h2>
                     </div>
                     <div className="text-right hidden md:block">
-                        <p className="text-lg font-medium text-zinc-500 dark:text-zinc-400">
+                        <p className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
                             Every Field, Every Crop <br />
                             <span className="text-zinc-900 dark:text-white font-bold">One Solution.</span>
                         </p>

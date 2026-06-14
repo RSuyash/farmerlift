@@ -5,11 +5,23 @@ import { BlogPost } from '@/types/blog';
 import { Certification } from '@/types/certification';
 import { mapWpProductToApp, mapWpPostToBlog, mapWpPostToCropGuide } from './mapper';
 
+async function parseJsonOr<T>(response: Response, fallback: T): Promise<T> {
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok || !contentType.includes("application/json")) {
+        return fallback;
+    }
+
+    try {
+        return await response.json() as T;
+    } catch {
+        return fallback;
+    }
+}
 
 // 1. GET HOME BANNERS (Carousel)
 export async function getHomeBanners() {
     const res = await fetch(`${WP_API}/hero_slide?_embed&per_page=5`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data)) return [];
 
     return data.map((item: any) => {
@@ -32,7 +44,7 @@ export async function getHomeBanners() {
 export async function getPageBanner(slug: string) {
     // Fetches a WP Page by its slug to get banner data
     const res = await fetch(`${WP_API}/pages?slug=${slug}&_embed`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
 
     if (!data || data.length === 0) return null;
     const page = data[0];
@@ -53,7 +65,7 @@ export async function getPageBanner(slug: string) {
 // 3. GET GLOBAL SETTINGS (Footer, Contact, Channels)
 export async function getSiteConfig() {
     const res = await fetch(`${WP_API}/site_config?per_page=1`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
 
     if (!data || data.length === 0) return null;
     const s = data[0].acf;
@@ -82,7 +94,7 @@ export async function getSiteConfig() {
 export async function getAllProducts() {
     // 100 per page to catch most, loop if needed later
     const res = await fetch(`${WP_API}/product?_embed&per_page=100`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     return Array.isArray(data) ? data.map(p => mapWpProductToApp(p)) : [];
 }
 
@@ -93,7 +105,7 @@ export async function getProductsByCategory(categoryId: string) {
 
 export async function getProductById(slug: string) {
     const res = await fetch(`${WP_API}/product?slug=${slug}&_embed`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data) || data.length === 0) return null;
 
     const post = data[0];
@@ -116,7 +128,7 @@ export async function getProductById(slug: string) {
             const uniqueIds = Array.from(new Set(mediaIds));
             // Max 100 per request, we likely have < 12, so one request is fine.
             const mediaRes = await fetch(`${WP_API}/media?include=${uniqueIds.join(',')}&per_page=100&_fields=id,source_url`, { next: { revalidate: 3600 } }); // Cache longer
-            const mediaData = await mediaRes.json();
+            const mediaData = await parseJsonOr<any[]>(mediaRes, []);
 
             if (Array.isArray(mediaData)) {
                 mediaData.forEach((m: any) => {
@@ -136,13 +148,13 @@ export async function getProductById(slug: string) {
 export async function getAllPosts(limit?: number) {
     const perPage = limit ? `&per_page=${limit}` : '&per_page=100';
     const res = await fetch(`${WP_API}/posts?_embed${perPage}`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     return Array.isArray(data) ? data.map(mapWpPostToBlog) : [];
 }
 
 export async function getPostBySlug(slug: string) {
     const res = await fetch(`${WP_API}/posts?slug=${slug}&_embed`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data) || data.length === 0) return null;
     return mapWpPostToBlog(data[0]);
 }
@@ -150,7 +162,7 @@ export async function getPostBySlug(slug: string) {
 // 5. GET GALLERIES (Photo & Video)
 export async function getPhotoGallery() {
     const res = await fetch(`${WP_API}/photo_resource?_embed&per_page=100`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data)) return [];
 
     return data.map((item: any) => ({
@@ -162,7 +174,7 @@ export async function getPhotoGallery() {
 
 export async function getVideoGallery() {
     const res = await fetch(`${WP_API}/video_resource?_embed&per_page=100`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data)) return [];
 
     return data.map((item: any) => ({
@@ -178,13 +190,13 @@ export async function getVideoGallery() {
 // --------------------------------------------------------------------------
 export async function getAllCropGuides() {
     const res = await fetch(`${WP_API}/crop_guide?_embed&per_page=100`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     return Array.isArray(data) ? data.map(mapWpPostToCropGuide) : [];
 }
 
 export async function getCropGuideBySlug(slug: string) {
     const res = await fetch(`${WP_API}/crop_guide?slug=${slug}&_embed`, { next: { revalidate: 60 } });
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
     if (!Array.isArray(data) || data.length === 0) return null;
     return mapWpPostToCropGuide(data[0]);
 }
@@ -196,7 +208,7 @@ export async function getAllCertifications(): Promise<Certification[]> {
     const res = await fetch(`${WP_API}/certification?_embed&per_page=100`, { next: { revalidate: 60 } });
     if (!res.ok) return [];
 
-    const data = await res.json();
+    const data = await parseJsonOr<any[]>(res, []);
 
     // Map response
     const certs = await Promise.all(data.map(async (item: any) => {
@@ -210,8 +222,8 @@ export async function getAllCertifications(): Promise<Certification[]> {
             // Fetch Media URL if ID
             try {
                 const mediaRes = await fetch(`${WP_API}/media/${acf.cert_file}`);
-                if (mediaRes.ok) {
-                    const media = await mediaRes.json();
+                const media = await parseJsonOr<any | null>(mediaRes, null);
+                if (media) {
                     fileUrl = media.source_url || '';
                 }
             } catch (e) {

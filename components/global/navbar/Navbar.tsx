@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, Search, Phone, Mail, ChevronDown } from "lucide-react";
+import { Menu, Phone, Mail, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,7 @@ export default function Navbar() {
                     </div>
                     <div className="flex items-center gap-4">
                         <GoogleTranslate className="scale-90" />
-                        <Link href="/help" className="hover:text-emerald-300 transition-colors opacity-90">Help Center</Link>
+                        <Link href="/contact" className="hover:text-emerald-300 transition-colors opacity-90">Support</Link>
                     </div>
                 </div>
             </div>
@@ -53,13 +53,14 @@ export default function Navbar() {
             <div className="sticky top-0 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm z-[50]" suppressHydrationWarning>
                 <div className="container-width flex h-20 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
+                    <Link href="/" className="flex shrink-0 items-center gap-2 group">
                         <div className="relative h-10 w-12 md:h-12 md:w-16 transition-transform group-hover:scale-105">
                             <Image
                                 src="/images/farmerlift_icon_transparent.png"
                                 alt="FarmerLift Logo"
                                 fill
                                 className="object-contain object-left"
+                                sizes="(max-width: 768px) 48px, 64px"
                                 priority
                             />
                         </div>
@@ -71,10 +72,10 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-8">
+                    <nav className="hidden 2xl:flex items-center gap-5">
                         <Link
                             href="/"
-                            className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative"
+                            className="whitespace-nowrap text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative"
                         >
                             Home
                         </Link>
@@ -83,7 +84,7 @@ export default function Navbar() {
                         <div className="relative group">
                             <Link
                                 href="/catalogue"
-                                className="flex items-center gap-1 text-sm font-semibold text-muted-foreground group-hover:text-primary transition-colors py-4"
+                                className="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-muted-foreground group-hover:text-primary transition-colors py-4"
                             >
                                 Catalogue
                                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
@@ -120,13 +121,12 @@ export default function Navbar() {
                             { name: "Blog", href: "/blog" },
                             { name: "Gallery", href: "/gallery" },
                             { name: "About", href: "/about" },
-                            { name: "Partner with Us", href: "/register" },
                             { name: "Dealer Enquiry", href: "/dealer-enquiry" },
                         ].map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full"
+                                className="whitespace-nowrap text-sm font-semibold text-muted-foreground hover:text-primary transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full"
                             >
                                 {link.name}
                             </Link>
@@ -135,20 +135,12 @@ export default function Navbar() {
 
                     {/* Actions */}
                     <div className="flex items-center gap-3">
-                        <div className="hidden lg:flex relative group">
-                            {/* Search Removed for Cleaner Look */}
-                        </div>
-
-                        <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Search">
-                            <Search className="h-5 w-5" />
-                        </Button>
-
-                        <div className="hidden md:block">
+                        <div className="hidden 2xl:block">
                             <ThemeToggle />
                         </div>
 
-                        <Link href="/register" className="hidden md:block">
-                            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-md hover:shadow-lg transition-all rounded-full px-6">
+                        <Link href="/register" className="hidden 2xl:block">
+                            <Button className="whitespace-nowrap bg-emerald-700 hover:bg-emerald-800 text-white font-semibold shadow-md hover:shadow-lg transition-all rounded-full px-5">
                                 Partner with Us
                             </Button>
                         </Link>
@@ -156,7 +148,7 @@ export default function Navbar() {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="md:hidden relative z-[60]"
+                            className="2xl:hidden relative z-[60]"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle Menu"
                         >
@@ -171,12 +163,12 @@ export default function Navbar() {
                 <>
                     {/* Dark Backdrop Overlay */}
                     <div
-                        className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm animate-in fade-in duration-300 md:hidden"
+                        className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm animate-in fade-in duration-300 2xl:hidden"
                         onClick={() => setIsMobileMenuOpen(false)}
                     />
 
                     {/* Drawer */}
-                    <div className="fixed inset-y-0 right-0 z-[100] w-[85vw] sm:w-[350px] bg-white dark:bg-zinc-950 border-l border-gray-100 dark:border-white/10 shadow-2xl animate-in slide-in-from-right duration-300 md:hidden flex flex-col">
+                    <div className="fixed inset-y-0 right-0 z-[100] w-[85vw] sm:w-[350px] bg-white dark:bg-zinc-950 border-l border-gray-100 dark:border-white/10 shadow-2xl animate-in slide-in-from-right duration-300 2xl:hidden flex flex-col">
 
                         {/* Drawer Header */}
                         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/10">
@@ -187,6 +179,7 @@ export default function Navbar() {
                                         alt="Logo"
                                         fill
                                         className="object-contain"
+                                        sizes="40px"
                                     />
                                 </div>
                                 <span className="font-bold font-outfit text-xl">Menu</span>

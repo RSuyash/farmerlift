@@ -21,7 +21,6 @@ export default async function Footer() {
     const footerLinks = {
         company: [
             { label: "About Us", href: "/about" },
-            { label: "Careers", href: "/careers" },
             { label: "Blog", href: "/blog" },
             { label: "Contact", href: "/contact" },
         ],
@@ -63,7 +62,7 @@ export default async function Footer() {
 
                         {/* Newsletter / CTA Box */}
                         <div className="bg-white dark:bg-white/5 backdrop-blur-sm border border-emerald-100 dark:border-white/10 rounded-2xl p-6 mt-8 shadow-sm dark:shadow-none">
-                            <div className="flex items-center gap-3 mb-3 text-emerald-600 dark:text-emerald-400 font-semibold">
+                            <div className="flex items-center gap-3 mb-3 text-emerald-700 dark:text-emerald-300 font-semibold">
                                 <Leaf className="h-5 w-5" />
                                 <span>Join the Movement</span>
                             </div>
@@ -156,7 +155,7 @@ export default async function Footer() {
                 </div>
 
                 <div className="border-t border-zinc-200 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500">
-                    <p>© {new Date().getFullYear()} FarmerLift. All rights reserved. <span className="text-zinc-400 dark:text-zinc-600">v0.1.1-ci</span></p>
+                    <p>© {new Date().getFullYear()} FarmerLift. All rights reserved. <span className="text-zinc-700 dark:text-zinc-400">v0.1.1-ci</span></p>
 
                     {/* Developer Credit */}
                     <RsuyashSignature />
@@ -164,7 +163,6 @@ export default async function Footer() {
                     <div className="flex gap-6">
                         <Link href="/privacy" className="hover:text-emerald-600 dark:hover:text-white transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-emerald-600 dark:hover:text-white transition-colors">Terms of Service</Link>
-                        <Link href="/sitemap" className="hover:text-emerald-600 dark:hover:text-white transition-colors">Sitemap</Link>
                     </div>
                 </div>
             </Container>

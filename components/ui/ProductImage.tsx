@@ -69,11 +69,10 @@ export default function ProductImage({
                     "duration-700 ease-in-out",
                     isLoading ? "scale-110 blur-lg grayscale" : "scale-100 blur-0 grayscale-0"
                 )}
-                sizes={sizes}
+                sizes={sizes || (fill ? "(max-width: 768px) 50vw, 25vw" : undefined)}
                 priority={priority}
                 onLoad={() => setIsLoading(false)}
                 onError={() => setError(true)}
-                unoptimized={imageSrc.startsWith('/')}
             />
         </div>
     );

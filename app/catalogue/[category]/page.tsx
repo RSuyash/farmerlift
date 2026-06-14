@@ -4,7 +4,43 @@ import CatalogueNavigation from "@/components/modules/catalogue/CatalogueNavigat
 import ProductImage from "@/components/ui/ProductImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+    const categories = await getAllCategories();
+    return categories.map((category) => ({
+        category: category.id,
+    }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+    const { category } = await params;
+    const categoryData = await getCategoryById(category);
+
+    if (!categoryData) {
+        return {
+            title: "Catalogue Category Not Found",
+            robots: { index: false, follow: false },
+        };
+    }
+
+    const url = `https://farmerlift.in/catalogue/${categoryData.id}`;
+
+    return {
+        title: `${categoryData.name} | FarmerLift Catalogue`,
+        description: categoryData.description,
+        alternates: { canonical: url },
+        openGraph: {
+            title: `${categoryData.name} | FarmerLift Catalogue`,
+            description: categoryData.description,
+            url,
+            type: "website",
+        },
+    };
+}
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
     const { category } = await params;

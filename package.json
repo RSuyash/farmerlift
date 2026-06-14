@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "audit:seo-smoke": "node scripts/audit-seo-smoke.mjs",
     "deploy:webdev": "node scripts/deploy-webdev.mjs"
   },
   "dependencies": {

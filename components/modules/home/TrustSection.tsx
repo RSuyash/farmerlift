@@ -1,5 +1,3 @@
-"use client";
-
 import { ShieldCheck, Truck, Users, Leaf, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -9,7 +7,7 @@ const features = [
         title: "Certified Quality",
         description: "100% authentic inputs verified by agricultural experts.",
         border: "hover:border-emerald-500/20",
-        iconColor: "text-emerald-600 dark:text-emerald-400",
+        iconColor: "text-emerald-700 dark:text-emerald-300",
         bgHover: "hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10"
     },
     {
@@ -45,7 +43,7 @@ export default function TrustSection() {
             <div className="container-width">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                     <div className="max-w-2xl">
-                        <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs mb-2 block">Our Promise</span>
+                        <span className="text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-widest text-xs mb-2 block">Our Promise</span>
                         <h2 className="text-3xl md:text-5xl font-bold font-outfit text-gray-900 dark:text-white tracking-tight mb-4">
                             Built for the <br className="hidden md:block" />
                             <span className="text-emerald-700 dark:text-emerald-500">Modern Farmer.</span>
@@ -77,7 +75,7 @@ export default function TrustSection() {
                                 {feature.description}
                             </p>
 
-                            <div className="flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-800 dark:group-hover:text-emerald-300 transition-colors uppercase tracking-wider">
+                            <div className="flex items-center text-xs font-semibold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors uppercase tracking-wider">
                                 Learn More <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
                             </div>
                         </div>

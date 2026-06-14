@@ -5,8 +5,7 @@ import FeaturedProducts from "@/components/modules/home/FeaturedProducts";
 import BlogPreviewSection from "@/components/modules/home/BlogPreviewSection";
 import { getHomeBanners } from "@/lib/cms";
 
-// Force dynamic rendering so banners update immediately when changed in WP
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export default async function Home() {
   // 1. Fetch Banners from CMS
@@ -14,9 +13,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Pass CMS slides to HeroSection. 
-          Note: You will need to update HeroSection.tsx to accept { slides } as props 
-          or it will just ignore them and show default. */}
       <HeroSection slides={slides} />
 
       <TrustSection />

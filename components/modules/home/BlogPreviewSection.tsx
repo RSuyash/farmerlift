@@ -13,10 +13,10 @@ export default async function BlogPreviewSection() {
                     <div className="max-w-2xl">
                         <div className="flex items-center gap-2 mb-3">
                             <span className="h-px w-8 bg-emerald-500 hidden md:block" />
-                            <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs">Knowledge Hub</span>
+                            <span className="text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-widest text-xs">Knowledge Hub</span>
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold font-outfit text-emerald-950 dark:text-white tracking-tight mb-4">
-                            Latest <span className="text-emerald-600 dark:text-emerald-500">Insights</span>
+                            Latest <span className="text-emerald-700 dark:text-emerald-300">Insights</span>
                         </h2>
                         <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                             Expert advice, farming tips, and industry news to help you stay ahead of the curve.
@@ -43,7 +43,7 @@ export default async function BlogPreviewSection() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4">
-                                    <span className="inline-block py-1 px-3 rounded-md bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
+                                    <span className="inline-block py-1 px-3 rounded-md bg-emerald-700 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
                                         {article.tags[0] || 'Insights'}
                                     </span>
                                 </div>
@@ -62,7 +62,7 @@ export default async function BlogPreviewSection() {
                                 <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4 flex-grow line-clamp-3">
                                     {article.excerpt}
                                 </p>
-                                <div className="flex items-center text-sm font-semibold text-emerald-600 dark:text-emerald-400 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto">
+                                <div className="flex items-center text-sm font-semibold text-emerald-700 dark:text-emerald-300 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto">
                                     Read Article <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                                 </div>
                             </div>

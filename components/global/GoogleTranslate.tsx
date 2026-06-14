@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Globe } from "lucide-react";
 
 interface GoogleTranslateProps {
@@ -14,22 +14,26 @@ declare global {
   }
 }
 
+function clearTranslateCookies() {
+  document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie =
+    "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" +
+    window.location.hostname;
+}
+
 export default function GoogleTranslate({ className }: GoogleTranslateProps) {
-  const [mounted, setMounted] = useState(false);
   const [isMarathi, setIsMarathi] = useState(false);
-  const initRef = useRef(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const scriptPromiseRef = useRef<Promise<void> | null>(null);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMarathi(document.cookie.includes("googtrans=/en/mr"));
+  }, []);
 
-    // Check if already translated from cookie
-    if (document.cookie.includes("googtrans=/en/mr")) {
-      setIsMarathi(true);
+  const loadTranslate = useCallback(() => {
+    if (scriptPromiseRef.current) {
+      return scriptPromiseRef.current;
     }
-
-    // Only init once
-    if (initRef.current) return;
-    initRef.current = true;
 
     window.googleTranslateElementInit = () => {
       if (window.google?.translate) {
@@ -40,62 +44,72 @@ export default function GoogleTranslate({ className }: GoogleTranslateProps) {
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false,
           },
-          "google_translate_element"
+          "google_translate_element",
         );
       }
     };
 
-    // Load script
-    if (!document.getElementById("google-translate-script")) {
+    scriptPromiseRef.current = new Promise((resolve, reject) => {
+      const existingScript = document.getElementById("google-translate-script");
+      if (existingScript) {
+        resolve();
+        return;
+      }
+
       const script = document.createElement("script");
       script.id = "google-translate-script";
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Google Translate failed to load"));
       document.body.appendChild(script);
-    }
+    });
+
+    return scriptPromiseRef.current;
   }, []);
 
-  const toggleLanguage = useCallback(() => {
+  const toggleLanguage = useCallback(async () => {
     if (isMarathi) {
-      // Clear cookies and reload to get English back
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+      clearTranslateCookies();
       window.location.reload();
       return;
     }
 
-    // Try to find and trigger the Google Translate select
-    const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-    if (select) {
-      select.value = "mr";
-      select.dispatchEvent(new Event("change"));
-      setIsMarathi(true);
-    } else {
-      // Fallback: set cookie and reload
-      document.cookie = "googtrans=/en/mr; path=/;";
-      window.location.reload();
-    }
-  }, [isMarathi]);
+    setIsLoading(true);
+    try {
+      await loadTranslate();
+      await new Promise((resolve) => window.setTimeout(resolve, 250));
 
-  if (!mounted) return null;
+      const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
+      if (select) {
+        select.value = "mr";
+        select.dispatchEvent(new Event("change"));
+        setIsMarathi(true);
+      } else {
+        document.cookie = "googtrans=/en/mr; path=/;";
+        window.location.reload();
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isMarathi, loadTranslate]);
 
   return (
     <div className={className}>
-      {/* Hidden Google Translate widget */}
       <div
         id="google_translate_element"
         aria-hidden="true"
         style={{ position: "absolute", top: "-9999px", left: "-9999px", width: 0, height: 0, overflow: "hidden" }}
       />
 
-      {/* Our branded toggle */}
       <button
         onClick={toggleLanguage}
         type="button"
-        className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/25 hover:border-white/50 hover:bg-white/10 transition-all text-white text-xs font-semibold cursor-pointer select-none"
+        disabled={isLoading}
+        className="flex min-w-[88px] items-center justify-center gap-1.5 px-3 py-1 rounded-full border border-white/25 hover:border-white/50 hover:bg-white/10 transition-all text-white text-xs font-semibold cursor-pointer select-none disabled:opacity-60"
       >
         <Globe className="h-3.5 w-3.5 shrink-0" />
-        <span className="whitespace-nowrap">{isMarathi ? "English" : "मराठी"}</span>
+        <span className="whitespace-nowrap">{isMarathi ? "English" : "Marathi"}</span>
       </button>
 
       <style jsx global>{`
