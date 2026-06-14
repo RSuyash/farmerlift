@@ -93,6 +93,8 @@ It does:
 4. WP cache flush if available
 5. API smoke test
 
+The workflow retries Hostinger SSH connections because Hostinger can sometimes time out from GitHub-hosted runners.
+
 ## Manual Backend Deploy
 
 Manual backend deploy is CTO-approved only.

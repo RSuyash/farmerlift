@@ -90,7 +90,7 @@ jobs:
           set -euo pipefail
           remote="$WEBDEV_USER@$WEBDEV_HOST"
           key="$RUNNER_TEMP/farmerlift-actions-key"
-          ssh_opts=(-i "$key" -p "$WEBDEV_SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes)
+          ssh_opts=(-i "$key" -p "$WEBDEV_SSH_PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
 
           install -m 700 -d ~/.ssh
           printf '%s\n' "$WEBDEV_SSH_KEY" | tr -d '\r' > "$key"
@@ -110,8 +110,16 @@ jobs:
             done
           fi
 
-          cat "$RUNNER_TEMP/farmerlift-release.tar.gz" | ssh "${ssh_opts[@]}" "$remote" \
-            farmerlift
+          for attempt in 1 2 3; do
+            if cat "$RUNNER_TEMP/farmerlift-release.tar.gz" | ssh "${ssh_opts[@]}" "$remote" farmerlift; then
+              exit 0
+            fi
+            if [ "$attempt" = "3" ]; then
+              echo "::error::Could not deploy release over restricted webdev SSH"
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
 
       - name: Verify public release
         run: |

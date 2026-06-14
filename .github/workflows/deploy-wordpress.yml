@@ -76,16 +76,26 @@ jobs:
           timestamp="$(date +%Y%m%d_%H%M%S)"
           remote_base="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
           backup_dir="domains/admin.farmerlift.in/backups/wordpress_${timestamp}"
+          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
 
-          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" "
-            set -e
-            mkdir -p '$backup_dir'
-            cp '$remote_base/functions.php' '$backup_dir/functions.php' 2>/dev/null || true
-            cp -r '$remote_base/includes' '$backup_dir/includes' 2>/dev/null || true
-            cd domains/admin.farmerlift.in/backups/ 2>/dev/null || exit 0
-            ls -dt wordpress_* 2>/dev/null | tail -n +11 | xargs rm -rf 2>/dev/null || true
-            echo '$backup_dir'
-          "
+          for attempt in 1 2 3; do
+            if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" "
+              set -e
+              mkdir -p '$backup_dir'
+              cp '$remote_base/functions.php' '$backup_dir/functions.php' 2>/dev/null || true
+              cp -r '$remote_base/includes' '$backup_dir/includes' 2>/dev/null || true
+              cd domains/admin.farmerlift.in/backups/ 2>/dev/null || exit 0
+              ls -dt wordpress_* 2>/dev/null | tail -n +11 | xargs rm -rf 2>/dev/null || true
+              echo '$backup_dir'
+            "; then
+              exit 0
+            fi
+            if [ "$attempt" = "3" ]; then
+              echo "::error::Could not create Hostinger backup over SSH"
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
 
       - name: Upload backend files
         env:
@@ -95,8 +105,36 @@ jobs:
         run: |
           set -euo pipefail
           remote_base="domains/admin.farmerlift.in/public_html/wp-content/themes/twentytwentyfive"
+          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+          scp_opts=(-i ~/.ssh/deploy_key -P "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
 
-          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" "
+          retry_ssh() {
+            local attempt
+            for attempt in 1 2 3; do
+              if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" "$1"; then
+                return 0
+              fi
+              if [ "$attempt" = "3" ]; then
+                return 1
+              fi
+              sleep $((attempt * 10))
+            done
+          }
+
+          retry_scp() {
+            local attempt
+            for attempt in 1 2 3; do
+              if scp "${scp_opts[@]}" "$@"; then
+                return 0
+              fi
+              if [ "$attempt" = "3" ]; then
+                return 1
+              fi
+              sleep $((attempt * 10))
+            done
+          }
+
+          retry_ssh "
             set -e
             mkdir -p '$remote_base/includes/crm/ajax'
             mkdir -p '$remote_base/includes/crm/views'
@@ -104,11 +142,11 @@ jobs:
             mkdir -p '$remote_base/includes/products/views'
           "
 
-          scp -i ~/.ssh/deploy_key -P "$SSH_PORT" \
+          retry_scp \
             backend/wordpress/functions.php \
             "$SSH_USERNAME@$SSH_HOST:$remote_base/functions.php"
 
-          scp -i ~/.ssh/deploy_key -P "$SSH_PORT" -r \
+          retry_scp -r \
             backend/wordpress/includes/. \
             "$SSH_USERNAME@$SSH_HOST:$remote_base/includes/"
 
@@ -119,8 +157,18 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
         run: |
           set -euo pipefail
-          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
-            "cd domains/admin.farmerlift.in/public_html && php ~/wp-cli.phar cache flush || true"
+          ssh_opts=(-i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+          for attempt in 1 2 3; do
+            if ssh "${ssh_opts[@]}" "$SSH_USERNAME@$SSH_HOST" \
+              "cd domains/admin.farmerlift.in/public_html && php ~/wp-cli.phar cache flush || true"; then
+              exit 0
+            fi
+            if [ "$attempt" = "3" ]; then
+              echo "::warning::Could not flush WordPress cache over SSH after retries"
+              exit 0
+            fi
+            sleep $((attempt * 10))
+          done
 
       - name: Smoke test
         run: |

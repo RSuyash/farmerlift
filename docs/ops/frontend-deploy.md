@@ -93,6 +93,8 @@ WEBDEV_KNOWN_HOSTS
 
 The frontend workflow is manual-only. It does not auto-deploy every push.
 
+The deploy step retries the restricted SSH stream if the server connection is temporarily slow.
+
 ## Path B: Manual Webdev Deploy
 
 ```bash
