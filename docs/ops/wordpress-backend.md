@@ -25,6 +25,16 @@ Normal backend workflow:
 
 This gives version control, audit history, backup, and rollback without giving broad Hostinger shell access.
 
+Required GitHub secrets for backend deploy:
+
+```text
+SSH_HOST
+SSH_PORT
+SSH_USERNAME
+SSH_PRIVATE_KEY
+SSH_KNOWN_HOSTS
+```
+
 ## Hostinger SSH
 
 The CTO machine has:

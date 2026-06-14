@@ -79,6 +79,7 @@ WEBDEV_HOST
 WEBDEV_USER
 WEBDEV_SSH_PORT
 WEBDEV_SSH_KEY
+WEBDEV_KNOWN_HOSTS
 ```
 
 `WEBDEV_USER` should be `webdev`. The key should be authorized only for the server-side deploy router.

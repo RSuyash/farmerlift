@@ -85,6 +85,7 @@ jobs:
           WEBDEV_USER: ${{ secrets.WEBDEV_USER }}
           WEBDEV_SSH_KEY: ${{ secrets.WEBDEV_SSH_KEY }}
           WEBDEV_SSH_PORT: ${{ secrets.WEBDEV_SSH_PORT || '22' }}
+          WEBDEV_KNOWN_HOSTS: ${{ secrets.WEBDEV_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
           remote="$WEBDEV_USER@$WEBDEV_HOST"
@@ -94,16 +95,20 @@ jobs:
           install -m 700 -d ~/.ssh
           printf '%s\n' "$WEBDEV_SSH_KEY" | tr -d '\r' > "$key"
           chmod 600 "$key"
-          for attempt in 1 2 3; do
-            if ssh-keyscan -T 20 -p "$WEBDEV_SSH_PORT" -H "$WEBDEV_HOST" >> ~/.ssh/known_hosts; then
-              break
-            fi
-            if [ "$attempt" = "3" ]; then
-              echo "::error::Could not scan WEBDEV_HOST SSH key"
-              exit 1
-            fi
-            sleep 5
-          done
+          if [ -n "${WEBDEV_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$WEBDEV_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+          else
+            for attempt in 1 2 3; do
+              if ssh-keyscan -T 20 -p "$WEBDEV_SSH_PORT" -H "$WEBDEV_HOST" >> ~/.ssh/known_hosts; then
+                break
+              fi
+              if [ "$attempt" = "3" ]; then
+                echo "::error::Could not scan WEBDEV_HOST SSH key"
+                exit 1
+              fi
+              sleep 5
+            done
+          fi
 
           cat "$RUNNER_TEMP/farmerlift-release.tar.gz" | ssh "${ssh_opts[@]}" "$remote" \
             farmerlift
