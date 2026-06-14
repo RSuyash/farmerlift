@@ -70,6 +70,19 @@ Do not deploy if CPU steal is above `25%`, load is high for several minutes, or 
 
 ## Path A: GitHub Actions
 
+CTO-only setup: the workflow must use the restricted `webdev` deploy account, not full `nivi` SSH.
+
+Required GitHub secrets:
+
+```text
+WEBDEV_HOST
+WEBDEV_USER
+WEBDEV_SSH_PORT
+WEBDEV_SSH_KEY
+```
+
+`WEBDEV_USER` should be `webdev`. The key should be authorized only for the server-side deploy router.
+
 1. Open GitHub.
 2. Go to `Actions`.
 3. Select `Deploy Frontend`.

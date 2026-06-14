@@ -29,6 +29,8 @@ Branch rule:
 | GitHub Actions: `Deploy WordPress Backend` | Backend PHP/theme code under `backend/wordpress/**` | CTO or trusted intern |
 | Hostinger SSH `farmerlift` | Emergency backend inspection/rollback | CTO/operator only unless explicitly approved |
 
+Frontend GitHub Actions must use the restricted `webdev` deploy key through `WEBDEV_*` repo secrets. Do not store full `nivi` SSH access in this repo.
+
 ## SOP Files
 
 1. [Frontend Deploy SOP](./frontend-deploy.md)
