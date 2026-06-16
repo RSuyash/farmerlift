@@ -197,7 +197,7 @@ export function GrowthOsContactForm() {
           </>
         ) : (
           <>
-            Send Message <MessageSquare className="ml-2 h-4 w-4" />
+            Send Enquiry <MessageSquare className="ml-2 h-4 w-4" />
           </>
         )}
       </Button>

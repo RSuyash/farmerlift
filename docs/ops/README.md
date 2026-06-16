@@ -8,11 +8,11 @@ Never share private keys, `.env` files, `wp-config.php`, API tokens, database cr
 
 As of 2026-06-14:
 
-| Surface | Purpose | Production location |
-| --- | --- | --- |
-| Frontend | Public website at `farmerlift.in` and `www.farmerlift.in` | Naya VPS, Docker service `farmerlift-web` |
-| WordPress backend | CMS/API at `admin.farmerlift.in/wp-json` | Hostinger SSH alias `farmerlift` |
-| Legacy WordPress | Old public WP install | Hostinger `farmerlift.in`, not the active public frontend |
+| Surface           | Purpose                                                   | Production location                                       |
+| ----------------- | --------------------------------------------------------- | --------------------------------------------------------- |
+| Frontend          | Public website at `farmerlift.in` and `www.farmerlift.in` | Naya VPS, Docker service `farmerlift-web`                 |
+| WordPress backend | CMS/API at `admin.farmerlift.in/wp-json`                  | Hostinger SSH alias `farmerlift`                          |
+| Legacy WordPress  | Old public WP install                                     | Hostinger `farmerlift.in`, not the active public frontend |
 
 Branch rule:
 
@@ -22,13 +22,13 @@ Branch rule:
 
 ## Deployment Paths
 
-| Path | Use for | Who should run it |
-| --- | --- | --- |
-| GitHub Actions: `Deploy Frontend` | Versioned frontend deploy from `master` | CTO or approved intern |
-| `npm run deploy:webdev` | Fallback frontend deploy from a clean synced local `master` | Approved intern with `webdev` key |
-| GitHub Actions: `Deploy WordPress Backend` | Backend PHP/theme code under `backend/wordpress/**` through restricted `webdev` proxy | CTO or trusted intern |
-| `npm run deploy:wordpress:webdev` | Fallback backend deploy from a clean synced local `master` | CTO-approved intern with `webdev` key |
-| Hostinger SSH `farmerlift` | Emergency backend inspection/rollback | CTO/operator only unless explicitly approved |
+| Path                                       | Use for                                                                               | Who should run it                            |
+| ------------------------------------------ | ------------------------------------------------------------------------------------- | -------------------------------------------- |
+| GitHub Actions: `Deploy Frontend`          | Versioned frontend deploy from `master`                                               | CTO or approved intern                       |
+| `npm run deploy:webdev`                    | Fallback frontend deploy from a clean synced local `master`                           | Approved intern with `webdev` key            |
+| GitHub Actions: `Deploy WordPress Backend` | Backend PHP/theme code under `backend/wordpress/**` through restricted `webdev` proxy | CTO or trusted intern                        |
+| `npm run deploy:wordpress:webdev`          | Fallback backend deploy from a clean synced local `master`                            | CTO-approved intern with `webdev` key        |
+| Hostinger SSH `farmerlift`                 | Emergency backend inspection/rollback                                                 | CTO/operator only unless explicitly approved |
 
 Frontend and backend GitHub Actions must use the restricted `webdev` deploy key through `WEBDEV_*` repo secrets. Do not store full `nivi` SSH access in this repo. Do not give broad Hostinger SSH to interns unless the CTO explicitly approves it.
 
