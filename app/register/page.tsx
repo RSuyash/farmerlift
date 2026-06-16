@@ -338,7 +338,7 @@ export default function RegisterPage() {
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
                     </>
                   ) : (
-                    "Submit Application"
+                    "Become a Partner"
                   )}
                 </Button>
                 <p className="text-center text-xs text-gray-500 mt-4">

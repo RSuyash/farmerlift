@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getAllCategories } from "@/lib/db";
 import { getAllProducts } from "@/lib/cms";
 import ProductBrowser from "@/components/modules/products/ProductBrowser";
@@ -14,7 +15,9 @@ export default async function ProductsPage() {
       <CatalogueHeader categories={categories} />
 
       <div className="container-width">
-        <ProductBrowser initialProducts={products} />
+        <Suspense fallback={<div className="h-96 flex items-center justify-center animate-pulse text-zinc-500">Loading products...</div>}>
+          <ProductBrowser initialProducts={products} />
+        </Suspense>
       </div>
     </div>
   );

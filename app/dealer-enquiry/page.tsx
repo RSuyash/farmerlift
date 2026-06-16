@@ -335,7 +335,7 @@ export default function DealerEnquiryPage() {
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
               </>
             ) : (
-              "Submit Dealer Enquiry"
+              "Send Dealer Enquiry"
             )}
           </Button>
         </form>

@@ -1,87 +1,134 @@
-import { ShieldCheck, Truck, Users, Leaf, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+"use client";
+
+import { ShieldCheck, Truck, Microscope, Award, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import AnimatedCounter from "@/components/global/AnimatedCounter";
+
+const metrics = [
+  { label: "Farmers Empowered", value: 50000, suffix: "+" },
+  { label: "Certified Products", value: 150, suffix: "+" },
+  { label: "Dealer Network", value: 200, suffix: "+" },
+  { label: "Districts Covered", value: 25, suffix: "+" },
+];
 
 const features = [
-    {
-        icon: ShieldCheck,
-        title: "Certified Quality",
-        description: "100% authentic inputs verified by agricultural experts.",
-        border: "hover:border-emerald-500/20",
-        iconColor: "text-emerald-700 dark:text-emerald-300",
-        bgHover: "hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10"
-    },
-    {
-        icon: Truck,
-        title: "Reliable Delivery",
-        description: "Fast and secure logistics network reaching remote farms.",
-        border: "hover:border-blue-500/20",
-        iconColor: "text-blue-600 dark:text-blue-400",
-        bgHover: "hover:bg-blue-50/50 dark:hover:bg-blue-900/10"
-    },
-    {
-        icon: Users,
-        title: "Community Driven",
-        description: "Join thousands of farmers sharing knowledge and success.",
-        border: "hover:border-orange-500/20",
-        iconColor: "text-orange-600 dark:text-orange-400",
-        bgHover: "hover:bg-orange-50/50 dark:hover:bg-orange-900/10"
+  {
+    icon: ShieldCheck,
+    title: "Verified Supply Chain",
+    description: "Guaranteed authentic agricultural inputs sourced directly from certified manufacturers.",
+  },
+  {
+    icon: Microscope,
+    title: "Agronomy Expert Support",
+    description: "Dedicated agricultural scientists and agronomists supporting our entire network.",
+  },
+  {
+    icon: Award,
+    title: "Certified Quality Standards",
+    description: "Adhering to the highest industry and government benchmarks for safety and efficacy.",
+  },
+  {
+    icon: Truck,
+    title: "Pan-India Logistics",
+    description: "Reliable, trackable delivery systems ensuring products reach the most remote farms.",
+  },
+];
 
-    },
-    {
-        icon: Leaf,
-        title: "Sustainable Focus",
-        description: "Promoting eco-friendly practices for long-term soil health.",
-        border: "hover:border-green-500/20",
-        iconColor: "text-green-600 dark:text-green-400",
-        bgHover: "hover:bg-green-50/50 dark:hover:bg-green-900/10"
-    },
+const certifications = [
+  "ISO 9001:2015 Certified",
+  "FSSAI Approved",
+  "Organic India",
+  "Make in India",
+  "GMP Certified",
 ];
 
 export default function TrustSection() {
-    return (
-        <section className="py-24 bg-white dark:bg-black border-y border-gray-100 dark:border-white/5">
-            <div className="container-width">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <span className="text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-widest text-xs mb-2 block">Our Promise</span>
-                        <h2 className="text-3xl md:text-5xl font-bold font-outfit text-gray-900 dark:text-white tracking-tight mb-4">
-                            Built for the <br className="hidden md:block" />
-                            <span className="text-emerald-700 dark:text-emerald-500">Modern Farmer.</span>
-                        </h2>
-                        <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">
-                            We combine industrial-grade supply chains with deep agronomy expertise to deliver what matters most: Trust and Results.
-                        </p>
-                    </div>
+  return (
+    <section className="relative py-20 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-white/10 overflow-hidden">
+      {/* Decorative background */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-emerald-500/5 dark:from-emerald-900/10 to-transparent pointer-events-none" />
+
+      <div className="container-width relative z-10">
+        
+        {/* Layer 1: Metrics (Scale) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 mb-20">
+          {metrics.map((metric, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="flex flex-col items-center justify-center text-center p-6 bg-white dark:bg-black/40 rounded-2xl border border-zinc-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <div className="text-3xl md:text-5xl font-black font-outfit text-emerald-600 dark:text-emerald-400 mb-2 tracking-tight flex items-center">
+                <AnimatedCounter to={metric.value} duration={2.5} suffix={metric.suffix} />
+              </div>
+              <div className="text-sm md:text-base font-semibold text-zinc-600 dark:text-zinc-400">
+                {metric.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Layer 2: Premium Trust Cards (Authority) */}
+        <div className="mb-20">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold font-outfit text-zinc-900 dark:text-white mb-6 tracking-tight">
+              Enterprise-Grade <span className="text-emerald-600 dark:text-emerald-500">Reliability.</span>
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              We combine an industrial-scale supply chain with deep agronomic expertise to guarantee authenticity, quality, and results for every stakeholder.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="group relative bg-white dark:bg-zinc-900/50 p-8 rounded-3xl border border-zinc-200/50 dark:border-white/10 shadow-lg shadow-zinc-200/20 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="w-14 h-14 bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors duration-300">
+                  <feature.icon className="w-7 h-7 text-emerald-600 dark:text-emerald-400 group-hover:text-white transition-colors duration-300" strokeWidth={1.5} />
                 </div>
+                <h3 className="text-xl font-bold font-outfit text-zinc-900 dark:text-white mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-100 dark:divide-white/5 border border-gray-100 dark:border-white/5 rounded-2xl overflow-hidden bg-white dark:bg-white/5 shadow-sm">
-                    {features.map((feature, index) => (
-                        <div
-                            key={index}
-                            className={cn(
-                                "group relative p-10 transition-all duration-300",
-                                feature.bgHover
-                            )}
-                        >
-                            <div className={`mb-6 p-3 w-fit rounded-xl bg-gray-50 dark:bg-white/5 group-hover:scale-105 transition-transform duration-300`}>
-                                <feature.icon className={cn("w-8 h-8", feature.iconColor)} strokeWidth={1.5} />
-                            </div>
+        {/* Layer 3: Certifications Banner (Proof) */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="border-t border-zinc-200 dark:border-white/10 pt-10"
+        >
+          <p className="text-center text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-8">
+            Recognized & Certified By
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12">
+            {certifications.map((cert, index) => (
+              <div key={index} className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400 grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100">
+                <CheckCircle className="w-5 h-5 text-emerald-500" />
+                <span className="font-bold text-sm md:text-base">{cert}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 font-outfit group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
-                                {feature.title}
-                            </h3>
-
-                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm mb-6">
-                                {feature.description}
-                            </p>
-
-                            <div className="flex items-center text-xs font-semibold text-emerald-700 dark:text-emerald-300 group-hover:text-emerald-800 dark:group-hover:text-emerald-200 transition-colors uppercase tracking-wider">
-                                Learn More <ArrowRight className="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform" />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+      </div>
+    </section>
+  );
 }

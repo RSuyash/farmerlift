@@ -34,10 +34,11 @@ export default async function ContactPage() {
       </section>
 
       <div className="container-width -mt-12 relative z-20 pb-20">
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8 items-start">
 
           {/* 2. Contact Info Cards (Left Column) */}
-          {/* Address Card & Map */}
+          <div className="lg:col-span-1 space-y-8">
+            {/* Address Card & Map */}
           <div className="bg-white dark:bg-black/40 p-0 rounded-2xl border border-gray-100 dark:border-white/10 shadow-lg overflow-hidden">
             <div className="p-8 pb-0">
               <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-700 dark:text-emerald-400 mb-4">
@@ -91,17 +92,18 @@ export default async function ContactPage() {
               </div>
             </div>
           </div>
-        </div>
+          </div>
 
-        {/* 3. Contact Form (Right Column - Wider) */}
-        <div className="lg:col-span-2 mt-8 lg:mt-0">
-          <div className="bg-white dark:bg-white/5 p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-white/10 shadow-xl h-full">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold font-outfit text-gray-900 dark:text-white mb-2">Send us a Message</h2>
-              <p className="text-gray-500 dark:text-gray-400">Fill out the form below and our team will get back to you within 24 hours.</p>
+          {/* 3. Contact Form (Right Column - Wider) */}
+          <div className="lg:col-span-2 mt-8 lg:mt-0">
+            <div className="bg-white dark:bg-white/5 p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-white/10 shadow-xl h-full">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold font-outfit text-gray-900 dark:text-white mb-2">Send us a Message</h2>
+                <p className="text-gray-500 dark:text-gray-400">Fill out the form below and our team will get back to you within 24 hours.</p>
+              </div>
+
+              <GrowthOsContactForm />
             </div>
-
-            <GrowthOsContactForm />
           </div>
         </div>
       </div>
