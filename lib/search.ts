@@ -53,15 +53,36 @@ export function searchProducts(products: Product[], filters: SearchFilters): Pro
         // Crop Target (Checks if *any* of the product's target crops match the filter)
         if (filters.cropTarget && filters.cropTarget.length > 0) {
             let hasTargetCrop = false;
-            // Check fertilizer/pesticide/seed target crops (normalize to array)
-            const pTargetCrops = (product.specifications as any).targetCrops; // duck typing
-            if (Array.isArray(pTargetCrops)) {
-                const normalizedTargets = pTargetCrops.map(c => c.toLowerCase());
+            
+            // Build a list of all crops associated with this product
+            const productCrops: string[] = [];
+            
+            if (product.recommendedCrops) {
+                product.recommendedCrops.forEach(c => {
+                    if (c.name) productCrops.push(c.name.trim());
+                });
+            }
+            
+            if (product.targetCropsDescription) {
+                const parts = product.targetCropsDescription.split(',');
+                parts.forEach(p => {
+                    if (p.trim()) productCrops.push(p.trim());
+                });
+            }
+            
+            if (productCrops.length > 0) {
+                const normalizedTargets = productCrops.map(c => c.toLowerCase());
                 const normalizedFilters = filters.cropTarget.map(c => c.toLowerCase());
-                if (normalizedTargets.some(t => normalizedFilters.some(f => t.includes(f)))) {
+                
+                // Scrub spaces for slug-safe comparison (e.g. "sugar cane" -> "sugarcane")
+                const scrubbedTargets = normalizedTargets.map(t => t.replace(/\s+/g, ''));
+                const scrubbedFilters = normalizedFilters.map(f => f.replace(/\s+/g, ''));
+
+                if (scrubbedTargets.some(t => scrubbedFilters.some(f => t.includes(f)))) {
                     hasTargetCrop = true;
                 }
             }
+
             // Machinery might not have target crops, so ignore or strict check? 
             // Logic: If filter is applied, and product doesn't have crop info, usually exclude it.
             // But for broad search, let's include if generic. For now, strict.
@@ -83,9 +104,19 @@ export function getFacets(products: Product[]) {
     products.forEach(p => {
         brands.add(p.brand);
         categories.add(p.category);
-        const specs = p.specifications as any;
-        if (specs.targetCrops && Array.isArray(specs.targetCrops)) {
-            specs.targetCrops.forEach((c: string) => crops.add(c));
+        
+        if (p.recommendedCrops) {
+            p.recommendedCrops.forEach(c => {
+                if (c.name && c.name !== 'Crop') crops.add(c.name.trim());
+            });
+        }
+        
+        if (p.targetCropsDescription) {
+            const parts = p.targetCropsDescription.split(',');
+            parts.forEach(part => {
+                const trimmed = part.trim();
+                if (trimmed) crops.add(trimmed);
+            });
         }
     });
 

@@ -1,7 +1,8 @@
 'use client';
 
 import { Product } from '@/types/product';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { searchProducts, SearchFilters, getFacets } from '@/lib/search';
 import ProductCard from './ProductCard';
 import ProductFilters from './ProductFilters';
@@ -13,9 +14,77 @@ export default function ProductBrowser({
 }: {
   initialProducts: Product[];
 }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const gridRef = useRef<HTMLDivElement>(null);
+
   const [filters, setFilters] = useState<SearchFilters>({});
   const [sortBy, setSortBy] = useState<string>('relevance');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const isUpdatingUrl = useRef(false);
+
+  // 1. Read from URL
+  useEffect(() => {
+    if (isUpdatingUrl.current) return;
+
+    const f: SearchFilters = {};
+    const query = searchParams.get('query');
+    if (query) f.query = query;
+    
+    const categories = searchParams.getAll('category');
+    if (categories.length > 0) f.category = categories;
+    
+    const brands = searchParams.getAll('brand');
+    if (brands.length > 0) f.brands = brands;
+    
+    // Read 'crop' from URL and map to 'cropTarget' filter
+    const crops = searchParams.getAll('crop');
+    if (crops.length > 0) {
+      // search.ts logic is case-insensitive, but facets might be Capitalized.
+      // E.g., 'cotton' -> 'Cotton'. The user's links are lowercase, but facets in ProductFilters are usually exactly as in the product.
+      // We'll just pass the string directly, `searchProducts` uses `toLowerCase()` for `cropTarget` matching.
+      f.cropTarget = crops;
+    }
+
+    setFilters(f);
+
+    // Initial Load scroll
+    if (!isInitialized) {
+      setIsInitialized(true);
+      if (crops.length > 0 || categories.length > 0 || brands.length > 0 || query) {
+        setTimeout(() => {
+          if (gridRef.current) {
+            const y = gridRef.current.getBoundingClientRect().top + window.scrollY - 120;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    }
+  }, [searchParams, isInitialized]);
+
+  // 2. Sync to URL
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    isUpdatingUrl.current = true;
+    const params = new URLSearchParams();
+    
+    if (filters.query) params.set('query', filters.query);
+    if (filters.category) filters.category.forEach(c => params.append('category', c));
+    if (filters.brands) filters.brands.forEach(b => params.append('brand', b));
+    if (filters.cropTarget) filters.cropTarget.forEach(c => params.append('crop', c));
+
+    const newQuery = params.toString();
+    const newUrl = `${pathname}${newQuery ? `?${newQuery}` : ''}`;
+    
+    router.push(newUrl, { scroll: false });
+    
+    setTimeout(() => {
+      isUpdatingUrl.current = false;
+    }, 100);
+  }, [filters, pathname, router, isInitialized]);
 
   // Derive filtered products
   const filteredProducts = useMemo(() => {
@@ -127,7 +196,7 @@ export default function ProductBrowser({
       )}
 
       {/* Main Content */}
-      <div className="flex-1 w-full min-w-0">
+      <div className="flex-1 w-full min-w-0" ref={gridRef}>
         {/* Mobile Filter & Search Bar */}
         <div className="lg:hidden flex gap-3 mb-6">
           <div className="relative grow">
