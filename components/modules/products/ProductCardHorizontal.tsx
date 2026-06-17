@@ -4,19 +4,9 @@ import { Product } from "@/types/product";
 import Link from "next/link";
 import { ArrowRight, Sprout } from "lucide-react";
 import ProductImage from "@/components/ui/ProductImage";
-import { motion } from "framer-motion";
 
-const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.4,
-            ease: [0.25, 0.1, 0.25, 1] as const,
-        },
-    },
-};
+
+
 
 /**
  * Extracts crop names from product data.
@@ -46,7 +36,7 @@ export default function ProductCardHorizontal({ product, showSku = false }: Prod
     const overflowCount = crops.length - 3;
 
     return (
-        <motion.div variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }}>
+        <>
             <Link
                 href={`/products/${product.id}`}
                 className="group flex flex-col sm:flex-row bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-2xl overflow-hidden hover:shadow-xl hover:border-emerald-500/20 dark:hover:border-emerald-500/20 transition-all duration-300 h-auto sm:h-56 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
@@ -139,6 +129,6 @@ export default function ProductCardHorizontal({ product, showSku = false }: Prod
                     </div>
                 </div>
             </Link>
-        </motion.div>
+        </>
     );
 }
