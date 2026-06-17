@@ -26,6 +26,7 @@ import {
   Droplets,
   Beaker,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useCallback, Suspense } from 'react';
@@ -35,6 +36,80 @@ import { QRCodeSVG } from 'qrcode.react';
 import { cn } from '@/lib/utils';
 import QRAuthPopup from './QRAuthPopup';
 import FormattedText from '@/components/ui/FormattedText';
+
+// Helper to render spec table row
+const SpecRow = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number | undefined;
+}) =>
+  value ? (
+    <div className="flex justify-between py-3 border-b border-zinc-100 dark:border-zinc-800 last:border-0 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 px-2 rounded-lg transition-colors">
+      <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        {label}
+      </span>
+      <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 text-right">
+        {value}
+      </span>
+    </div>
+  ) : null;
+
+// Helper to render description list items (Split by newline)
+const DescriptionList = ({
+  text,
+  icon: Icon,
+  colorClass,
+}: {
+  text: string;
+  icon: LucideIcon;
+  colorClass: string;
+}) => {
+  const items = text
+    .split('\n')
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+  return (
+    <div className="space-y-3">
+      {items.map((item, idx) => {
+        const isHeader = item.endsWith(':');
+        return (
+          <div
+            key={idx}
+            className={cn(
+              'flex items-start gap-3 p-3 rounded-lg transition-all',
+              isHeader
+                ? 'bg-zinc-100/50 dark:bg-zinc-800/30 mt-4 first:mt-0'
+                : 'hover:translate-x-1',
+            )}
+          >
+            {!isHeader && (
+              <div
+                className={cn(
+                  'mt-1 h-5 w-5 rounded-full flex items-center justify-center shrink-0',
+                  colorClass,
+                )}
+              >
+                <Icon className="h-3 w-3" />
+              </div>
+            )}
+            <span
+              className={cn(
+                'text-sm leading-relaxed',
+                isHeader
+                  ? 'font-bold text-zinc-900 dark:text-white uppercase tracking-wider text-xs'
+                  : 'text-zinc-600 dark:text-zinc-300 font-medium',
+              )}
+            >
+              {item}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 function ProductDetailContent({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(product.images[0] || '');
@@ -103,80 +178,6 @@ function ProductDetailContent({ product }: { product: Product }) {
     `Hi FarmerLift, I am interested in *${product.name}*.\n\nSKU: ${product.sku || 'N/A'}\nPrice: ${priceText}\n\nPlease share more details and availability.`,
   );
   const waLink = `https://wa.me/919226411841?text=${whatsAppMessage}`;
-
-  // Helper to render spec table row
-  const SpecRow = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string | number | undefined;
-  }) =>
-    value ? (
-      <div className="flex justify-between py-3 border-b border-zinc-100 dark:border-zinc-800 last:border-0 group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 px-2 rounded-lg transition-colors">
-        <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-          {label}
-        </span>
-        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 text-right">
-          {value}
-        </span>
-      </div>
-    ) : null;
-
-  // Helper to render description list items (Split by newline)
-  const DescriptionList = ({
-    text,
-    icon: Icon,
-    colorClass,
-  }: {
-    text: string;
-    icon: any;
-    colorClass: string;
-  }) => {
-    const items = text
-      .split('\n')
-      .map((item) => item.trim())
-      .filter((item) => item.length > 0);
-    return (
-      <div className="space-y-3">
-        {items.map((item, idx) => {
-          const isHeader = item.endsWith(':');
-          return (
-            <div
-              key={idx}
-              className={cn(
-                'flex items-start gap-3 p-3 rounded-lg transition-all',
-                isHeader
-                  ? 'bg-zinc-100/50 dark:bg-zinc-800/30 mt-4 first:mt-0'
-                  : 'hover:translate-x-1',
-              )}
-            >
-              {!isHeader && (
-                <div
-                  className={cn(
-                    'mt-1 h-5 w-5 rounded-full flex items-center justify-center shrink-0',
-                    colorClass,
-                  )}
-                >
-                  <Icon className="h-3 w-3" />
-                </div>
-              )}
-              <span
-                className={cn(
-                  'text-sm leading-relaxed',
-                  isHeader
-                    ? 'font-bold text-zinc-900 dark:text-white uppercase tracking-wider text-xs'
-                    : 'text-zinc-600 dark:text-zinc-300 font-medium',
-                )}
-              >
-                {item}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-black pb-28 lg:pb-20">
@@ -709,8 +710,9 @@ function ProductDetailContent({ product }: { product: Product }) {
                     )}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
-                    {/* Fallback code for categories */}
+                  <div className="rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700 p-6 text-sm text-zinc-500 dark:text-zinc-400">
+                    Method of application details are currently unavailable for
+                    this product.
                   </div>
                 )}
               </div>
@@ -860,7 +862,7 @@ function ProductDetailContent({ product }: { product: Product }) {
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-[2] flex items-center justify-center gap-2 h-14 bg-emerald-600 text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform"
+            className="flex-2 flex items-center justify-center gap-2 h-14 bg-emerald-600 text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform"
           >
             <MessageCircle className="h-5 w-5" />
             <div className="flex flex-col items-start leading-tight">
