@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Product } from "@/types/product";
 import { ExternalLink } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import { motion } from "framer-motion";
+
 import ProductCardHorizontal from "@/components/modules/products/ProductCardHorizontal";
 
 interface Category {
@@ -19,14 +19,7 @@ interface CatalogueSectionProps {
     products: Product[];
 }
 
-const containerVariants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.1,
-        },
-    },
-};
+
 
 export default function CatalogueSection({ category, products }: CatalogueSectionProps) {
     const { ref, inView } = useInView({
@@ -66,12 +59,8 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
             {/* Products Grid - Lazy Loaded */}
             {inView ? (
                 products.length > 0 ? (
-                    <motion.div
+                    <div
                         className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                        variants={containerVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-40px" }}
                         suppressHydrationWarning
                     >
                         {products.map((product) => (
@@ -81,7 +70,7 @@ export default function CatalogueSection({ category, products }: CatalogueSectio
                                 showSku
                             />
                         ))}
-                    </motion.div>
+                    </div>
                 ) : (
                     <div className="bg-gray-50 dark:bg-white/5 rounded-2xl p-8 text-center border border-dashed border-gray-200 dark:border-white/10" suppressHydrationWarning>
                         <p className="text-gray-500 dark:text-gray-400">No products available currently.</p>

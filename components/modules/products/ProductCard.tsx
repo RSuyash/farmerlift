@@ -4,19 +4,9 @@ import { Product } from "@/types/product";
 import Link from "next/link";
 import { ArrowRight, Sprout, Check } from "lucide-react";
 import ProductImage from "@/components/ui/ProductImage";
-import { motion } from "framer-motion";
 
-const cardVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.45,
-            ease: [0.25, 0.1, 0.25, 1] as const,
-        },
-    },
-};
+
+
 
 /**
  * Extracts crop names from product data.
@@ -48,7 +38,7 @@ export default function ProductCard({ product }: { product: Product }) {
     const firstBenefit = product.features?.[0] ?? null;
 
     return (
-        <motion.div variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-40px" }}>
+        <>
             <Link
                 href={`/products/${product.id}`}
                 className="group block h-full"
@@ -173,6 +163,6 @@ export default function ProductCard({ product }: { product: Product }) {
                     </div>
                 </div>
             </Link>
-        </motion.div>
+        </>
     );
 }
