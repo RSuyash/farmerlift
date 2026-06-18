@@ -168,7 +168,7 @@ const MobileMenuSection = ({
   setIsMobileMenuOpen,
 }: MobileMenuSectionProps) => (
   <div className="flex flex-col gap-1 mb-6">
-    <h4 className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 px-2">
+    <h4 className="text-[11px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2 px-2">
       {title}
     </h4>
     {items.map((item) => {
@@ -303,7 +303,7 @@ export default function Navbar() {
                 basePath="/catalogue"
                 pathname={pathname}
               >
-                <DropdownLink href="/catalogue" pathname={pathname}>
+                <DropdownLink href="/products" pathname={pathname}>
                   All Products
                 </DropdownLink>
                 <DropdownLink href="/catalogue" pathname={pathname}>
@@ -451,7 +451,7 @@ export default function Navbar() {
                   title="Explore"
                   items={[
                     { name: 'Home', href: '/' },
-                    { name: 'All Products', href: '/catalogue' },
+                    { name: 'All Products', href: '/products' },
                     { name: 'Shop By Crop', href: '/#shop-by-crop' },
                   ]}
                   pathname={pathname}
@@ -488,7 +488,7 @@ export default function Navbar() {
                 />
               </div>
 
-              <div className="p-6 border-t border-gray-100 dark:border-white/10 space-y-4 bg-gray-50/50 dark:bg-black/20 shrink-0">
+              <div className="p-6 border-t border-gray-100 dark:border-white/10 space-y-4 bg-gray-50/50 dark:bg-black/20 shrink-0 relative shadow-[0_-8px_16px_-8px_rgba(0,0,0,0.05)] dark:shadow-[0_-8px_16px_-8px_rgba(0,0,0,0.2)]">
                 <div className="flex md:hidden items-center justify-between px-2 mb-2">
                   <span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
                     Theme
