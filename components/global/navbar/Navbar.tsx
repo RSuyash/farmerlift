@@ -80,7 +80,10 @@ const DesktopNavDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
 
   // Active if current pathname starts with the basePath
-  const isActive = basePath !== '#' && pathname.startsWith(basePath);
+  const isActive =
+    label === 'Products'
+      ? pathname.startsWith('/catalogue') || pathname.startsWith('/products')
+      : basePath !== '#' && pathname.startsWith(basePath);
 
   return (
     <div
