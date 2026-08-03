@@ -157,11 +157,21 @@ export default function ProductBrowser({
             onClick={() => setShowMobileFilters(false)}
           />
           {/* Drawer */}
-          <div className="absolute inset-y-0 left-0 w-[85vw] max-w-sm bg-white dark:bg-zinc-900 shadow-xl p-6 overflow-y-auto transition-transform animate-in slide-in-from-left duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-bold font-outfit text-xl text-zinc-900 dark:text-white">
-                Filters
-              </h3>
+          <div className="absolute inset-y-0 left-0 w-[85vw] max-w-sm bg-white dark:bg-zinc-900 shadow-xl flex flex-col transition-transform animate-in slide-in-from-left duration-300">
+            <div className="flex items-center justify-between p-4 sm:p-6 shrink-0 border-b border-zinc-100 dark:border-zinc-800">
+              <div className="flex items-center gap-4">
+                <h3 className="font-bold font-outfit text-xl text-zinc-900 dark:text-white">
+                  Filters
+                </h3>
+                {Object.keys(filters).length > 0 && (
+                  <button
+                    onClick={clearFilters}
+                    className="text-xs text-rose-500 hover:text-rose-600 hover:underline font-medium transition-colors"
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
               <Button
                 variant="ghost"
                 size="icon"
@@ -171,22 +181,17 @@ export default function ProductBrowser({
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            <ProductFilters
-              filters={filters}
-              setFilters={setFilters}
-              facets={facets}
-            />
-            <div className="mt-8 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-              <Button
-                onClick={clearFilters}
-                variant="outline"
-                className="w-full mb-3 h-12"
-              >
-                Clear Filters
-              </Button>
+            <div className="flex-1 overflow-y-auto p-6">
+              <ProductFilters
+                filters={filters}
+                setFilters={setFilters}
+                facets={facets}
+              />
+            </div>
+            <div className="p-4 sm:p-6 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shrink-0 shadow-[0_-8px_16px_-8px_rgba(0,0,0,0.05)] dark:shadow-[0_-8px_16px_-8px_rgba(0,0,0,0.2)] relative z-10">
               <Button
                 onClick={() => setShowMobileFilters(false)}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 h-12"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-12 sm:h-14 text-base font-semibold shadow-md shadow-emerald-500/20"
               >
                 Show {filteredProducts.length} Results
               </Button>

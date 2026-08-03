@@ -98,13 +98,6 @@ export default function ProductFilters({ filters, setFilters, facets }: ProductF
                 </div>
             </div>
 
-            <Button
-                variant="outline"
-                className="w-full text-xs h-8 mt-4"
-                onClick={() => setFilters({})}
-            >
-                Reset Filters
-            </Button>
         </div>
     );
 }
