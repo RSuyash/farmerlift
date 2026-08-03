@@ -20,7 +20,7 @@ jobs:
           mkdir -p model
           curl -L --fail --retry 5 --retry-delay 2 \
             -o model/ggml-small-q5_1.bin \
-            https://github.com/Bagani/rec2text-models/releases/download/v1/ggml-small-q5_1.bin
+            https://github.com/w3xgroup/taskurio-models/releases/download/whisper-models-v1/ggml-small-q5_1.bin
           echo "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb  model/ggml-small-q5_1.bin" | sha256sum -c -
           ls -lh model/ggml-small-q5_1.bin
 
