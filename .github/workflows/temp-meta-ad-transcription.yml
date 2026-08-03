@@ -51,7 +51,7 @@ jobs:
           ]
           for file_id, name in files:
               target = Path("videos") / name
-              result = gdown.download(id=file_id, output=str(target), quiet=False, fuzzy=True)
+              result = gdown.download(id=file_id, output=str(target), quiet=False)
               if not result or not target.exists() or target.stat().st_size < 1000:
                   raise RuntimeError(f"Download failed: {name}")
               print(name, target.stat().st_size)
