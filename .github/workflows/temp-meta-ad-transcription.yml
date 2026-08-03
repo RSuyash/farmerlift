@@ -1,4 +1,4 @@
-name: Temporary Meta Ads Transcription
+name: Temporary Whisper Model Artifact
 
 on:
   pull_request:
@@ -9,104 +9,25 @@ permissions:
   contents: read
 
 jobs:
-  transcribe:
+  package-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
+      - name: Download multilingual Whisper model
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
-          python -m pip install --upgrade pip
-          pip install faster-whisper gdown
+          mkdir -p model
+          curl -L --fail --retry 5 --retry-delay 2 \
+            -o model/ggml-small-q5_1.bin \
+            https://github.com/Bagani/rec2text-models/releases/download/v1/ggml-small-q5_1.bin
+          echo "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb  model/ggml-small-q5_1.bin" | sha256sum -c -
+          ls -lh model/ggml-small-q5_1.bin
 
-      - name: Download source videos
-        run: |
-          mkdir -p videos output
-          python - <<'PY'
-          import gdown
-          from pathlib import Path
-          files = [
-              ("1w0Ucv8gJeATmQLhiGsinr52C8TGbylA5", "01_vibha_designing.mp4"),
-              ("10UpZzGQy2o503bu9Gcu6A-9so8iB8vaL", "02_feelthehype.mp4"),
-              ("15wp3Cn4eMTdcrq4_uY2DN88JXLLk2wUO", "03_appnitysoftwares.mp4"),
-              ("1f1dBdxFtgmfgmxzp-p5Yy1b0O_M9FJJQ", "04_lead_sure_1775485958.mp4"),
-              ("1vPF1y64IMjWzwMetMAWHo2Vtc4__Izkf", "05_codelith_lab.mp4"),
-              ("1Qs2qzCywIr44CRTsqZZSLRiFOz9o-QDe", "06_lead_sure_1774705670.mp4"),
-              ("16ZNQ7-tax_GC4ohnmnzid1WM9DdFbOaW", "07_socialsynergyofficial.mp4"),
-              ("11FaFFxPxeS8jUWI8TY_3QZF7oNubgwAO", "08_imddxb.mp4"),
-              ("16gMjE3L_vBCNjkFX4sNuXKXi_YFbTwrP", "09_webpulseindia.mp4"),
-              ("1AYBRGMKB6VW9G88qaNpPbnC9-raRm2uI", "10_vedhunt.mp4"),
-              ("1yAbCoO4nfjxEYfgpZSb7HLYgYF6NTIzf", "11_jayrai_web.mp4"),
-              ("1DQWc4bEz9k16HJsX8ZGKeaWzWsBN4KmI", "12_brandbuddiestudio.mp4"),
-              ("1DgBIyjXNhJQWQj9M47Kk5C7ODz7YVAJI", "13_website_designer_india.mp4"),
-              ("1XeTeRCkjoQZ1IaYCjr_Br4BXZ3-M3Ivb", "14_rookiezz_solutions.mp4"),
-              ("1oELSnGRChxOLbINiUdpBd3pvAHs4bs2W", "15_robushtagency.mp4"),
-          ]
-          for file_id, name in files:
-              target = Path("videos") / name
-              result = gdown.download(id=file_id, output=str(target), quiet=False)
-              if not result or not target.exists() or target.stat().st_size < 1000:
-                  raise RuntimeError(f"Download failed: {name}")
-              print(name, target.stat().st_size)
-          PY
-
-      - name: Run multilingual transcription
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from faster_whisper import WhisperModel
-
-          model = WhisperModel("small", device="cpu", compute_type="int8", cpu_threads=4)
-          prompt = ("Website development, custom website, WordPress, Shopify, React, Next.js, "
-                    "SEO, domain, hosting, business website, digital marketing, enquiries, "
-                    "conversion, Meta ads, WhatsApp, free consultation, business growth.")
-          results, blocks = [], []
-          for video in sorted(Path("videos").glob("*.mp4")):
-              segments, info = model.transcribe(
-                  str(video), language=None, beam_size=5, best_of=5, vad_filter=True,
-                  word_timestamps=True, condition_on_previous_text=False,
-                  initial_prompt=prompt, temperature=0.0)
-              seg_rows, words_flat, pieces = [], [], []
-              for seg in segments:
-                  text = seg.text.strip()
-                  if text:
-                      pieces.append(text)
-                  words = []
-                  for word in (seg.words or []):
-                      row = {"start": word.start, "end": word.end,
-                             "word": word.word, "probability": word.probability}
-                      words.append(row)
-                      words_flat.append(row)
-                  seg_rows.append({"start": seg.start, "end": seg.end, "text": text,
-                                   "avg_logprob": seg.avg_logprob,
-                                   "no_speech_prob": seg.no_speech_prob,
-                                   "words": words})
-              transcript = " ".join(pieces).strip()
-              results.append({"file": video.name,
-                              "detected_language": info.language,
-                              "language_probability": info.language_probability,
-                              "duration": info.duration,
-                              "transcript": transcript,
-                              "segments": seg_rows,
-                              "words": words_flat})
-              blocks.append(f"{'='*90}\n{video.name}\nDetected language: {info.language} ({info.language_probability:.3f})\n{'-'*90}\n{transcript}\n")
-              print(video.name, info.language, len(transcript))
-          Path("output/transcriptions.json").write_text(
-              json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
-          Path("output/transcriptions_raw.txt").write_text("\n".join(blocks), encoding="utf-8")
-          PY
-
-      - name: Upload transcription results
+      - name: Upload model artifact
         uses: actions/upload-artifact@v4
         with:
-          name: meta-ads-transcriptions
-          path: output/
-          retention-days: 3
+          name: whisper-small-q5-model
+          path: model/ggml-small-q5_1.bin
+          compression-level: 0
+          retention-days: 1
